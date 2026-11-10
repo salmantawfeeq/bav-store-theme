@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Bav: 1) Install dependencies",
+      "type": "shell",
+      "command": "npx --yes pnpm@10 install",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Bav: 2) Build (production)",
+      "type": "shell",
+      "command": "npx --yes pnpm@10 run production",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Bav: Watch (development)",
+      "type": "shell",
+      "command": "npx --yes pnpm@10 run watch",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Bav: Git first push",
+      "type": "shell",
+      "command": "git init; git branch -M main; git remote add origin https://github.com/salmantawfeeq/bav-store-theme.git; git add .; git commit -m \"Initial commit: Bav Store theme\"; git push -u origin main",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Bav: Git commit and push",
+      "type": "shell",
+      "command": "git add .; git commit -m \"${input:commitMessage}\"; git push",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "Commit message",
+      "default": "Update theme"
+    }
+  ]
+}
