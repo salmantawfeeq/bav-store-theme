@@ -149,11 +149,56 @@
             ]
         },
         {
-            "id": "other_services_products",
+            "id": "digital_files_products",
             "type": "items",
             "format": "dropdown-list",
-            "label": "منتجات قسم \"خدمات أخرى\" في الرئيسية",
-            "description": "اختر حتى 4 منتجات لعرضها في قسم خدمات أخرى بالصفحة الرئيسية",
+            "label": "منتجات قسم \"الملفات الرقمية\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات (مثل دليل المشاهدات ودليل تحسين الجودة) لعرضها في الصفحة الرئيسية",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "services_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"الخدمات\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات (مثل إنشاء حساب وحل المشاكل) لعرضها في الصفحة الرئيسية",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "double_cp_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"الدبل CP\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات لعرضها في قسم الدبل CP بالصفحة الرئيسية",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "double_cp_gift_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"إهداء الدبل CP\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات لعرضها في قسم إهداء الدبل بالصفحة الرئيسية",
             "icon": "sicon-keyboard_arrow_down",
             "selected": [],
             "options": [],
@@ -177,6 +222,41 @@
             "searchable": true,
             "maxLength": 4,
             "required": false
+        },
+        {
+            "id": "reward_levels",
+            "type": "collection",
+            "format": "collection",
+            "label": "مستويات شريط المكافآت",
+            "description": "4 مستويات حسب قيمة السلة. المكافآت الحقيقية (كوبونات/عروض) تُنشأ من سلة، وهذا النص وصف فقط",
+            "icon": "sicon-award-ribbon",
+            "minLength": 4,
+            "maxLength": 4,
+            "item_label": "مستوى",
+            "value": [
+                { "reward_levels.amount": 50, "reward_levels.text": "هدية يحددها المتجر" },
+                { "reward_levels.amount": 150, "reward_levels.text": "خصم 5 ر.س على طلبك القادم" },
+                { "reward_levels.amount": 300, "reward_levels.text": "80 CP هدية مع الطلب" },
+                { "reward_levels.amount": 600, "reward_levels.text": "كود خصم 10% لطلبك القادم" }
+            ],
+            "fields": [
+                {
+                    "id": "reward_levels.amount",
+                    "type": "number",
+                    "format": "integer",
+                    "label": "قيمة السلة (ر.س)",
+                    "required": true
+                },
+                {
+                    "id": "reward_levels.text",
+                    "type": "string",
+                    "format": "text",
+                    "label": "وصف المكافأة",
+                    "multilanguage": true,
+                    "required": true,
+                    "maxLength": 60
+                }
+            ]
         },
         {
             "id": "freelance_doc_code",

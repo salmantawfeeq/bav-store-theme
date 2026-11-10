@@ -1,29 +1,73 @@
-import "lite-youtube-embed";
 import BasePage from "./base-page";
-import Lightbox from "fslightbox";
-window.fslightbox = Lightbox;
 
 class Home extends BasePage {
     onReady() {
-        this.initFeaturedTabs();
+        this.initRewardsLadder();
     }
 
-    /**
-     * used in views/components/home/featured-products-style*.twig
-     */
-    initFeaturedTabs() {
-        app.all('.tab-trigger', el => {
-            el.addEventListener('click', ({ currentTarget: btn }) => {
-                let id = btn.dataset.componentId;
-                // btn.setAttribute('fill', 'solid');
-                app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'is-active opacity-0 translate-y-3', 'inactive', tab => tab.id == btn.dataset.target)
-                    .toggleClassIf(`#${id} .tab-trigger`, 'is-active', 'inactive', tabBtn => tabBtn == btn);
+    initRewardsLadder() {
+        const ladder = document.getElementById('bav-ladder');
+        if (!ladder) return;
 
-                // fadeIn active tabe
-                setTimeout(() => app.toggleClassIf(`#${id} .tabs-wrapper>div`, 'opacity-100 translate-y-0', 'opacity-0 translate-y-3', tab => tab.id == btn.dataset.target), 100);
-            })
-        });
-        document.querySelectorAll('.s-block-tabs').forEach(block => block.classList.add('tabs-initialized'));
+        const levels = Array.from(ladder.querySelectorAll('.lv')).map(el => ({
+            el,
+            amount: Number(el.dataset.amt),
+            chip: el.querySelector('.lv-chip'),
+        })).sort((a, b) => a.amount - b.amount);
+
+        const lang = {
+            addMore: ladder.dataset.langAddMore,
+            allUnlocked: ladder.dataset.langAllUnlocked,
+            unlocked: ladder.dataset.langUnlocked,
+            next: ladder.dataset.langNext,
+            locked: ladder.dataset.langLocked,
+        };
+
+        const fill = document.getElementById('bav-lad-fill');
+        const text = document.getElementById('bav-lad-text');
+        const total = document.getElementById('bav-lad-total');
+        const maxAmount = levels.length ? levels[levels.length - 1].amount : 0;
+
+        const render = (cartTotal) => {
+            total.textContent = salla.helpers.number(cartTotal, 2);
+
+            const nextLevel = levels.find(level => cartTotal < level.amount);
+            if (nextLevel) {
+                text.textContent = lang.addMore.replace(':amount', salla.helpers.number(nextLevel.amount - cartTotal, 2));
+            } else {
+                text.textContent = lang.allUnlocked;
+            }
+
+            const progress = maxAmount ? Math.min(100, (cartTotal / maxAmount) * 100) : 0;
+            fill.style.width = `${progress}%`;
+
+            levels.forEach(level => {
+                const isUnlocked = cartTotal >= level.amount;
+                const isNext = !isUnlocked && level === nextLevel;
+                level.el.style.borderColor = isUnlocked || isNext ? 'var(--accent)' : '#232329';
+                level.el.style.boxShadow = isNext ? '0 20px 60px -30px var(--accent)' : 'none';
+
+                if (isUnlocked) {
+                    level.chip.textContent = lang.unlocked;
+                    level.chip.style.background = 'var(--accent)';
+                    level.chip.style.border = '1px solid var(--accent)';
+                    level.chip.style.color = '#0A0A0B';
+                } else if (isNext) {
+                    level.chip.textContent = lang.next;
+                    level.chip.style.background = '#17171B';
+                    level.chip.style.border = '1px solid var(--accent)';
+                    level.chip.style.color = 'var(--accent)';
+                } else {
+                    level.chip.textContent = lang.locked;
+                    level.chip.style.background = '#131316';
+                    level.chip.style.border = '1px solid #2A2A31';
+                    level.chip.style.color = '#6E6E78';
+                }
+            });
+        };
+
+        render(Number(ladder.dataset.initialTotal) || 0);
+        salla.cart.event.onUpdated(summary => render(Number(summary.total) || 0));
     }
 }
 

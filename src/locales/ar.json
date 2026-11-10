@@ -40,10 +40,29 @@
       "home": "الرئيسية",
       "choose_game": "اختر لعبتك",
       "other_services": "خدمات أخرى",
+      "digital_files": "الملفات الرقمية",
+      "services": "الخدمات",
+      "double_cp": "الدبل CP",
+      "double_cp_gift": "إهداء الدبل CP",
       "how_to_find_id": "كيف أجد معرّفي؟",
       "faq": "الأسئلة الشائعة",
       "about": "من نحن"
     },
-    "brand_store_label": "STORE"
+    "brand_store_label": "STORE",
+    "rewards_title": "اشترِ أكثر.. وافتح المكافآت",
+    "rewards_subtitle": "كل ما زادت قيمة سلتك فتحت مكافأة جديدة تلقائيًا.",
+    "rewards_cart_value": "قيمة سلتك الآن",
+    "rewards_add_more": "أضف :amount ر.س لتفتح المستوى التالي",
+    "rewards_all_unlocked": "فتحت كل المستويات! 🎉",
+    "reward_unlocked": "تم فتحه",
+    "reward_next": "المستوى التالي",
+    "reward_locked": "مقفل",
+    "how_title": "كيف تشحن؟",
+    "how_subtitle": "ثلاث خطوات فقط.",
+    "how_step1_title": "اختر الفئة",
+    "how_step1_desc": "حدّد الخدمة أو الفئة التي تناسبك من صفحة المتجر.",
+    "how_step2_title": "أدخل معرّف اللاعب",
+    "how_step2_desc": "اكتب المعرّف وأكّده. لا نطلب كلمة سر حسابك أبدًا.",
+    "how_step3_title": "ادفع واستلم"
   }
 }

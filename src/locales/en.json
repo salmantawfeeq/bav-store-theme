@@ -40,10 +40,29 @@
       "home": "Home",
       "choose_game": "Choose Your Game",
       "other_services": "Other Services",
+      "digital_files": "Digital Files",
+      "services": "Services",
+      "double_cp": "Double CP",
+      "double_cp_gift": "Gift Double CP",
       "how_to_find_id": "How to find my ID?",
       "faq": "FAQ",
       "about": "About Us"
     },
-    "brand_store_label": "STORE"
+    "brand_store_label": "STORE",
+    "rewards_title": "Spend More, Unlock Rewards",
+    "rewards_subtitle": "Every time your cart value grows, a new reward unlocks automatically.",
+    "rewards_cart_value": "Your cart value now",
+    "rewards_add_more": "Add :amount SAR to unlock the next level",
+    "rewards_all_unlocked": "All levels unlocked! 🎉",
+    "reward_unlocked": "Unlocked",
+    "reward_next": "Next level",
+    "reward_locked": "Locked",
+    "how_title": "How to top up?",
+    "how_subtitle": "Just three steps.",
+    "how_step1_title": "Choose a tier",
+    "how_step1_desc": "Pick the service or tier that suits you from the store page.",
+    "how_step2_title": "Enter your Player ID",
+    "how_step2_desc": "Enter your Player ID and confirm it. We never ask for your account password.",
+    "how_step3_title": "Pay and receive"
   }
 }

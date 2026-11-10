@@ -18,10 +18,6 @@
         <div class="hero-bot" style="position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(9,9,11,0),#09090B)"></div>
         <div class="wrap hero-wrap" style="position:relative;display:flex;align-items:center;min-height:760px;padding-bottom:70px">
             <div style="max-width:560px;display:flex;flex-direction:column;align-items:flex-start;gap:30px">
-                <span style="display:inline-flex;align-items:center;gap:12px;border:1px solid #34343B;border-radius:999px;padding:9px 18px 9px 20px;font-size:15px;color:#D2D2D8;background:rgba(15,15,18,.7);backdrop-filter:blur(8px)">
-                    <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)"></span>
-                    {{ trans('bav.nav.choose_game') }}
-                </span>
                 <h1 class="h1 disp" style="margin:0;font-size:80px;line-height:1.1">
                     <span style="display:block">{{ theme.settings.get('hero_title_line1') }}</span>
                     <span style="display:block;color:var(--accent)">{{ theme.settings.get('hero_title_line2') }}</span>
@@ -32,7 +28,7 @@
                         {{ trans('bav.nav.choose_game') }}
                         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
                     </a>
-                    <a href="#other-services" class="btn btn-g">{{ trans('bav.nav.other_services') }}</a>
+                    <a href="#services" class="btn btn-g">{{ trans('bav.nav.services') }}</a>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03);max-width:100%">
                     <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -45,17 +41,13 @@
     {# Mobile hero (simplified, stacked) #}
     <section class="mob" style="position:relative;overflow:hidden;border-bottom:1px solid #1D1D22">
         <div class="wrap" style="position:relative;padding-top:30px;padding-bottom:36px;display:flex;flex-direction:column;gap:18px">
-            <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;border:1px solid #34343B;border-radius:999px;padding:7px 14px;font-size:13px;color:#D2D2D8;background:rgba(15,15,18,.8)">
-                <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)"></span>
-                {{ trans('bav.nav.choose_game') }}
-            </span>
             <h1 class="disp" style="margin:0;font-size:46px;line-height:1.15">
                 <span style="display:block">{{ theme.settings.get('hero_title_line1') }}</span>
                 <span style="display:block;color:var(--accent)">{{ theme.settings.get('hero_title_line2') }}</span>
             </h1>
             <p style="margin:0;font-size:16px;line-height:1.85;color:#B9B9C2">{{ theme.settings.get('hero_subtitle') }}</p>
             <a href="#choose-game" class="btn btn-p" style="height:54px;font-size:17px;width:100%">{{ trans('bav.nav.choose_game') }}</a>
-            <a href="#other-services" class="btn btn-g" style="height:54px;font-size:17px;width:100%">{{ trans('bav.nav.other_services') }}</a>
+            <a href="#services" class="btn btn-g" style="height:54px;font-size:17px;width:100%">{{ trans('bav.nav.services') }}</a>
             <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03)">
                 <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                 <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ theme.settings.get('execution_time_text') }}</span>
@@ -134,25 +126,162 @@
         </section>
     {% endif %}
 
-    {# Other services — digital files & extra services, merchant-selected #}
-    {% set other_services = (theme.settings.get('other_services_products')|default([]))|map(item => item.value) %}
-    {% if other_services|length %}
-        <section id="other-services" style="padding:40px 0 40px">
+    {# Double CP — merchant-selected products #}
+    {% set double_cp_products = (theme.settings.get('double_cp_products')|default([]))|map(item => item.value) %}
+    {% if double_cp_products|length %}
+        <section id="double-cp" style="padding:40px 0 40px">
             <div class="wrap">
                 <div class="sechead">
-                    <h2>{{ trans('bav.nav.other_services') }}</h2>
+                    <h2>{{ trans('bav.nav.double_cp') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
                 </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                     <salla-products-list
                         source="selected"
-                        source-value="{{ other_services|json_encode }}"
+                        source-value="{{ double_cp_products|json_encode }}"
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
             </div>
         </section>
     {% endif %}
+
+    {# Gift Double CP — separate, same tiers, "ID" field instead of Player ID #}
+    {% set double_cp_gift_products = (theme.settings.get('double_cp_gift_products')|default([]))|map(item => item.value) %}
+    {% if double_cp_gift_products|length %}
+        <section id="double-cp-gift" style="padding:40px 0 40px">
+            <div class="wrap">
+                <div class="sechead">
+                    <h2>{{ trans('bav.nav.double_cp_gift') }}</h2>
+                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                    <salla-products-list
+                        source="selected"
+                        source-value="{{ double_cp_gift_products|json_encode }}"
+                        product-card-component="custom-salla-product-card">
+                    </salla-products-list>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {# Digital files — merchant-selected #}
+    {% set digital_files = (theme.settings.get('digital_files_products')|default([]))|map(item => item.value) %}
+    {% if digital_files|length %}
+        <section id="digital-files" style="padding:40px 0 40px">
+            <div class="wrap">
+                <div class="sechead">
+                    <h2>{{ trans('bav.nav.digital_files') }}</h2>
+                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                    <salla-products-list
+                        source="selected"
+                        source-value="{{ digital_files|json_encode }}"
+                        product-card-component="custom-salla-product-card">
+                    </salla-products-list>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {# Services — merchant-selected #}
+    {% set services_products = (theme.settings.get('services_products')|default([]))|map(item => item.value) %}
+    {% if services_products|length %}
+        <section id="services" style="padding:40px 0 40px">
+            <div class="wrap">
+                <div class="sechead">
+                    <h2>{{ trans('bav.nav.services') }}</h2>
+                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                    <salla-products-list
+                        source="selected"
+                        source-value="{{ services_products|json_encode }}"
+                        product-card-component="custom-salla-product-card">
+                    </salla-products-list>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {# Rewards ladder — reacts to live cart value #}
+    {% set reward_levels = theme.settings.get('reward_levels') %}
+    <section style="padding:100px 0 40px">
+        <div class="wrap">
+            <div class="sechead">
+                <h2>{{ trans('bav.rewards_title') }}</h2>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.rewards_subtitle') }}</p>
+            </div>
+            <div class="ladder" id="bav-ladder"
+                 data-lang-add-more="{{ trans('bav.rewards_add_more') }}"
+                 data-lang-all-unlocked="{{ trans('bav.rewards_all_unlocked') }}"
+                 data-lang-cart-value="{{ trans('bav.rewards_cart_value') }}"
+                 data-lang-unlocked="{{ trans('bav.reward_unlocked') }}"
+                 data-lang-next="{{ trans('bav.reward_next') }}"
+                 data-lang-locked="{{ trans('bav.reward_locked') }}"
+                 style="padding:36px 36px 40px;border-radius:28px;border:1px solid #232329;background:linear-gradient(180deg,#101013,#0B0B0D)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+                    <div class="lad-text" id="bav-lad-text" style="font-size:20px;font-weight:600"></div>
+                    <div style="font-size:15px;color:#8E8E98">{{ trans('bav.rewards_cart_value') }} <span class="num lad-total" id="bav-lad-total" style="color:#fff">0.00</span> ر.س</div>
+                </div>
+                <div style="position:relative;height:10px;border-radius:999px;background:#1B1B20;margin-bottom:30px">
+                    <div class="lad-fill" id="bav-lad-fill" style="position:absolute;top:0;right:0;height:100%;width:0%;border-radius:999px;background:linear-gradient(270deg,var(--accent),#FFB27A);box-shadow:0 0 24px var(--accent);transition:width .6s cubic-bezier(.2,.8,.2,1)"></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+                    {% for level in reward_levels %}
+                        <div class="lv" data-n="{{ loop.index }}" data-amt="{{ level['reward_levels.amount'] }}" style="position:relative;padding:26px 24px;border-radius:20px;border:1px solid #232329;background:#0F0F12">
+                            <div style="display:flex;align-items:center;justify-content:space-between">
+                                <span class="num" style="font-size:13px;letter-spacing:.16em;color:#8E8E98">LEVEL 0{{ loop.index }}</span>
+                                <span class="lv-chip" style="font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:#131316;border:1px solid #2A2A31;color:#6E6E78">{{ trans('bav.reward_locked') }}</span>
+                            </div>
+                            <div class="num" style="font-size:34px;margin-top:20px">{{ level['reward_levels.amount'] }}<span class="cur" style="font-family:var(--font-main);margin-right:6px">ر.س</span></div>
+                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ level['reward_levels.text'] }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# How to top up — 3 steps #}
+    <section style="padding:100px 0 40px">
+        <div class="wrap">
+            <div class="sechead">
+                <h2>{{ trans('bav.how_title') }}</h2>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.how_subtitle') }}</p>
+            </div>
+            <div class="g-steps g3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px">
+                <div class="step">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span class="ico" style="width:56px;height:56px;border-radius:16px"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5L12 12l8-4.5M12 12v9"/></svg></span>
+                        <span class="num" style="font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #34343B">01</span>
+                    </div>
+                    <div class="disp" style="font-size:26px;margin-top:26px">{{ trans('bav.how_step1_title') }}</div>
+                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ trans('bav.how_step1_desc') }}</div>
+                </div>
+                <div class="step">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span class="ico" style="width:56px;height:56px;border-radius:16px"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
+                        <span class="num" style="font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #34343B">02</span>
+                    </div>
+                    <div class="disp" style="font-size:26px;margin-top:26px">{{ trans('bav.how_step2_title') }}</div>
+                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ trans('bav.how_step2_desc') }}</div>
+                </div>
+                <div class="step">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                        <span class="ico" style="width:56px;height:56px;border-radius:16px"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+                        <span class="num" style="font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #34343B">03</span>
+                    </div>
+                    <div class="disp" style="font-size:26px;margin-top:26px">{{ trans('bav.how_step3_title') }}</div>
+                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ theme.settings.get('execution_time_text') }}، وتصلك رسالة تأكيد فور اكتمال التنفيذ.</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     {# FAQ (short preview) #}
     <section id="faq" style="padding:40px 0 110px">
