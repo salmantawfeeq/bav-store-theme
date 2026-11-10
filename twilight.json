@@ -7,8 +7,6 @@
     "author_email": "salmantawfeeq10@gmail.com",
     "features": [
         "mega-menu",
-        "fonts",
-        "color",
         "breadcrumb",
         "unite-cards-height",
         "component-featured-products",
@@ -25,6 +23,221 @@
         "filters"
     ],
     "settings": [
+        {
+            "id": "topbar_items",
+            "type": "collection",
+            "format": "collection",
+            "label": "عناصر شريط الإعلانات العلوي",
+            "description": "النصوص المتحركة في الشريط العلوي للمتجر",
+            "icon": "sicon-list",
+            "minLength": 1,
+            "maxLength": 10,
+            "item_label": "عنصر",
+            "value": [
+                { "topbar_items.text": "الشحن بمعرّف اللاعب فقط — بدون كلمة سر" },
+                { "topbar_items.text": "راجع معرّف اللاعب قبل الدفع" },
+                { "topbar_items.text": "دفع آمن بطرق متعددة" },
+                { "topbar_items.text": "مدة التنفيذ من 10 دقائق إلى ساعتين ونصف" },
+                { "topbar_items.text": "ساعات العمل 10 صباحًا – 12 منتصف الليل" },
+                { "topbar_items.text": "دعم بعد الشراء على واتساب" }
+            ],
+            "fields": [
+                {
+                    "id": "topbar_items.text",
+                    "type": "string",
+                    "format": "text",
+                    "label": "النص",
+                    "multilanguage": true,
+                    "required": true,
+                    "minLength": 1,
+                    "maxLength": 100
+                }
+            ]
+        },
+        {
+            "id": "hero_title_line1",
+            "type": "string",
+            "format": "text",
+            "label": "عنوان الهيرو — السطر الأول",
+            "icon": "sicon-format-text-alt",
+            "multilanguage": true,
+            "value": "كل خدماتك الرقمية",
+            "required": false,
+            "maxLength": 60
+        },
+        {
+            "id": "hero_title_line2",
+            "type": "string",
+            "format": "text",
+            "label": "عنوان الهيرو — السطر الثاني (بلون مميز)",
+            "icon": "sicon-format-text-alt",
+            "multilanguage": true,
+            "value": "في مكان واحد",
+            "required": false,
+            "maxLength": 60
+        },
+        {
+            "id": "hero_subtitle",
+            "type": "string",
+            "format": "textarea",
+            "label": "فقرة الهيرو",
+            "icon": "sicon-typography",
+            "multilanguage": true,
+            "value": "بدون كلمة سر ولا تسجيل دخول لحسابك. اختر الخدمة، أدخل معرّف اللاعب عند الحاجة، وراجعه جيدًا قبل الدفع.",
+            "required": false,
+            "maxLength": 200
+        },
+        {
+            "id": "hero_image",
+            "type": "string",
+            "format": "image",
+            "label": "صورة الهيرو",
+            "description": "* المقاس المناسب 1600×889 بكسل. اختياري — في حال عدم رفعها يظهر تدرّج لوني بدلًا منها",
+            "icon": "sicon-image",
+            "value": null,
+            "required": false
+        },
+        {
+            "id": "featured_games",
+            "type": "collection",
+            "format": "collection",
+            "label": "الألعاب المعروضة في قسم \"اختر لعبتك\"",
+            "description": "كل عنصر يمثّل لعبة واحدة: الاسم، الصورة، ورابط صفحة تصنيفها في المتجر",
+            "icon": "sicon-game-controller-alt",
+            "minLength": 0,
+            "maxLength": 6,
+            "item_label": "لعبة",
+            "value": [
+                {
+                    "featured_games.name": "Call of Duty: Mobile",
+                    "featured_games.image": null,
+                    "featured_games.url": null
+                }
+            ],
+            "fields": [
+                {
+                    "id": "featured_games.name",
+                    "type": "string",
+                    "format": "text",
+                    "label": "اسم اللعبة",
+                    "icon": "sicon-format-text-alt",
+                    "required": true,
+                    "maxLength": 60
+                },
+                {
+                    "id": "featured_games.image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة اللعبة",
+                    "icon": "sicon-image",
+                    "required": false
+                },
+                {
+                    "id": "featured_games.url",
+                    "type": "items",
+                    "icon": "sicon-link",
+                    "label": "رابط صفحة اللعبة (التصنيف)",
+                    "format": "variable-list",
+                    "searchable": true,
+                    "source": "custom",
+                    "sources": [
+                        { "label": "تصنيف", "key": "categories", "value": "categories" },
+                        { "label": "رابط خارجي", "key": "custom", "value": "custom" }
+                    ],
+                    "required": false
+                }
+            ]
+        },
+        {
+            "id": "other_services_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"خدمات أخرى\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات لعرضها في قسم خدمات أخرى بالصفحة الرئيسية",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "game_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"فئات الشحن\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات (مثل شحن CP وBattle Pass) لعرضها في الصفحة الرئيسية",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "freelance_doc_code",
+            "type": "string",
+            "format": "text",
+            "label": "رمز وثيقة العمل الحر",
+            "icon": "sicon-certificate",
+            "value": "FL-522999221",
+            "required": false
+        },
+        {
+            "id": "footer_about_text",
+            "type": "string",
+            "format": "textarea",
+            "label": "نص الفوتر التعريفي",
+            "icon": "sicon-typography",
+            "multilanguage": true,
+            "value": "متجر Bav للخدمات الرقمية. اختر الخدمة التي تحتاجها، أدخل معرّف اللاعب عند الحاجة، وأكمل الدفع بأمان.",
+            "required": false,
+            "maxLength": 200
+        },
+        {
+            "id": "whatsapp_number",
+            "type": "string",
+            "format": "text",
+            "label": "رقم واتساب المتجر",
+            "description": "بالصيغة الدولية بدون + أو أصفار بادئة، مثال: 966564622432",
+            "icon": "sicon-whatsapp",
+            "value": "966564622432",
+            "required": false
+        },
+        {
+            "id": "whatsapp_message",
+            "type": "string",
+            "format": "text",
+            "label": "رسالة واتساب الافتراضية",
+            "icon": "sicon-chat-bubbles",
+            "multilanguage": true,
+            "value": "السلام عليكم، عندي استفسار بخصوص متجر Bav Store.",
+            "required": false
+        },
+        {
+            "id": "execution_time_text",
+            "type": "string",
+            "format": "text",
+            "label": "نص مدة التنفيذ",
+            "icon": "sicon-clock",
+            "multilanguage": true,
+            "value": "من 10 دقائق إلى ساعتين ونصف بعد تأكيد الدفع",
+            "required": false
+        },
+        {
+            "id": "working_hours_text",
+            "type": "string",
+            "format": "text",
+            "label": "نص ساعات العمل",
+            "icon": "sicon-clock",
+            "multilanguage": true,
+            "value": "من 10 صباحًا إلى 12 منتصف الليل",
+            "required": false
+        },
         {
             "id": "squar_photo_bg_image_size",
             "type": "items",

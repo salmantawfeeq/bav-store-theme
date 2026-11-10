@@ -5,25 +5,53 @@ $infinte-color: var(--infinte-color);
 $main-text-color: var(--main-text-color);
 
 :root {
-  --infinte-color: #c9c9c9;
-  --main-text-color: #231f1e;
-  --main-text-color-dark: #2b2d34;
+  --infinte-color: #2A2A31;
+  --main-text-color: #F4F4F2;
+  --main-text-color-dark: #F4F4F2;
 
-  /* current */
-  --color-primary: #5cd5c4;
-  --color-primary: #414042;
-  --color-primary-d: #272628;
-  --color-primary-l: #676668;
-  --color-primary-reverse: #ff6767;
-  --color-text: #7c8082;
-  --bg-gray: #c6c7ce1a;
-  --color-grey: #f5f7f9;
-  --color-light-grey: #eeeeee;
+  /* Bav identity — fixed, not merchant-configurable */
+  --accent: #FF5A1F;
+  --color-primary: #FF5A1F;
+  --color-primary-dark: #E04E1A;
+  --color-primary-light: #FF7A2F;
+  --color-primary-reverse: #09090B;
+  --color-text: #C7C7CF;
+  --color-text-secondary: #9B9BA5;
+  --color-text-muted: #8E8E98;
+  --color-price-old: #6E6E78;
+
+  --bg-base: #09090B;
+  --bg-surface-1: #0F0F12;
+  --bg-surface-2: #141418;
+  --bg-surface-3: #17171B;
+  --bg-surface-4: #0E0E11;
+  --bg-surface-5: #111114;
+  --bg-gray: #141418;
+  --color-grey: #141418;
+  --color-light-grey: #17171B;
+
+  --border-1: #232329;
+  --border-2: #2A2A31;
+  --border-3: #2E2E35;
+
   /* font-size */
   --font-sm: 0.8685714286rem;
-  /* font-family: ; */
-  --font-main: "DINNextLTArabic";
+
+  /* fonts */
+  --font-main: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif;
+  --font-num: 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif;
+
+  /* radius */
+  --s-radius: 14px;
+  --s-radius-card: 22px;
+  --s-radius-pill: 28px;
 
   /* plugins */
   --mm-ocd-width: calc(100% - 51px);
+}
+
+html, body {
+  background-color: var(--bg-base);
+  color: var(--main-text-color);
 }

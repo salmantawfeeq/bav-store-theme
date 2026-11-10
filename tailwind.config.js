@@ -8,9 +8,12 @@ module.exports = {
     theme   : {
         container : {
             center : true,
-            padding: '10px',
+            padding: {
+                DEFAULT: '18px',
+                lg     : '36px',
+            },
             screens: {
-                '2xl': "1280px"
+                '2xl': "1240px"
             }
         },
         fontFamily: {
@@ -19,7 +22,15 @@ module.exports = {
                 '-apple-system',
                 'BlinkMacSystemFont',
             ],
-            primary: "var(--font-main)"
+            primary: "var(--font-main)",
+            display: [
+                'var(--font-display)',
+                '-apple-system',
+            ],
+            num: [
+                'var(--font-num)',
+                '-apple-system',
+            ],
         },
         extend    : {
             transitionTimingFunction: {
@@ -52,7 +63,8 @@ module.exports = {
                 'large': '22px',
                 'big'  : '40px',
                 'tiny' : '3px',
-                DEFAULT: '.75rem',
+                'pill' : '28px',
+                DEFAULT: '14px',
             },
             fontSize           : {
                 'icon-lg'   : '33px',

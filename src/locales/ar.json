@@ -34,5 +34,16 @@
   "common": {
     "bank_offer_sub_title_multiple": "ادفع قيمة مشترياتك عبر أحد البطاقات البنكة التالية واحصل على الخصم المحدد",
     "bank_offer_sub_title_single": "ادفع قيمة مشترياتك عبر أحد بطاقات بنك :bank_name واحصل على خصم بنسبة "
+  },
+  "bav": {
+    "nav": {
+      "home": "الرئيسية",
+      "choose_game": "اختر لعبتك",
+      "other_services": "خدمات أخرى",
+      "how_to_find_id": "كيف أجد معرّفي؟",
+      "faq": "الأسئلة الشائعة",
+      "about": "من نحن"
+    },
+    "brand_store_label": "STORE"
   }
 }
