@@ -99,15 +99,15 @@ const doubleCpProducts = [
   // he gave; he separately flagged wanting extra margin on the GIFT version
   // specifically before going live, so treat these as the trial sale prices
   // for now, same as every other trial price in this file).
-  { slug: 'double-cp-160', name: '160', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_80.webp`, price: '3.69', subtitle: '+5 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-800', name: '800', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_420.webp`, price: '17.99', subtitle: '+10 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-1600', name: '1,600', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_880.webp`, price: '36.99', subtitle: '+15 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-4000', name: '4,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_2400.webp`, price: '89.99', subtitle: '+20 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-8000', name: '8,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_5000.webp`, price: '184.99', subtitle: '+60 Bonus Mythic Coins', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-16000', name: '16,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_10800.webp`, price: '369.99', subtitle: '+120 Bonus Mythic Coins', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-160', name: '160', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_80.webp`, price: '3.69', subtitle: '+5 Bonus Strongboxes' },
+  { slug: 'double-cp-800', name: '800', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_420.webp`, price: '17.99', subtitle: '+10 Bonus Strongboxes' },
+  { slug: 'double-cp-1600', name: '1,600', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_880.webp`, price: '36.99', subtitle: '+15 Bonus Strongboxes' },
+  { slug: 'double-cp-4000', name: '4,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_2400.webp`, price: '89.99', subtitle: '+20 Bonus Strongboxes' },
+  { slug: 'double-cp-8000', name: '8,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_5000.webp`, price: '184.99', subtitle: '+60 Bonus Mythic Coins' },
+  { slug: 'double-cp-16000', name: '16,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_10800.webp`, price: '369.99', subtitle: '+120 Bonus Mythic Coins' },
 ].map((p) => ({
   ...p,
-  description: `تحب تاخذ ضعف رصيدك من CP بنفس السعر؟ أدخل معرّف اللاعب واشحن ${p.name} ${p.unit}، وتتضاعف الكمية تلقائيًا في حسابك فور تأكيد الدفع. للعلم: الميزة دي تتفعّل مرة وحدة بس لكل حساب.`,
+  description: `تحب تاخذ ضعف رصيدك من CP بنفس السعر؟ أدخل معرّف اللاعب واشحن ${p.name} ${p.unit}، وتتضاعف الكمية تلقائيًا في حسابك فور تأكيد الدفع.`,
 }));
 
 const doubleCpGiftProducts = doubleCpProducts.map((p) => ({
