@@ -7375,7 +7375,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   font-family: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 17px;
+  font-size: 16px;
 }
 .bav-trust-desc {
   font-size: 13px;
@@ -7449,7 +7449,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
 }
 .faq summary::-webkit-details-marker {
@@ -7469,7 +7469,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
 }
 .faq p {
   margin: 14px 0 0;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.9;
   color: #A6A6AF;
   max-width: 760px;
@@ -7718,7 +7718,7 @@ html[dir=ltr] .hero-bg {
     margin-top: 6px !important;
   }
   .ladder .lad-text {
-    font-size: 17px !important;
+    font-size: 16px !important;
   }
 }
 /* Merchant-authored rich text pages (About, policies, how-to-find-id, ...) */
@@ -8119,7 +8119,7 @@ html[dir=ltr] .drawer {
   display: block;
   padding: 16px 4px;
   border-bottom: 1px solid #1D1D22;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
 }
 .menu input {
@@ -8478,7 +8478,7 @@ html[dir=ltr] .drawer {
 .bav-mobile-nav li > a, .bav-mobile-nav li > span {
   display: block;
   padding: 16px 4px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #F4F4F2;
   -webkit-text-decoration: none;
@@ -8557,7 +8557,7 @@ html[dir=ltr] .drawer {
   color: #F4F4F2;
 }
 .mm-spn a, .mm-spn span {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
 }
 .mm-spn li:after {
@@ -8569,7 +8569,7 @@ html[dir=ltr] .drawer {
   color: var(--accent);
 }
 .mm-spn salla-menu a {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #F4F4F2;
   display: block;

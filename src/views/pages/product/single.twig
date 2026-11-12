@@ -397,14 +397,14 @@
                             <label class="form-label"><b class="block">{{ trans('pages.products.price') }}</b></label>
                             <div class="price-wrapper" style="display:flex;align-items:baseline;gap:12px">
                               <div class="price_is_on_sale {{ product.is_on_sale ? '' : 'hidden' }}" style="{{ product.is_on_sale ? 'display:flex;align-items:baseline;gap:10px' : '' }}">
-                                <h2 class="total-price num" style="font-size:24px">{{ product.sale_price|money }}</h2>
+                                <h2 class="total-price num" style="font-size:22px">{{ product.sale_price|money }}</h2>
                                 <span class="before-price old">{{ product.regular_price|money }}</span>
                               </div>
                               <div class="starting-or-normal-price {{ product.is_on_sale ? 'hidden' : '' }}" style="{{ product.is_on_sale ? '' : 'display:flex;align-items:baseline;gap:10px' }}">
                                 {% if product.starting_price %}
                                   <span class="starting-price-title" style="font-size:14px;color:#8E8E98">{{ trans('pages.products.starting_price') }}</span>
                                 {% endif %}
-                                <h2 class="total-price num" style="font-size:24px">{{ product.starting_price ? product.starting_price|money : product.price|money }}</h2>
+                                <h2 class="total-price num" style="font-size:22px">{{ product.starting_price ? product.starting_price|money : product.price|money }}</h2>
                               </div>
                             </div>
                             <div data-testid="store-product-out-of-stock" class="out-of-stock hidden" style="color:#FF6B5A;font-weight:700">{{ trans('pages.products.out_of_stock')}}</div>

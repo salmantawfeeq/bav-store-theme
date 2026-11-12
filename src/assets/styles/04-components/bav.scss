@@ -99,7 +99,7 @@
 .bav-trust-item:not(:last-child)::after { content: ""; position: absolute; inset-inline-start: 0; top: 18%; bottom: 18%; width: 1px; background: linear-gradient(180deg, transparent, #2A2A31, transparent); }
 .bav-trust-icon { flex: none; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 32% 30%, rgba(255,90,31,.32), rgba(255,90,31,.05) 72%); border: 1px solid rgba(255,90,31,.35); box-shadow: 0 0 22px -8px var(--accent); transition: box-shadow .25s, transform .25s; }
 .bav-trust-item:hover .bav-trust-icon { box-shadow: 0 0 30px -4px var(--accent); transform: scale(1.06); }
-.bav-trust-title { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+.bav-trust-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
 .bav-trust-desc { font-size: 13px; color: #8E8E98; margin-top: 4px; line-height: 1.6; }
 .bav-trust--mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 18px; }
 .bav-trust--mobile .bav-trust-item { padding: 18px 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -117,11 +117,11 @@
 
 /* FAQ */
 .faq details { border-bottom: 1px solid #232329; padding: 22px 0; }
-.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 19px; font-weight: 600; }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 20px; font-weight: 600; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; font-family: var(--font-num); font-size: 28px; color: var(--accent); line-height: 1; }
 .faq details[open] summary::after { content: "−"; }
-.faq p { margin: 14px 0 0; font-size: 17px; line-height: 1.9; color: #A6A6AF; max-width: 760px; }
+.faq p { margin: 14px 0 0; font-size: 16px; line-height: 1.9; color: #A6A6AF; max-width: 760px; }
 
 /* Footer links */
 .flink { display: block; position: relative; z-index: 1; font-size: 15px; color: #9B9BA5; padding: 6px 0; }
@@ -207,7 +207,7 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
   .ladder .lv span.num { font-size: 11px !important; letter-spacing: .06em !important; white-space: nowrap; }
   .ladder .lv > div:first-child { flex-wrap: wrap; gap: 6px; }
   .ladder .lv div:last-child { font-size: 13px !important; margin-top: 6px !important; }
-  .ladder .lad-text { font-size: 17px !important; }
+  .ladder .lad-text { font-size: 16px !important; }
 }
 
 /* Merchant-authored rich text pages (About, policies, how-to-find-id, ...) */
@@ -293,7 +293,7 @@ html[dir="ltr"] .drawer { left: auto; right: 0; border-right: 0; border-left: 1p
 
 .menu { position: fixed; inset: 0; background: #09090B; z-index: 110; padding: 22px 20px; display: none; flex-direction: column; gap: 6px; overflow: auto; }
 .menu.on { display: flex; }
-.menu a.ml { display: block; padding: 16px 4px; border-bottom: 1px solid #1D1D22; font-size: 19px; font-weight: 600; }
+.menu a.ml { display: block; padding: 16px 4px; border-bottom: 1px solid #1D1D22; font-size: 20px; font-weight: 600; }
 .menu input { width: 100%; height: 52px; border-radius: 14px; border: 1px solid #2A2A31; background: #111114; color: #F4F4F2; font-family: inherit; font-size: 16px; padding: 0 16px; outline: 0; margin: 6px 0 10px; }
 .menu input:focus { border-color: var(--accent); }
 
@@ -407,7 +407,7 @@ html[dir="ltr"] .drawer { left: auto; right: 0; border-right: 0; border-left: 1p
 .bav-mobile-nav { padding: 70px 20px 30px; background: #0E0E11; color: #F4F4F2; }
 .bav-mobile-nav ul { list-style: none; margin: 0; padding: 0; }
 .bav-mobile-nav li { border-bottom: 1px solid #232329; }
-.bav-mobile-nav li > a, .bav-mobile-nav li > span { display: block; padding: 16px 4px; font-size: 17px; font-weight: 600; color: #F4F4F2; text-decoration: none; }
+.bav-mobile-nav li > a, .bav-mobile-nav li > span { display: block; padding: 16px 4px; font-size: 16px; font-weight: 600; color: #F4F4F2; text-decoration: none; }
 .bav-mobile-nav li > a:active { color: var(--accent); }
 
 /* Local-preview-only off-canvas simulation (see scripts/preview-build.js) -
@@ -447,10 +447,10 @@ html[dir="ltr"] .drawer { left: auto; right: 0; border-right: 0; border-left: 1p
 .bav-mobile-nav__close { position: absolute; top: 18px; inset-inline-end: 18px; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9B9BA5; border: 1px solid #2A2A31; z-index: 3; }
 .bav-mobile-nav__close:hover { color: var(--accent); border-color: var(--accent); }
 .mm-spn.mm-spn--dark { background: #0E0E11; color: #F4F4F2; }
-.mm-spn a, .mm-spn span { font-size: 17px; font-weight: 600; }
+.mm-spn a, .mm-spn span { font-size: 16px; font-weight: 600; }
 .mm-spn li:after { border-color: #232329 !important; opacity: 1 !important; }
 .mm-spn li.Selected > a, .mm-spn a:active { color: var(--accent); }
-.mm-spn salla-menu a { font-size: 17px; font-weight: 600; color: #F4F4F2; display: block; padding: calc((var(--mm-spn-item-height) - var(--mm-spn-line-height)) / 2) var(--mm-spn-item-indent); }
+.mm-spn salla-menu a { font-size: 16px; font-weight: 600; color: #F4F4F2; display: block; padding: calc((var(--mm-spn-item-height) - var(--mm-spn-line-height)) / 2) var(--mm-spn-item-indent); }
 
 /* Mobile nav toggle - a clean, even 3-bar icon that morphs into an X while
    the drawer is open (driven by body.menu-opened, which app.js's existing
