@@ -290,12 +290,6 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
     `$1\n<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">\n<meta http-equiv="Pragma" content="no-cache">\n<meta http-equiv="Expires" content="0">`
   );
 
-  // noindex + preview banner injected right after <body ...>
-  master = master.replace(
-    /(<body[^>]*>)/,
-    `$1\n<div style="position:fixed;bottom:14px;left:14px;z-index:999;background:#17171B;border:1px solid #2A2A31;color:#8E8E98;font-size:12px;padding:8px 14px;border-radius:10px">معاينة مولّدة من كود الثيم الحقيقي — ${pageSlugLabel}</div>`
-  );
-
   // The real wishlist button (`onclick="salla.wishlist.toggle(...)"`) is a
   // no-op here since there's no live Salla runtime in this static preview -
   // this demo-only script simulates the real toggle (is-added class +
