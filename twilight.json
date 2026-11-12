@@ -305,6 +305,16 @@
             "required": false
         },
         {
+            "id": "weapons_calculator_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"حاسبة شحن الأسلحة\"",
+            "description": "لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة بعنوان \"حاسبة شحن الأسلحة\" بالضبط. اتركه فاضي لإخفاء أي زر يوديك لها لحد ما تتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
             "id": "currency_category_url",
             "type": "string",
             "format": "text",

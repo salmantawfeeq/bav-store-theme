@@ -3,6 +3,8 @@ import BasePage from './base-page';
 import Fslightbox from 'fslightbox';
 window.fslightbox = Fslightbox;
 import { zoom } from './partials/image-zoom';
+import { WeaponsCalculator } from './partials/weapons-calculator';
+import { WEAPON_WHEELS } from './partials/weapons-wheels-data';
 
 class Product extends BasePage {
     onReady() {
@@ -19,6 +21,7 @@ class Product extends BasePage {
         this.initNativeGallery();
         this.initConfirmGate();
         this.initQuantitySubtotalElements();
+        this.initWeaponsCalculator();
 
         if(imageZoom){
             // call the function when the page is ready
@@ -106,6 +109,21 @@ class Product extends BasePage {
         if (!this.subtotalEl) return;
         const qty = Number(this.qtyInput?.value) || 1;
         this.subtotalEl.innerHTML = salla.money(this.unitPrice * qty);
+    }
+
+    /**
+     * Mini "how much CP do I need for this weapon" calculator, embedded
+     * directly in a weapon product's own page (طلبات_صاحب_المتجر.md,
+     * "حاسبة شحن الأسلحة") - single.twig only renders the container div for
+     * products in the weapons category, so no extra detection is needed
+     * here. Locked to the first defined wheel for now since only one real
+     * wheel exists; once more wheels are added, map product.slug -> wheel id
+     * here instead of always using the first one.
+     */
+    initWeaponsCalculator() {
+        const container = document.getElementById('bav-weapons-calculator-mini');
+        if (!container) return;
+        new WeaponsCalculator(container, { lockedWheelId: container.dataset.wheelId || WEAPON_WHEELS[0].id });
     }
 
     initImagesZooming() {

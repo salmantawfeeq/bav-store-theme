@@ -167,6 +167,16 @@ const servicesProducts = [
   },
 ];
 
+// Preview/testing only - no real weapons products exist yet (see the
+// "weapons" SECTION_META entry above). Just enough to render one standalone
+// page so the weapons-calculator mini-widget (single.twig) can be checked.
+const weaponsProducts = [
+  {
+    slug: 'legendary-weapon', name: 'السلاح الأسطوري', subtitle: 'شحن عجلة السلاح الأسطوري بمعرّف اللاعب', price: '5.00', service: true,
+    description: 'شحن عجلة فتح السلاح الأسطوري على حسابك، بمعرّف اللاعب فقط. استخدم الحاسبة تحت عشان تعرف بالظبط كام CP محتاج تشحنه.',
+  },
+];
+
 function money(v) {
   return Number(v).toFixed(2);
 }
@@ -346,6 +356,11 @@ const SECTION_META = {
   doubleCpGift: { type: 'codes', category: 'إهداء الدبل CP', anchor: '#double-cp-gift', idBase: 3000 },
   digitalFiles: { type: 'digital', category: 'الملفات الرقمية', anchor: '#digital-files', idBase: 4000 },
   services: { type: 'service', category: 'الخدمات', anchor: '#services', idBase: 5000 },
+  // No real weapons products exist yet (طلبات_صاحب_المتجر.md - still
+  // pending from the merchant) - this single mock entry only exists so the
+  // weapons calculator mini-widget (single.twig) has a real page to render
+  // on for preview/testing, not a real Bav Store product.
+  weapons: { type: 'service', category: 'شحن الأسلحة', anchor: '#weapons', idBase: 6000 },
 };
 
 function money(v) { return Number(v || 0); }
@@ -478,6 +493,7 @@ const allProductPages = [
   ...doubleCpGiftProducts.map((p, i) => ({ slug: p.slug, context: toProductContext(p, 'doubleCpGift', i) })),
   ...digitalFilesProducts.map((p, i) => ({ slug: p.slug, context: toProductContext(p, 'digitalFiles', i) })),
   ...servicesProducts.map((p, i) => ({ slug: p.slug, context: toProductContext(p, 'services', i) })),
+  ...weaponsProducts.map((p, i) => ({ slug: p.slug, context: toProductContext(p, 'weapons', i) })),
 ];
 
 // "العروض" homepage section - one standout per section (not all from the

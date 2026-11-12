@@ -455,6 +455,35 @@
             </div>
         </div>
 
+    {% elseif page.title == trans('bav.weapons_calculator_title') %}
+        {#
+            Full standalone calculator page (طلبات_صاحب_المتجر.md, "حاسبة شحن
+            الأسلحة") - the actual interactive widget is rendered client-side
+            by weapons-calc.js into #bav-weapons-calculator below; this twig
+            branch is just the page shell (title, breadcrumb, container).
+        #}
+        <div class="wrap" style="padding:60px 0 100px;max-width:760px">
+            <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
+            <div class="sechead">
+                <h1 class="disp" style="font-size:32px">{{ trans('bav.weapons_calculator_title') }}</h1>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.weapons_calculator_subtitle') }}</p>
+            </div>
+            <div id="bav-weapons-calculator"
+                 style="margin-top:30px"
+                 data-lang-account-type="{{ trans('bav.wcalc_account_type') }}"
+                 data-lang-wheel-type="{{ trans('bav.wcalc_wheel_type') }}"
+                 data-lang-pulls-label="{{ trans('bav.wcalc_pulls_label') }}"
+                 data-lang-pulls-hint="{{ trans('bav.wcalc_pulls_hint') }}"
+                 data-lang-include-all="{{ trans('bav.wcalc_include_all') }}"
+                 data-lang-exclude-all="{{ trans('bav.wcalc_exclude_all') }}"
+                 data-lang-owned-label="{{ trans('bav.wcalc_owned_label') }}"
+                 data-lang-owned-note="{{ trans('bav.wcalc_owned_note') }}"
+                 data-lang-discount-label="{{ trans('bav.wcalc_discount_label') }}"
+                 data-lang-discount-note="{{ trans('bav.wcalc_discount_note') }}"
+                 data-lang-result-label="{{ trans('bav.wcalc_result_label') }}"></div>
+        </div>
+
     {% elseif page.type == 'customised' %}
       {#
           Hook: information_page.information_page
@@ -495,5 +524,8 @@
             items.forEach(function (el) { io.observe(el); });
         })();
         </script>
+    {% endif %}
+    {% if page.title == trans('bav.weapons_calculator_title') %}
+        <script defer src="{{ 'weapons-calc.js' | asset }}"></script>
     {% endif %}
 {% endblock %}

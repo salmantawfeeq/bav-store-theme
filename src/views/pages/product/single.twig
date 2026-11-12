@@ -529,6 +529,30 @@
                     </div>
                 {% endif %}
 
+                {#
+                    Mini weapons-charging calculator (طلبات_صاحب_المتجر.md,
+                    "حاسبة شحن الأسلحة") - scoped to this one weapon, rendered
+                    client-side by product.js into #bav-weapons-calculator-mini.
+                    Detected the same way as is_double_cp_product above: off
+                    the product's own category name, not its slug/name.
+                #}
+                {% if 'أسلحة' in (product.category.name ?? '') %}
+                    <div style="margin-top:20px">
+                        <div class="disp" style="font-size:18px;margin-bottom:14px">{{ trans('bav.weapons_calculator_mini_title') }}</div>
+                        <div id="bav-weapons-calculator-mini"
+                             data-lang-account-type="{{ trans('bav.wcalc_account_type') }}"
+                             data-lang-pulls-label="{{ trans('bav.wcalc_pulls_label') }}"
+                             data-lang-pulls-hint="{{ trans('bav.wcalc_pulls_hint') }}"
+                             data-lang-include-all="{{ trans('bav.wcalc_include_all') }}"
+                             data-lang-exclude-all="{{ trans('bav.wcalc_exclude_all') }}"
+                             data-lang-owned-label="{{ trans('bav.wcalc_owned_label') }}"
+                             data-lang-owned-note="{{ trans('bav.wcalc_owned_note') }}"
+                             data-lang-discount-label="{{ trans('bav.wcalc_discount_label') }}"
+                             data-lang-discount-note="{{ trans('bav.wcalc_discount_note') }}"
+                             data-lang-result-label="{{ trans('bav.wcalc_result_label') }}"></div>
+                    </div>
+                {% endif %}
+
                 {% hook 'product:single.description.end' %}
                 <salla-quick-order data-testid="store-product-quick-order" class="mt-5 md:-mb-2 block"></salla-quick-order>
             </div>

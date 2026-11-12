@@ -105,7 +105,17 @@
         <li><a href="{{ theme.settings.get('double_cp_gift_category_url', store.url ~ '#double-cp-gift') }}">{{ trans('bav.nav.double_cp_gift') }}</a></li>
         <li><a href="{{ theme.settings.get('services_category_url', store.url ~ '#services') }}">{{ trans('bav.nav.services') }}</a></li>
         <li><a href="{{ theme.settings.get('digital_files_category_url', store.url ~ '#digital-files') }}">{{ trans('bav.nav.digital_files') }}</a></li>
-        <li><a href="{{ theme.settings.get('weapons_category_url', store.url ~ '#weapons') }}">{{ trans('bav.nav.weapons') }}</a></li>
+        {#
+            "حاسبة شحن الأسلحة" nested under the weapons category link for the
+            same reason as the FAQ sub-items below - it's a tool that belongs
+            to this category, not a standalone top-level destination.
+        #}
+        <li>
+            <a href="{{ theme.settings.get('weapons_category_url', store.url ~ '#weapons') }}">{{ trans('bav.nav.weapons') }}</a>
+            <ul class="bav-mobile-nav__sub">
+                <li><a href="{{ theme.settings.get('weapons_calculator_page_url', store.url ~ '#weapons') }}">{{ trans('bav.weapons_calculator_title') }}</a></li>
+            </ul>
+        </li>
         {#
             "من نحن" and "كيف أجد معرّفي؟" moved from their own top-level
             entries to sit under "الأسئلة الشائعة" itself (merchant request,
