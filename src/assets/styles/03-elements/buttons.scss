@@ -79,15 +79,18 @@ salla-button {
     // Salla's own base button color (.s-button-light-outline) was winning
     // out over a plain `@apply text-primary` here with no visible change on
     // click - the count went up but the heart itself never looked any
-    // different. !important guarantees the state wins regardless, and the
-    // brief pop makes the change impossible to miss instead of a subtle
-    // colour-only shift on a thin icon-font glyph.
+    // different. !important guarantees the state wins regardless.
+    //
+    // The outline icon-font glyph and the solid SVG heart both render at
+    // all times; only one is ever visible - whichever matches the current
+    // state - so there's no layout jump between them.
+    .bav-heart-filled { display: none; }
+
     &.is-added {
       color: var(--accent) !important;
 
-      i {
-        animation: bavWishlistPop .35s ease;
-      }
+      .sicon-heart { display: none; }
+      .bav-heart-filled { display: inline-flex; animation: bavWishlistPop .35s ease; }
     }
   }
 
