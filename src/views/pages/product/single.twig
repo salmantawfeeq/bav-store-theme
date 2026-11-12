@@ -113,7 +113,15 @@
                 {% set explainer_image = is_recipient_id_product
                     ? {id: 'recipient-id-explainer', url: 'images/recipient-id-schematic.svg'|asset, alt: 'آيدي صديقك: روح لقائمة أصدقائك، افتح ملف صديقك، وانسخ الآيدي', video_url: null, video_type: null, type: 'image'}
                     : {id: 'player-id-explainer', url: 'images/player-id-schematic.svg'|asset, alt: 'رسم توضيحي يوضح مكان معرّف اللاعب: الإعدادات، ثم إعدادات المستخدم، ثم نسخ المعرّف', video_url: null, video_type: null, type: 'image'} %}
-                {% set gallery_images = product.images|slice(0, 1)|merge([explainer_image]) %}
+                {#
+                    Only "codes" products (currency tiers, Battle Pass,
+                    Double CP) actually ask for a player ID / recipient ID -
+                    digital files ask for an email instead, and services
+                    have no fixed required field at all, so this schematic
+                    was showing up as an irrelevant second photo on every
+                    product page regardless of type.
+                #}
+                {% set gallery_images = product.type == 'codes' ? product.images|slice(0, 1)|merge([explainer_image]) : product.images|slice(0, 2) %}
                 {% set has_many_images = true %}
                 <salla-slider
                         data-testid="store-product-image-slider"

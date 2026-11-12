@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="إنشاء حساب رخيص السعر">
+  <defs>
+    <linearGradient id="bavAcctBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1A20"/>
+      <stop offset="1" stop-color="#0E0E11"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="22" fill="url(#bavAcctBg)"/>
+  <rect x="1" y="1" width="398" height="298" rx="21" fill="none" stroke="#2A2A31" stroke-width="2"/>
+
+  <!-- ID card -->
+  <g transform="translate(200,128)">
+    <rect x="-108" y="-62" width="216" height="124" rx="18" fill="#17171C" stroke="#2E2E35" stroke-width="2"/>
+    <circle cx="-60" cy="-14" r="26" fill="#232329"/>
+    <circle cx="-60" cy="-22" r="11" fill="#FF5A1F"/>
+    <path d="M-86 10c5-13 15-19 26-19s21 6 26 19" fill="#FF5A1F"/>
+    <rect x="-18" y="-30" width="98" height="9" rx="4.5" fill="#2E2E35"/>
+    <rect x="-18" y="-8" width="78" height="7" rx="3.5" fill="#26262C"/>
+    <rect x="-18" y="8" width="60" height="7" rx="3.5" fill="#26262C"/>
+    <rect x="-18" y="24" width="86" height="7" rx="3.5" fill="#26262C"/>
+  </g>
+
+  <!-- plus badge: a fresh account, ready instantly -->
+  <g transform="translate(286,70)">
+    <circle r="22" fill="#FF5A1F"/>
+    <path d="M-10 0h20M0 -10v20" stroke="#17171C" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <text x="200" y="236" fill="#F4F4F2" font-size="22" font-weight="700" text-anchor="middle" font-family="sans-serif">إنشاء حساب</text>
+  <text x="200" y="260" fill="#8E8E98" font-size="14" text-anchor="middle" font-family="sans-serif">حساب جاهز خلال دقائق</text>
+</svg>

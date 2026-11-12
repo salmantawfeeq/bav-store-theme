@@ -83,11 +83,13 @@ const gameProducts = [
   {
     // From the merchant's hand-drawn product map (طلبات_صاحب_المتجر.md,
     // "Battle Pass والباقات": a third, separate combo product alongside
-    // Battle Pass and Battle Pass Bundle). No combo cover image or final
-    // price has arrived yet — placeholder image/price until it does.
+    // Battle Pass and Battle Pass Bundle). Had no real combo photography
+    // and was reusing Battle Pass Bundle's cover - designed a distinct
+    // branded cover instead so it doesn't read as a duplicate product.
+    // Final price still trial until the merchant sets one.
     slug: 'battle-pass-2400-combo', name: 'Battle Pass + 2400 CP',
     subtitle: 'بمعرّف اللاعب',
-    image: `${IMG}/02_product_images/Battle_Pass_Bundle.webp`,
+    image: '../bav-store-theme/public/images/battle-pass-2400-combo-cover.svg',
     price: '78.00', oldPrice: null,
     description: 'باقة وحدة تجمع لك تفعيل الباتل باس مع رصيد من عملات CP — توفير حقيقي في السعر والوقت، بدل ما تطلب كل وحدة لحالها.',
   },
@@ -132,11 +134,16 @@ const digitalFilesProducts = [
 
 const servicesProducts = [
   {
-    slug: 'cheap-account', name: 'إنشاء حساب رخيص السعر', subtitle: 'حساب إفريقي بشات خليجي — يمني أو أردني', price: '19.99', service: true,
+    // Both services had no real cover photo and fell back to the exact
+    // same generic icon placeholder - designed each its own distinct
+    // branded cover instead of leaving them visually identical.
+    slug: 'cheap-account', name: 'إنشاء حساب', subtitle: 'حساب إفريقي بشات خليجي — يمني أو أردني', price: '19.99', service: true,
+    image: '../bav-store-theme/public/images/service-cheap-account-cover.svg',
     description: 'تبي تبدأ من جديد أو تضيف حساب ثاني من غير ما تدفع فيه فلوس كثير؟ عندنا حساب جاهز بسعر اقتصادي يعطيك بداية سريعة، بأقل تكلفة ممكنة.',
   },
   {
     slug: 'settings-fix', name: 'حل مشاكل الإعدادات والتحكم', subtitle: 'ضبط الحساسية والإعدادات بما يناسب أسلوب لعبك', price: '5.99', service: true,
+    image: '../bav-store-theme/public/images/service-settings-fix-cover.svg',
     description: 'نضبط لك إعدادات التحكم والحساسية بما يناسب أسلوبك بالضبط، بخبرة عملية في كل التفاصيل اللي تفرق — من غير ما تضيّع وقتك تجرّب لحالك.',
   },
 ];
@@ -187,15 +194,7 @@ function card(p) {
         </div>
         ${badge}
       </div>`
-    // "Battle Pass + 2400 CP" shares its cover photo with "Battle Pass
-    // Bundle" (no distinct combo photography exists yet — flagged in
-    // طلبات_صاحب_المتجر.md) which made the two cards look like duplicates.
-    // Until a real combo cover arrives, a coin-stack chip (built from the
-    // same real coin-render asset used elsewhere) marks what's actually
-    // different about this one, instead of leaving two identical-looking
-    // cards for two different products.
     : `<div class="pimg${p.digitalFile ? ' pimg--contain' : ''}"${giftImgStyle}><img src="${img}" alt="${p.name}" loading="lazy">${badge}
-        ${p.slug === 'battle-pass-2400-combo' ? `<span style="position:absolute;bottom:14px;left:14px;display:flex;align-items:center;gap:6px;padding:5px 11px 5px 6px;border-radius:999px;background:rgba(10,10,11,.75);border:1px solid #34343B;backdrop-filter:blur(6px)"><img src="${IMG}/06_coin_only_renders/CP_80.webp" alt="" style="width:18px;height:18px;object-fit:contain" aria-hidden="true"><span class="num" style="font-size:13px;color:#fff">+2,400 CP</span></span>` : ''}
       </div>`;
 
   return `
@@ -286,14 +285,15 @@ function productGallery(product) {
   const isDigital = product.type === 'digital';
   const fit = isDigital ? 'contain' : 'cover';
   const ratio = isDigital ? '16/9' : '4/3';
-  // Real single.twig now always appends the fixed, theme-wide player-ID
-  // schematic as the second (and last) gallery slide - mirror that here so
-  // the preview matches what actually ships, instead of this stand-in's
-  // old behaviour of just echoing however many mock images a product had.
-  const explainerSlide = product.isGiftProduct
+  // Real single.twig only appends the player ID / recipient ID schematic
+  // for "codes" products (currency tiers, Battle Pass, Double CP) - those
+  // are the only ones that actually ask for that field. Digital files ask
+  // for an email instead and services have no fixed field at all, so
+  // showing this schematic there was a leftover irrelevant second photo.
+  const explainerSlide = product.type !== 'codes' ? null : product.isGiftProduct
     ? { url: '../bav-store-theme/public/images/recipient-id-schematic.svg', alt: 'آيدي صديقك: روح لقائمة أصدقائك، افتح ملف صديقك، وانسخ الآيدي' }
     : { url: '../bav-store-theme/public/images/player-id-schematic.svg', alt: 'رسم توضيحي يوضح مكان معرّف اللاعب' };
-  const slides = [main, explainerSlide];
+  const slides = explainerSlide ? [main, explainerSlide] : [main];
   const thumbs = slides.map((img, i) => `
       <div class="thumb${i === 0 ? ' on' : ''}"><img src="${img.url}" alt="${img.alt}" style="${i === 1 ? 'object-fit:contain;background:#101014' : ''}"></div>`).join('');
   return `
@@ -301,8 +301,8 @@ function productGallery(product) {
       <img src="${main.url}" alt="${main.alt}" style="width:100%;height:100%;object-fit:${fit};display:block">
       ${product.is_on_sale ? `<span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px">-${product.discount_percentage}</span>` : ''}
     </div>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px">${thumbs}
-    </div>`;
+    ${slides.length > 1 ? `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px">${thumbs}
+    </div>` : ''}`;
 }
 
 // Converts a simple card-shape mock product into the full Product context
