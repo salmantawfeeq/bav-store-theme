@@ -104,6 +104,8 @@ function load() {
     find_recipient_id_page_url: 'find-recipient-id.html',
     faq_page_url: 'faq-full.html',
     about_page_url: 'about.html',
+    refund_policy_page_url: 'refund-policy.html',
+    privacy_policy_page_url: 'privacy-policy.html',
   };
   for (const key in PREVIEW_LINK_TARGETS) {
     if (!settingsMap[key]) settingsMap[key] = PREVIEW_LINK_TARGETS[key];
@@ -725,6 +727,7 @@ function build() {
     { file: 'find-id.html', titleKey: 'bav.find_id_title', label: 'كيف أجد معرّفي؟' },
     { file: 'find-recipient-id.html', titleKey: 'bav.find_recipient_id_title', label: 'كيف أجد الآيدي؟ (هدية الدبل CP)' },
     { file: 'faq-full.html', titleKey: 'bav.faq_page_title', label: 'الأسئلة الشائعة (الصفحة الكاملة)' },
+    { file: 'privacy-policy.html', titleKey: 'bav.privacy_policy_title', label: 'سياسة الخصوصية' },
     { file: 'about.html', titleKey: 'bav.about_eyebrow', label: 'من نحن' },
     { file: 'refund-policy.html', titleKey: 'bav.refund_policy_title', label: 'سياسة الاستبدال والاسترجاع' },
     { file: 'terms.html', titleKey: 'bav.terms_title', label: 'الشروط والأحكام' },
@@ -736,7 +739,7 @@ function build() {
     fs.writeFileSync(path.join(PREVIEW_DIR, sp.file), html, 'utf8');
   }
 
-  console.log(`[${new Date().toLocaleTimeString('ar')}] Built bav-preview/index.html + ${mock.allProductPages.length} product pages + category.html + cart.html + find-id.html + find-recipient-id.html + faq-full.html + about.html + refund-policy.html + terms.html`);
+  console.log(`[${new Date().toLocaleTimeString('ar')}] Built bav-preview/index.html + ${mock.allProductPages.length} product pages + category.html + cart.html + find-id.html + find-recipient-id.html + faq-full.html + about.html + refund-policy.html + terms.html + privacy-policy.html`);
 }
 
 build();

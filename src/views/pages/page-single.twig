@@ -341,6 +341,9 @@
                     <div>
                         <div class="disp" style="font-size:17px">{{ trans('bav.terms_data_title') }}</div>
                         <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.terms_data_desc') }}</p>
+                        {% if theme.settings.get('privacy_policy_page_url') %}
+                            <a href="{{ theme.settings.get('privacy_policy_page_url') }}" style="display:inline-block;margin-top:10px;font-size:14px;color:var(--accent);text-decoration:underline">{{ trans('bav.privacy_policy_title') }}</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
@@ -368,6 +371,84 @@
                         {% set whatsapp_number_raw = theme.settings.get('whatsapp_number', '966564622432') %}
                         {% set whatsapp_number = whatsapp_number_raw|replace({'+': '', ' ': ''}) %}
                         {% if whatsapp_number starts with '00' %}{% set whatsapp_number = whatsapp_number|slice(2) %}{% endif %}
+                        <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:10px;font-size:14px;color:var(--accent);text-decoration:underline">{{ trans('bav.about_cta_contact') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elseif page.title == trans('bav.privacy_policy_title') %}
+        {#
+            New standalone page per صاحب المتجر's direct request
+            (طلبات_صاحب_المتجر.md point 8, 2026-11-12). Built only from data-
+            handling facts already established elsewhere in the project (the
+            email/phone fields on the account-creation service, the player/
+            recipient ID fields, and the store owner's own explicit statement
+            that the ID is shared only with an official Activision-authorized
+            vendor) plus the general, factual point that the store's data
+            lives on Salla's own platform infrastructure, since this theme
+            doesn't run its own separate servers/database. No invented
+            clauses about specific Saudi PDPL article numbers or compliance
+            certifications - those need real legal review this theme can't
+            provide.
+        #}
+        <div class="wrap" style="padding:60px 0 100px;max-width:760px">
+            <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
+            <div class="sechead">
+                <h1 class="disp" style="font-size:32px">{{ trans('bav.privacy_policy_title') }}</h1>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:18px;margin-top:30px">
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-page-content" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF">{{ trans('bav.privacy_policy_scope_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-database" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_collected_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_collected_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-info" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_why_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_why_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-lock" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_usage_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_usage_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-share" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_sharing_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_sharing_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-calendar" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_retention_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_retention_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-user-check" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.privacy_policy_rights_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.privacy_policy_rights_desc') }}</p>
+                        {% set whatsapp_number_raw = theme.settings.get('whatsapp_number', '966564622432') %}
+                        {% set whatsapp_number = whatsapp_number_raw|replace({'+': '', ' ': ''}) %}
+                        {% if whatsapp_number starts with '00' %}{% set whatsapp_number = whatsapp_number|slice(2) %}{% endif %}
+                        <p style="font-size:13px;line-height:1.8;color:#7C7C86;margin-top:8px">{{ trans('bav.privacy_policy_contact_desc', {hours: theme.settings.get('working_hours_text')}) }}</p>
                         <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:10px;font-size:14px;color:var(--accent);text-decoration:underline">{{ trans('bav.about_cta_contact') }}</a>
                     </div>
                 </div>
