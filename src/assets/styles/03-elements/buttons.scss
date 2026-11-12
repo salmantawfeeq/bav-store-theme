@@ -76,8 +76,18 @@ salla-button {
       @apply text-gray-600;
     }
 
+    // Salla's own base button color (.s-button-light-outline) was winning
+    // out over a plain `@apply text-primary` here with no visible change on
+    // click - the count went up but the heart itself never looked any
+    // different. !important guarantees the state wins regardless, and the
+    // brief pop makes the change impossible to miss instead of a subtle
+    // colour-only shift on a thin icon-font glyph.
     &.is-added {
-      @apply text-primary;
+      color: var(--accent) !important;
+
+      i {
+        animation: bavWishlistPop .35s ease;
+      }
     }
   }
 

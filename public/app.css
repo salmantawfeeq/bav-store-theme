@@ -3126,9 +3126,12 @@ salla-button.copied i:before {
   color: #9B9BA5;
   color: var(--color-text-secondary);
 }
-.btn--wishlist.is-added{
-    color: #FF5A1F;
-    color: var(--color-primary);
+.btn--wishlist.is-added {
+  color: #FF5A1F !important;
+  color: var(--accent) !important;
+}
+.btn--wishlist.is-added i {
+  animation: bavWishlistPop 0.35s ease;
 }
 .btn--rounded-gray{
     display: inline-flex;
@@ -8606,6 +8609,22 @@ body.menu-opened .bav-whatsapp-fab {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+@keyframes bavWishlistPop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn--wishlist.is-added i {
+    animation: none;
   }
 }
 /*
