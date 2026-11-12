@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="ثلاث خطوات: افتح الإعدادات، ثم إعدادات المستخدم، ثم انسخ معرّف اللاعب">
+  <defs>
+    <linearGradient id="bavSchematicBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1A20"/>
+      <stop offset="1" stop-color="#101014"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="20" fill="url(#bavSchematicBg)"/>
+  <rect x="1" y="1" width="398" height="298" rx="19" fill="none" stroke="#2A2A31" stroke-width="2"/>
+
+  <!-- Row 1: gear icon = "open settings" -->
+  <g>
+    <circle cx="40" cy="42" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" fill="none">
+      <circle cx="40" cy="42" r="5.5"/>
+      <path d="M40 33v2.5M40 48.5V51M31 42h2.5M46.5 42H49M33.7 35.7l1.8 1.8M44.5 44.5l1.8 1.8M46.3 35.7l-1.8 1.8M35.5 44.5l-1.8 1.8"/>
+    </g>
+    <text x="68" y="48" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">افتح الإعدادات</text>
+  </g>
+  <line x1="40" y1="60" x2="40" y2="100" stroke="#3A3A44" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Row 2: person icon = "user settings" -->
+  <g>
+    <circle cx="40" cy="118" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <circle cx="40" cy="113.5" r="4.3"/>
+      <path d="M31.5 126c1.6-4 4.8-6 8.5-6s6.9 2 8.5 6"/>
+    </g>
+    <text x="68" y="124" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">إعدادات المستخدم</text>
+  </g>
+  <line x1="40" y1="136" x2="40" y2="176" stroke="#3A3A44" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Row 3: copy icon = "copy player ID" -->
+  <g>
+    <circle cx="40" cy="194" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <rect x="34" y="188" width="10" height="12" rx="2"/>
+      <path d="M38 188v-2a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2h-2"/>
+    </g>
+    <text x="68" y="200" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">انسخ معرّف اللاعب</text>
+  </g>
+
+  <!-- The ID chip itself, large and unmistakable -->
+  <rect x="64" y="218" width="300" height="56" rx="14" fill="#17171C" stroke="#FF5A1F" stroke-width="1.8"/>
+  <text x="214" y="253" fill="#F4F4F2" font-size="26" font-family="monospace" text-anchor="middle" letter-spacing="3">4PHMKA</text>
+  <rect x="88" y="233" width="26" height="26" rx="5" fill="#17171C" stroke="#FF5A1F" stroke-width="2"/>
+  <rect x="92" y="229" width="26" height="26" rx="5" fill="none" stroke="#FF5A1F" stroke-width="2"/>
+</svg>
