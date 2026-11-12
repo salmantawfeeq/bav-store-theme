@@ -107,32 +107,37 @@
         </div>
     </div>
 
-    {# Offers — merchant-selected, on-sale products #}
-    {% set offers_products = [] %}
-    {% for item in theme.settings.get('offers_products')|default([]) %}{% set offers_products = offers_products|merge([item.value]) %}{% endfor %}
-    {% if offers_products|length %}
-        <section id="offers" style="padding:60px 0 40px">
-            <div class="wrap">
-                <div class="sechead">
-                    <h2>{{ trans('bav.nav.offers') }}</h2>
-                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
-                    <p>{{ trans('bav.offers_subtitle') }}</p>
-                </div>
-                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
-                    <salla-products-list
-                        source="selected"
-                        source-value="{{ offers_products|json_encode }}"
-                        product-card-component="custom-salla-product-card">
-                    </salla-products-list>
-                </div>
-                {% if theme.settings.get('offers_category_url') and offers_products|length > 3 %}
-                    <div style="text-align:center;margin-top:30px">
-                        <a href="{{ theme.settings.get('offers_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
-                    </div>
-                {% endif %}
+    {#
+        Offers — any product currently on sale, pulled automatically by
+        Salla itself (source="offers" is a real, built-in Twilight source
+        type for this exact purpose) instead of a merchant having to
+        hand-pick products here every time a sale starts or ends.
+        Twig can no longer know in advance whether there are zero or a
+        hundred such products (that's resolved client-side by the real
+        component at runtime, same as Theme Raed's own offers slider
+        component does) so this section always renders rather than being
+        gated on a selection count like the other homepage sections.
+    #}
+    <section id="offers" style="padding:60px 0 40px">
+        <div class="wrap">
+            <div class="sechead">
+                <h2>{{ trans('bav.nav.offers') }}</h2>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.offers_subtitle') }}</p>
             </div>
-        </section>
-    {% endif %}
+            <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                <salla-products-list
+                    source="offers"
+                    product-card-component="custom-salla-product-card">
+                </salla-products-list>
+            </div>
+            {% if theme.settings.get('offers_category_url') %}
+                <div style="text-align:center;margin-top:30px">
+                    <a href="{{ theme.settings.get('offers_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
 
     {# Choose your currency — merchant-selected products (no game names shown) #}
     {% set game_products = [] %}

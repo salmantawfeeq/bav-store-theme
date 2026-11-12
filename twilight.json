@@ -143,21 +143,6 @@
             "required": false
         },
         {
-            "id": "offers_products",
-            "type": "items",
-            "format": "dropdown-list",
-            "label": "منتجات قسم \"العروض\" في الرئيسية",
-            "description": "اختر المنتجات اللي عليها عرض/خصم حاليًا لعرضها في قسم العروض بالرئيسية — القائمة بتتغيّر من وقت لوقت فاختر وغيّر وقت ما تحب من هنا",
-            "icon": "sicon-keyboard_arrow_down",
-            "selected": [],
-            "options": [],
-            "source": "products",
-            "multichoice": true,
-            "searchable": true,
-            "maxLength": 8,
-            "required": false
-        },
-        {
             "id": "double_cp_products",
             "type": "items",
             "format": "dropdown-list",
