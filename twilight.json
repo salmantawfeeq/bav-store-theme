@@ -277,6 +277,16 @@
             "required": false
         },
         {
+            "id": "refund_policy_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"سياسة الاستبدال والاسترجاع\"",
+            "description": "لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة بعنوان \"سياسة الاستبدال والاسترجاع\" بالضبط. يُستخدم بس كرابط مرجعي من صفحة الشروط والأحكام. اتركه فاضي لإخفاء الرابط لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
             "id": "currency_category_url",
             "type": "string",
             "format": "text",
