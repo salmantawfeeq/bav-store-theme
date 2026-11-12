@@ -106,11 +106,22 @@
         <li><a href="{{ theme.settings.get('services_category_url', store.url ~ '#services') }}">{{ trans('bav.nav.services') }}</a></li>
         <li><a href="{{ theme.settings.get('digital_files_category_url', store.url ~ '#digital-files') }}">{{ trans('bav.nav.digital_files') }}</a></li>
         <li><a href="{{ theme.settings.get('weapons_category_url', store.url ~ '#weapons') }}">{{ trans('bav.nav.weapons') }}</a></li>
-        {% if theme.settings.get('about_page_url') %}
-            <li><a href="{{ theme.settings.get('about_page_url') }}">{{ trans('bav.about_eyebrow') }}</a></li>
-        {% endif %}
-        <li><a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}">{{ trans('bav.nav.how_to_find_id') }}</a></li>
-        <li><a href="{{ theme.settings.get('faq_page_url', store.url ~ '#faq') }}">{{ trans('bav.nav.faq') }}</a></li>
+        {#
+            "من نحن" and "كيف أجد معرّفي؟" moved from their own top-level
+            entries to sit under "الأسئلة الشائعة" itself (merchant request,
+            طلبات_صاحب_المتجر.md point 12) - both pages are really extensions
+            of the FAQ (who we are, how to do X), not separate destinations
+            that deserve equal top-level billing.
+        #}
+        <li>
+            <a href="{{ theme.settings.get('faq_page_url', store.url ~ '#faq') }}">{{ trans('bav.nav.faq') }}</a>
+            <ul class="bav-mobile-nav__sub">
+                {% if theme.settings.get('about_page_url') %}
+                    <li><a href="{{ theme.settings.get('about_page_url') }}">{{ trans('bav.about_eyebrow') }}</a></li>
+                {% endif %}
+                <li><a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}">{{ trans('bav.nav.how_to_find_id') }}</a></li>
+            </ul>
+        </li>
         <li><salla-menu data-testid="store-mobile-menu" source="header"></salla-menu></li>
     </ul>
 </nav>

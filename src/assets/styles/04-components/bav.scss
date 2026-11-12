@@ -439,6 +439,14 @@ html[dir="ltr"] .drawer { left: auto; right: 0; border-right: 0; border-left: 1p
 .bav-mobile-nav li > a, .bav-mobile-nav li > span { display: block; padding: 16px 4px; font-size: 16px; font-weight: 600; color: #F4F4F2; text-decoration: none; }
 .bav-mobile-nav li > a:active { color: var(--accent); }
 
+/* "من نحن" / "كيف أجد معرّفي؟" nested under "الأسئلة الشائعة" instead of
+   their own top-level rows - smaller, muted, indented to read as part of
+   the FAQ item rather than siblings of equal weight. */
+.bav-mobile-nav__sub { padding: 0 0 12px; }
+.bav-mobile-nav__sub li { border-bottom: 0; }
+.bav-mobile-nav__sub li > a { padding: 8px 22px 8px 4px; font-size: 14px; font-weight: 500; color: #9B9BA5; }
+.bav-mobile-nav__sub li > a:active { color: var(--accent); }
+
 /* Local-preview-only off-canvas simulation (see scripts/preview-build.js) -
    a real CSS class instead of ~10 individual JS-set inline style properties,
    so there is one place to verify this actually compiled instead of trusting
