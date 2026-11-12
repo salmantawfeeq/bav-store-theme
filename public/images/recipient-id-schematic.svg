@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="معرّف المستلم: روح لقائمة أصدقائك، افتح ملف صديقك، وانسخ الآيدي">
+  <defs>
+    <linearGradient id="bavRecipientBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1A20"/>
+      <stop offset="1" stop-color="#101014"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="20" fill="url(#bavRecipientBg)"/>
+  <rect x="1" y="1" width="398" height="298" rx="19" fill="none" stroke="#2A2A31" stroke-width="2"/>
+
+  <!-- Eyebrow: this is about a FRIEND's id, not the customer's own -->
+  <text x="200" y="28" fill="#FF8A4A" font-size="13" font-weight="700" text-anchor="middle" font-family="sans-serif">آيدي صديقك (المستلم)</text>
+
+  <!-- Row 1: friends list icon -->
+  <g>
+    <circle cx="40" cy="58" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <circle cx="35" cy="54" r="3.2"/>
+      <path d="M30 63c1-2.6 2.8-4 5-4"/>
+      <circle cx="45" cy="54" r="3.2"/>
+      <path d="M50 63c-1-2.6-2.8-4-5-4"/>
+    </g>
+    <text x="68" y="64" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">روح لقائمة أصدقائك</text>
+  </g>
+  <line x1="40" y1="76" x2="40" y2="112" stroke="#3A3A44" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Row 2: profile card icon -->
+  <g>
+    <circle cx="40" cy="130" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <rect x="31" y="123" width="18" height="14" rx="2.5"/>
+      <circle cx="37" cy="128" r="2.2"/>
+      <path d="M34 134c.6-1.6 1.6-2.4 3-2.4s2.4.8 3 2.4"/>
+      <path d="M42.5 127h3.5M42.5 131h3.5"/>
+    </g>
+    <text x="68" y="136" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">افتح ملف صديقك</text>
+  </g>
+  <line x1="40" y1="148" x2="40" y2="184" stroke="#3A3A44" stroke-width="2" stroke-dasharray="4 4"/>
+
+  <!-- Row 3: copy icon -->
+  <g>
+    <circle cx="40" cy="202" r="16" fill="#FF5A1F"/>
+    <g stroke="#101014" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <rect x="34" y="196" width="10" height="12" rx="2"/>
+      <path d="M38 196v-2a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2h-2"/>
+    </g>
+    <text x="68" y="208" fill="#F4F4F2" font-size="20" font-weight="700" text-anchor="start" font-family="sans-serif">انسخ الآيدي</text>
+  </g>
+
+  <!-- Example ID chip -->
+  <rect x="64" y="226" width="300" height="52" rx="14" fill="#17171C" stroke="#FF5A1F" stroke-width="1.8"/>
+  <text x="240" y="258" fill="#F4F4F2" font-size="19" font-family="monospace" text-anchor="middle" letter-spacing="1">6742910358918</text>
+  <rect x="88" y="240" width="24" height="24" rx="5" fill="#17171C" stroke="#FF5A1F" stroke-width="2"/>
+  <rect x="92" y="236" width="24" height="24" rx="5" fill="none" stroke="#FF5A1F" stroke-width="2"/>
+</svg>

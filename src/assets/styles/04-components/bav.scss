@@ -44,6 +44,12 @@
 .pcard:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: 0 30px 70px -30px var(--accent); }
 .pimg { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #09090B; }
 .pimg img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s; }
+/* Full-bleed banner-style cover art (digital file guides, etc.) is designed
+   at its own 16:9 aspect ratio, not the card's usual 4:3 — sizing the frame
+   to match the cover exactly means there's no letterboxing to begin with,
+   instead of cropping (or shrinking the image inside a mismatched box). */
+.pimg--contain { aspect-ratio: 16/9; }
+.pimg--contain img { object-fit: contain; }
 .pcard:hover .pimg img { transform: scale(1.06); }
 .badge { position: absolute; top: 16px; right: 16px; padding: 6px 14px; border-radius: 999px; background: var(--accent); color: #0A0A0B; font-size: 13px; font-weight: 700; }
 .save { position: absolute; top: 16px; left: 16px; padding: 5px 11px; border-radius: 999px; background: rgba(10,10,11,.7); border: 1px solid #34343B; color: #fff; font-size: 13px; backdrop-filter: blur(6px); }
@@ -55,13 +61,33 @@
 .price { font-size: 28px; }
 .cur { font-size: 15px; color: #B4B4BC; font-weight: 500; }
 .old { font-size: 16px; color: #6E6E78; text-decoration: line-through; font-family: var(--font-num); }
-.pbtn { display: flex; align-items: center; justify-content: center; gap: 10px; height: 50px; border-radius: 12px; background: #17171B; border: 1px solid #2A2A31; font-weight: 700; font-size: 16px; transition: background .2s, color .2s, border-color .2s; }
+/* margin-top: auto pins the button to the card's bottom edge regardless of
+   how many lines the name/subtitle above it wrap to - without it, a 1-fr
+   grid row stretches every .pcard to the same height (as it already did),
+   but the leftover space inside .pbody was just sitting unused below the
+   button instead of being pushed above it, so the button ended up at a
+   different height on every card depending on its own title's length. */
+.pbtn { display: flex; align-items: center; justify-content: center; gap: 10px; height: 50px; border-radius: 12px; background: #17171B; border: 1px solid #2A2A31; font-weight: 700; font-size: 16px; transition: background .2s, color .2s, border-color .2s; margin-top: auto; }
 .pcard:hover .pbtn { background: var(--accent); color: #0A0A0B; border-color: var(--accent); }
 
-/* Trust row */
-.trust { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #232329; border-radius: 20px; background: rgba(15,15,18,.86); backdrop-filter: blur(14px); overflow: hidden; }
-.trust > div { display: flex; align-items: center; gap: 16px; padding: 24px 26px; border-left: 1px solid #232329; }
-.trust > div:last-child { border-left: 0; }
+/* Trust row — glowing circular icon badges + a thin divider between items,
+   instead of a generic "4 equal bordered feature boxes" grid. */
+.bav-trust { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: linear-gradient(135deg, #140E08, #0B0B0D 60%); border: 1px solid #232329; border-radius: 22px; overflow: hidden; }
+.bav-trust-item { display: flex; align-items: center; gap: 16px; padding: 26px 24px; position: relative; }
+.bav-trust-item:not(:last-child)::after { content: ""; position: absolute; inset-inline-start: 0; top: 18%; bottom: 18%; width: 1px; background: linear-gradient(180deg, transparent, #2A2A31, transparent); }
+.bav-trust-icon { flex: none; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 32% 30%, rgba(255,90,31,.32), rgba(255,90,31,.05) 72%); border: 1px solid rgba(255,90,31,.35); box-shadow: 0 0 22px -8px var(--accent); transition: box-shadow .25s, transform .25s; }
+.bav-trust-item:hover .bav-trust-icon { box-shadow: 0 0 30px -4px var(--accent); transform: scale(1.06); }
+.bav-trust-title { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+.bav-trust-desc { font-size: 13px; color: #8E8E98; margin-top: 4px; line-height: 1.6; }
+.bav-trust--mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 18px; }
+.bav-trust--mobile .bav-trust-item { padding: 18px 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
+.bav-trust--mobile .bav-trust-item:nth-child(2)::after { display: none; }
+.bav-trust--mobile .bav-trust-item:nth-child(3), .bav-trust--mobile .bav-trust-item:nth-child(4) { padding-top: 16px; }
+.bav-trust--mobile .bav-trust-item:nth-child(1)::before, .bav-trust--mobile .bav-trust-item:nth-child(2)::before { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 1px; background: #232329; }
+.bav-trust--mobile .bav-trust-icon { width: 42px; height: 42px; }
+.bav-trust--mobile .bav-trust-title { font-size: 14px; }
+.bav-trust--mobile .bav-trust-desc { font-size: 11px; }
+
 .ico { flex: none; width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: #17171B; border: 1px solid #2A2A31; }
 
 /* Steps */
@@ -76,8 +102,12 @@
 .faq p { margin: 14px 0 0; font-size: 17px; line-height: 1.9; color: #A6A6AF; max-width: 760px; }
 
 /* Footer links */
-.flink { display: block; font-size: 15px; color: #9B9BA5; padding: 6px 0; }
+.flink { display: block; position: relative; z-index: 1; font-size: 15px; color: #9B9BA5; padding: 6px 0; }
 .flink:hover { color: #fff; }
+
+.bav-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; }
+@media (max-width: 900px) { .bav-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; } }
+@media (max-width: 560px) { .bav-footer-grid { grid-template-columns: 1fr; gap: 28px; } }
 
 /* Hero background mask */
 .hero-bg { -webkit-mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent 100%); }
@@ -88,15 +118,34 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
 
 @media (max-width: 1000px) {
   .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-  .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bav-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bav-trust-item:nth-child(2)::after { display: none; }
   .nav { display: none !important; }
   .split { grid-template-columns: 1fr !important; }
   .chips { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
 
 @media (max-width: 620px) {
-  .g3, .g-steps { grid-template-columns: 1fr !important; }
+  /* .g3 deliberately stays 2 columns here (inherited from the ≤1000px rule
+     above) instead of collapsing to 1 - a single full-width card per row
+     read as too plain/sparse on a phone, two to a row reads as an actual
+     product grid. Card internals just below are sized down to fit that. */
+  .g-steps { grid-template-columns: 1fr !important; }
   .h1 { font-size: 46px !important; }
+
+  .pcard { border-radius: 14px; }
+  .pcard:hover { transform: none; }
+  .pbody { padding: 12px 10px; gap: 6px; }
+  .pname { font-size: 18px; }
+  .pname small { font-size: 10px; }
+  .psub { display: none; }
+  .price { font-size: 16px; }
+  .cur { font-size: 10px; }
+  .old { font-size: 11px; }
+  .prow { flex-wrap: wrap; gap: 3px 6px; }
+  .pbtn { height: 36px; font-size: 12px; border-radius: 8px; }
+  .badge { top: 8px; right: 8px; padding: 3px 8px; font-size: 10px; }
+  .save { top: 8px; left: 8px; padding: 2px 6px; font-size: 10px; }
 }
 
 @media (max-width: 700px) {
@@ -115,7 +164,10 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
   .hero-wrap { min-height: 0 !important; padding-bottom: 84px !important; margin-top: -34px; align-items: flex-start !important; }
   .hero-wrap > div { gap: 18px !important; }
   .hero-wrap p { font-size: 16px !important; }
-  .hero-wrap .btn { width: 100%; }
+  /* The two hero buttons size themselves explicitly now (flex:1 in a
+     flex-wrap row, side by side when there's room) - a blanket width:100%
+     here would force each onto its own line regardless of space. */
+  .hero-wrap > div > div[style*="flex-wrap"] { width: 100%; }
   .sechead h2 { font-size: 32px; }
   .p-h1 { font-size: 28px !important; }
   .pbtn { white-space: nowrap; }
@@ -135,6 +187,29 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
   .ladder .lv div:last-child { font-size: 13px !important; margin-top: 6px !important; }
   .ladder .lad-text { font-size: 17px !important; }
 }
+
+/* Merchant-authored rich text pages (About, policies, how-to-find-id, ...) */
+.content-entry a { color: var(--accent); }
+.content-entry h2, .content-entry h3 { font-family: var(--font-display); font-weight: 700; margin: 28px 0 12px; color: #F4F4F2; }
+.content-entry ul, .content-entry ol { padding-right: 22px; margin: 12px 0; }
+.content-entry img { max-width: 100%; border-radius: 14px; }
+
+/* Product page: two-column split (gallery / details) */
+.split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+.p-h1 { margin: 10px 0 0; font-size: 40px; line-height: 1.3; }
+.save-badge { padding: 5px 12px; border-radius: 999px; background: rgba(255,90,31,.14); color: var(--accent); font-size: 14px; font-weight: 700; display: inline-flex; }
+/* Sale-price vs starting/normal-price rows toggle via a plain `hidden`
+   class (set server-side, and flipped by product.js after an option-driven
+   price update) — the flex layout has to live in the class, not an inline
+   style, or `hidden`'s display:none loses to the inline style every time. */
+.bav-price-row-sale, .bav-price-row { display: flex; align-items: baseline; gap: 10px; }
+.bav-price-row-sale { gap: 14px; flex-wrap: wrap; }
+.bav-price-row-sale.hidden, .bav-price-row.hidden { display: none; }
+.product-eyebrow { font-size: 14px; color: var(--accent); font-weight: 700; letter-spacing: .04em; }
+
+/* Confirmation checkbox gates the add-to-cart button until checked */
+.needs-confirm salla-add-product-button,
+.needs-confirm .sticky-product-bar__btn { pointer-events: none !important; opacity: .5; }
 
 /* Chips (tier selector) */
 .chip { position: relative; display: block; }
@@ -156,29 +231,13 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
 .chk { display: flex; gap: 14px; align-items: flex-start; cursor: pointer; }
 .chk input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--accent); }
 
-/* Mobile home ("m" scope) */
+/* Mobile hero ("m" scope) — the .mob/.m wrapper in index.twig only wraps
+   the simplified mobile hero section, nothing else on the page, so this
+   stays scoped to what that section actually contains. Product cards,
+   section headings, steps and FAQ aren't inside it - they're shared
+   (not duplicated desktop/mobile) markup, sized by the plain
+   `@media (max-width: 620px)` rules above instead. */
 .m .wrap { padding-left: 18px; padding-right: 18px; }
-.m .sechead { margin-bottom: 28px; }
-.m .sechead h2 { font-size: 30px; }
-.m .sechead p { font-size: 15px; margin-top: 10px; }
-.m .orn { margin-top: 14px; }
-.m .pcard { border-radius: 18px; }
-.m .pcard:hover { transform: none; }
-.m .pimg { aspect-ratio: 4/3; }
-.m .pbody { padding: 14px 14px 16px; gap: 10px; }
-.m .pname { font-size: 26px; }
-.m .pname small { font-size: 12px; }
-.m .psub { display: none; }
-.m .price { font-size: 21px; }
-.m .cur { font-size: 12px; }
-.m .old { font-size: 13px; }
-.m .prow { flex-wrap: wrap; gap: 4px 8px; }
-.m .pbtn { height: 42px; font-size: 14px; border-radius: 10px; }
-.m .badge { top: 10px; right: 10px; padding: 4px 10px; font-size: 11px; }
-.m .save { top: 10px; left: 10px; padding: 3px 8px; font-size: 11px; }
-.m .step { padding: 22px; border-radius: 18px; }
-.m .faq summary { font-size: 16px; }
-.m .faq p { font-size: 15px; }
 
 /* Misc behavior */
 .cart-badge { transition: transform .25s; }
@@ -230,4 +289,191 @@ html[dir="ltr"] .drawer { left: auto; right: 0; border-right: 0; border-left: 1p
 
 @media (prefers-reduced-motion: reduce) {
   .mq-track { animation: none; }
+}
+
+/* Freelance work-document badge - must sit on a white background so the
+   logo's teal-to-blue gradient (made for light backgrounds) stays legible. */
+/* The logo's own colours only read on a light surface (it's designed for
+   one — a transparent/dark background makes it unreadable), so white stays,
+   but smaller and softer (rounder pill, thinner padding, no hard box edge)
+   so it sits more gently inside the dark footer instead of a stark block. */
+/* Transparent per Salman's explicit call, overriding the earlier white-card
+   version - flagged once already that the logo's own colours (teal/blue,
+   made for a light surface) read weaker on a dark background, so the two
+   text lines are flipped to light colours here to at least stay legible
+   against the footer even though the logo mark itself may look dimmer. */
+.bav-freelance-badge { display: inline-flex; align-items: center; gap: 10px; background: transparent; padding: 0; margin-top: 22px; }
+.bav-freelance-badge img { display: block; flex: none; height: 30px; width: auto; }
+.bav-freelance-badge__label { display: block; font-size: 10.5px; color: #9B9BA5; }
+.bav-freelance-badge__code { display: block; font-size: 13px; font-weight: 700; color: #F4F4F2; margin-top: 1px; }
+
+/* Quiet scroll-reveal for the About page's major sections (spec section 8:
+   "ظهور تدريجي للأقسام عند التمرير") - fades/rises in once, respects
+   prefers-reduced-motion by just starting fully visible. */
+[data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+[data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* About page - "من نحن" */
+.about-hero { position: relative; min-height: 460px; display: flex; align-items: center; overflow: hidden; border-radius: 28px; background: radial-gradient(120% 140% at 85% 0%, #251208 0%, #0E0E11 55%, #09090B 100%); padding: 70px 56px; }
+.about-hero .bav-mark-bg { position: absolute; left: -40px; top: 50%; transform: translateY(-50%); opacity: .08; width: 360px; pointer-events: none; }
+/* Bento-style uneven grid (first and last card run wide, the middle two
+   stay compact) instead of four identical boxes in a row - breaks the
+   repetitive look while keeping the reading order obvious via the number
+   badges on the "كيف نعمل" steps. */
+.about-commit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(170px, auto); gap: 20px; }
+.about-commit-card { position: relative; background: linear-gradient(165deg, #16161A, #0E0E11 70%); border: 1px solid #232329; border-radius: 22px; padding: 30px 24px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; transition: transform .25s, border-color .25s; }
+.about-commit-card::before { content: ""; position: absolute; top: 0; right: 0; left: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity .25s; }
+.about-commit-card:hover { transform: translateY(-6px); border-color: #30303A; }
+.about-commit-card:hover::before { opacity: 1; }
+.about-commit-card .bav-trust-icon { width: 52px; height: 52px; }
+.about-commit-card:first-child, .about-commit-card:last-child { grid-column: span 2; }
+.about-commit-card:first-child p, .about-commit-card:last-child p { max-width: 86%; }
+
+.about-timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(150px, auto); gap: 20px; }
+.about-timeline .step { display: flex; flex-direction: column; justify-content: center; }
+.about-timeline .step:first-child, .about-timeline .step:last-child { grid-column: span 2; }
+
+.about-doc-card { background: #fff; border-radius: 28px; padding: 44px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.about-doc-card img { height: 56px; }
+.about-doc-card .num { font-size: 22px; letter-spacing: .04em; color: #16161A; }
+.about-cta-bar { background: linear-gradient(135deg, #1A1008, #0E0E11); border: 1px solid #2A1A10; border-radius: 28px; padding: 54px 40px; text-align: center; }
+@media (max-width: 1000px) {
+  .about-commit-grid, .about-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-commit-card:first-child, .about-commit-card:last-child,
+  .about-timeline .step:first-child, .about-timeline .step:last-child { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .about-hero { padding: 40px 24px; min-height: 0; }
+  .about-commit-grid, .about-timeline { grid-template-columns: 1fr; }
+  .about-commit-card:first-child, .about-commit-card:last-child,
+  .about-timeline .step:first-child, .about-timeline .step:last-child { grid-column: span 1; }
+}
+
+/* Cinematic loading screen - a brief, branded cover over first paint, never
+   a real blocking spinner. JS in master.twig removes it on load (with a
+   minimum show time so it never just flashes, and a hard cap so a slow
+   image can never trap the visitor behind it). */
+.bav-loader {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(120% 120% at 50% 40%, #1A0D06 0%, #0A0A0B 60%, #050506 100%);
+  transition: opacity .5s ease, visibility .5s ease;
+}
+.bav-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.bav-loader__mark { width: 86px; height: 70px; opacity: 0; transform: scale(.85); animation: bavLoaderIn .7s ease forwards .1s; }
+.bav-loader__line { width: 120px; height: 2px; margin-top: 22px; background: #232329; border-radius: 2px; overflow: hidden; position: relative; }
+.bav-loader__line i { position: absolute; inset: 0; background: var(--accent); transform-origin: right; transform: scaleX(0); animation: bavLoaderLine 1.1s ease-in-out forwards .3s; box-shadow: 0 0 12px var(--accent); }
+@keyframes bavLoaderIn { to { opacity: 1; transform: scale(1); } }
+@keyframes bavLoaderLine { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); } 100% { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .bav-loader__mark { opacity: 1; transform: none; animation: none; }
+  .bav-loader__line i { transform: scaleX(1); animation: none; }
+}
+
+/* Mobile nav drawer (mmenu-light) - the library only ships generic light/
+   dark presets; these bring it in line with Bav's own brand instead of the
+   library's plain default look. */
+.mm-ocd__content { background: #0E0E11 !important; }
+/* Base styling that works on its own (no mmenu-light JS classes needed) -
+   the .mm-spn rules further down are an extra enhancement layer the real
+   library adds on top of this at runtime, not a replacement for it; without
+   this base layer the drawer's own <ul><li><a> showed as default unstyled
+   browser list/link markup (bullets, default blue links, no dark theme). */
+.bav-mobile-nav { padding: 70px 20px 30px; background: #0E0E11; color: #F4F4F2; }
+.bav-mobile-nav ul { list-style: none; margin: 0; padding: 0; }
+.bav-mobile-nav li { border-bottom: 1px solid #232329; }
+.bav-mobile-nav li > a, .bav-mobile-nav li > span { display: block; padding: 16px 4px; font-size: 17px; font-weight: 600; color: #F4F4F2; text-decoration: none; }
+.bav-mobile-nav li > a:active { color: var(--accent); }
+
+/* Local-preview-only off-canvas simulation (see scripts/preview-build.js) -
+   a real CSS class instead of ~10 individual JS-set inline style properties,
+   so there is one place to verify this actually compiled instead of trusting
+   every runtime .style.property assignment succeeded on every browser. */
+.bav-preview-drawer {
+  position: fixed !important;
+  top: 0 !important; bottom: 0 !important;
+  inset-inline-end: 0 !important;
+  left: auto !important;
+  width: min(80%, 360px) !important;
+  max-width: 360px;
+  z-index: 9999 !important;
+  overflow-y: auto;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(150%);
+  transition: transform .3s ease, visibility 0s linear .3s;
+}
+.bav-preview-drawer.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+  transition: transform .3s ease;
+}
+.bav-preview-backdrop {
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,.45);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+.bav-preview-backdrop.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transition: opacity .3s ease;
+}
+.bav-mobile-nav__close { position: absolute; top: 18px; inset-inline-end: 18px; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #9B9BA5; border: 1px solid #2A2A31; z-index: 3; }
+.bav-mobile-nav__close:hover { color: var(--accent); border-color: var(--accent); }
+.mm-spn.mm-spn--dark { background: #0E0E11; color: #F4F4F2; }
+.mm-spn a, .mm-spn span { font-size: 17px; font-weight: 600; }
+.mm-spn li:after { border-color: #232329 !important; opacity: 1 !important; }
+.mm-spn li.Selected > a, .mm-spn a:active { color: var(--accent); }
+.mm-spn salla-menu a { font-size: 17px; font-weight: 600; color: #F4F4F2; display: block; padding: calc((var(--mm-spn-item-height) - var(--mm-spn-line-height)) / 2) var(--mm-spn-item-indent); }
+
+/* Mobile nav toggle - a clean, even 3-bar icon that morphs into an X while
+   the drawer is open (driven by body.menu-opened, which app.js's existing
+   open/close handlers already toggle - no extra JS needed for this). */
+.bav-burger__bar { position: absolute; inset-inline-start: 50%; top: calc(50% - 7px); width: 18px; height: 2px; border-radius: 2px; background: #F4F4F2; transform: translateX(-50%); transition: transform .25s ease, opacity .2s ease, top .25s ease; }
+.bav-burger__bar:nth-child(2) { top: calc(50% - 1px); }
+.bav-burger__bar:nth-child(3) { top: calc(50% + 5px); }
+body.menu-opened .bav-burger__bar:nth-child(1) { top: calc(50% - 1px); transform: translateX(-50%) rotate(45deg); }
+body.menu-opened .bav-burger__bar:nth-child(2) { opacity: 0; }
+body.menu-opened .bav-burger__bar:nth-child(3) { top: calc(50% - 1px); transform: translateX(-50%) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) {
+  .bav-burger__bar { transition: none; }
+}
+
+/* WhatsApp floating button - had no CSS at all (rendered as a plain inline
+   icon sitting in normal page flow instead of the fixed circular button the
+   spec calls for), which is a real, separate bug from the footer-link
+   click-offset issue being investigated alongside this. */
+.bav-whatsapp-fab {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 20px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,.5);
+  z-index: 500;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease, scale .2s ease;
+  animation: bavWaIn .4s ease 1.3s forwards;
+}
+.bav-whatsapp-fab svg { width: 22px; height: 22px; }
+.bav-whatsapp-fab:hover { scale: 1.06; }
+@media (max-width: 700px) {
+  .bav-whatsapp-fab { width: 44px; height: 44px; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; }
+  .bav-whatsapp-fab svg { width: 20px; height: 20px; }
+}
+/* Never sit under the sticky mobile add-to-cart bar, and never compete with
+   the mobile nav drawer or its backdrop for taps while either is open. */
+@media (max-width: 640px) {
+  body.is-sticky-product-bar .bav-whatsapp-fab { bottom: calc(96px + env(safe-area-inset-bottom)); }
+}
+body.menu-opened .bav-whatsapp-fab { opacity: 0; pointer-events: none; }
+@keyframes bavWaIn { to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .bav-whatsapp-fab { animation: none; opacity: 1; transform: none; }
 }

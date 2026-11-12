@@ -98,57 +98,6 @@
             "required": false
         },
         {
-            "id": "featured_games",
-            "type": "collection",
-            "format": "collection",
-            "label": "الألعاب المعروضة في قسم \"اختر لعبتك\"",
-            "description": "كل عنصر يمثّل لعبة واحدة: الاسم، الصورة، ورابط صفحة تصنيفها في المتجر",
-            "icon": "sicon-game-controller-alt",
-            "minLength": 0,
-            "maxLength": 6,
-            "item_label": "لعبة",
-            "value": [
-                {
-                    "featured_games.name": "Call of Duty: Mobile",
-                    "featured_games.image": null,
-                    "featured_games.url": null
-                }
-            ],
-            "fields": [
-                {
-                    "id": "featured_games.name",
-                    "type": "string",
-                    "format": "text",
-                    "label": "اسم اللعبة",
-                    "icon": "sicon-format-text-alt",
-                    "required": true,
-                    "maxLength": 60
-                },
-                {
-                    "id": "featured_games.image",
-                    "type": "string",
-                    "format": "image",
-                    "label": "صورة اللعبة",
-                    "icon": "sicon-image",
-                    "required": false
-                },
-                {
-                    "id": "featured_games.url",
-                    "type": "items",
-                    "icon": "sicon-link",
-                    "label": "رابط صفحة اللعبة (التصنيف)",
-                    "format": "variable-list",
-                    "searchable": true,
-                    "source": "custom",
-                    "sources": [
-                        { "label": "تصنيف", "key": "categories", "value": "categories" },
-                        { "label": "رابط خارجي", "key": "custom", "value": "custom" }
-                    ],
-                    "required": false
-                }
-            ]
-        },
-        {
             "id": "digital_files_products",
             "type": "items",
             "format": "dropdown-list",
@@ -176,6 +125,36 @@
             "multichoice": true,
             "searchable": true,
             "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "weapons_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"شحن الأسلحة\" في الرئيسية",
+            "description": "اختر حتى 4 أسلحة متاحة حاليًا لعرضها في الصفحة الرئيسية — القائمة بتتغيّر من وقت لوقت فاختر وغيّر وقت ما تحب من هنا",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
+            "id": "offers_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"العروض\" في الرئيسية",
+            "description": "اختر المنتجات اللي عليها عرض/خصم حاليًا لعرضها في قسم العروض بالرئيسية — القائمة بتتغيّر من وقت لوقت فاختر وغيّر وقت ما تحب من هنا",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 8,
             "required": false
         },
         {
@@ -236,7 +215,7 @@
             "value": [
                 { "reward_levels.amount": 50, "reward_levels.text": "هدية يحددها المتجر" },
                 { "reward_levels.amount": 150, "reward_levels.text": "خصم 5 ر.س على طلبك القادم" },
-                { "reward_levels.amount": 300, "reward_levels.text": "80 CP هدية مع الطلب" },
+                { "reward_levels.amount": 300, "reward_levels.text": "هدية يحددها المتجر" },
                 { "reward_levels.amount": 600, "reward_levels.text": "كود خصم 10% لطلبك القادم" }
             ],
             "fields": [
@@ -265,6 +244,106 @@
             "label": "رمز وثيقة العمل الحر",
             "icon": "sicon-certificate",
             "value": "FL-522999221",
+            "required": false
+        },
+        {
+            "id": "find_id_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"كيف أجد معرّفي؟\"",
+            "description": "لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة (المحتوى > الصفحات) بعنوان \"كيف أجد معرّفي؟\" بالضبط. اتركه فاضي لإخفاء أي زر يوديك لها لحد ما تتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "faq_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"الأسئلة الشائعة\" الكاملة",
+            "description": "لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة بعنوان \"الأسئلة الشائعة\" بالضبط. اتركه فاضي لإخفاء زر \"كل الأسئلة\" لحد ما تتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "about_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"من نحن\"",
+            "description": "لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة بعنوان \"من نحن\" بالضبط. اتركه فاضي لإخفاء أي رابط يوديك لها لحد ما تتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "currency_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"فئات شحن العملات\"",
+            "description": "لصقه بعد ما تنشئ تصنيف (Category) في سلة يجمع منتجات شحن العملات. اتركه فاضي لإخفاء زرار \"شاهد المزيد\" تحت هذا القسم لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "double_cp_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"الدبل CP\"",
+            "description": "لصقه بعد ما تنشئ تصنيف يجمع منتجات الدبل. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "double_cp_gift_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"إهداء الدبل\"",
+            "description": "لصقه بعد ما تنشئ تصنيف يجمع منتجات إهداء الدبل. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "digital_files_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"الملفات الرقمية\"",
+            "description": "لصقه بعد ما تنشئ تصنيف يجمع الملفات الرقمية. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "services_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"خدمات أخرى\"",
+            "description": "لصقه بعد ما تنشئ تصنيف يجمع منتجات قسم خدمات أخرى. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "offers_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف/صفحة \"العروض\"",
+            "description": "لصقه بعد ما تنشئ تصنيف أو صفحة تجمع كل المنتجات اللي عليها عروض. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
+            "id": "weapons_category_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط تصنيف \"شحن الأسلحة\"",
+            "description": "لصقه بعد ما تنشئ تصنيف يجمع منتجات شحن الأسلحة. اتركه فاضي لإخفاء الزرار لحد ما يتوفر.",
+            "icon": "sicon-link",
+            "value": "",
             "required": false
         },
         {

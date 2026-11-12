@@ -38,7 +38,7 @@ $main-text-color: var(--main-text-color);
   --font-sm: 0.8685714286rem;
 
   /* fonts */
-  --font-main: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-main: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
   --font-display: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif;
   --font-num: 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif;
 
@@ -52,6 +52,22 @@ $main-text-color: var(--main-text-color);
 }
 
 html, body {
-  background-color: var(--bg-base);
-  color: var(--main-text-color);
+  /* !important: Raed's own base reset (02-generic/common.scss) sets
+     `body { @apply bg-gray-50; }` at the same specificity and later in the
+     cascade, so without this the page background silently reverts to
+     light gray everywhere a section doesn't paint its own surface. */
+  background-color: var(--bg-base) !important;
+  color: var(--main-text-color) !important;
+}
+
+/* Ported verbatim from the approved reference (BAV_Design/01_final_site):
+   links inherit the surrounding text color instead of Raed's default link
+   color, and focus-visible gets a real, visible accent-colored ring -
+   tailwind.config.js disables Tailwind's own outline utilities sitewide,
+   so without this keyboard-focus states would be entirely invisible. */
+a { color: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
 }

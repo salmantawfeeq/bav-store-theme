@@ -1,0 +1,28 @@
+/*
+  Category/product-listing page (product/index.twig) — <salla-products-list>
+  is a real Salla component that renders a <custom-salla-product-card> (our
+  own .pcard markup) per product with no grid layout of its own; the theme
+  is responsible for the grid. Covers both cases of exactly where the cards
+  end up nested, since that's an internal detail of the component.
+*/
+.s-products-index-grid,
+.s-products-index-grid salla-products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .s-products-index-grid,
+  .s-products-index-grid salla-products-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .s-products-index-grid,
+  .s-products-index-grid salla-products-list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -62,7 +62,7 @@
 
                 {% for item in cart.items %}
                     <form onchange="salla.form.onChange('cart.updateItem', event)" id="item-{{ item.id }}">
-                        <section data-testid="store-cart-item-{{ item.id }}" class="cart-item bg-white p-5 xs:p-7 rounded-md mb-5 relative">
+                        <section data-testid="store-cart-item-{{ item.id }}" class="cart-item bg-white p-5 xs:p-7 mb-5 relative bav-card-radius">
                             <input type="hidden" name="id" value="{{ item.id }}">
                                 <!-- product -->
                                 <div class="md:flex rtl:space-x-reverse md:space-x-12 items-start justify-between mb-8 last:mb-0">
@@ -99,6 +99,9 @@
                                             <p class="text-sm text-gray-500 item-weight-row {{ item.weight_label ? '' : 'hidden' }}"> {{ trans('pages.products.weight') }}
                                              <span class="item-weight">{{ item.weight_label }}</span>
                                             </p>
+                                            {% if item.type == 'digital' %}
+                                                <p style="font-size:12px;color:#8E8E98;margin-top:4px">{{ trans('bav.digital_no_refund_note') }}</p>
+                                            {% endif %}
                                             <span class="old-offers flex items-center gap-1 mx-1.5  {{ item.detailed_offers ? 'hidden' : '' }}">
                                                 <i class="sicon-discount-calculator text-gray-500 offer-icon {{ item.offer?'':'hidden' }}"></i>
                                                 <span class="text-sm text-gray-500 offer-name {{ item.offer ?  '' : 'hidden' }}">{{ item.offer.names }}</span>
@@ -175,7 +178,7 @@
             <!-- sidebar -->
             {% if cart.items|length %}
                 <div class="sticky top-24 w-full lg:w-96 rtl:lg:mr-8 ltr:lg:ml-8">
-                    <div class="shadow-default bg-white p-5 xs:p-7 rounded-md mb-5 relative {{ cart.free_shipping_bar ? '' : 'hidden' }}" id="free-shipping">
+                    <div class="shadow-default bg-white p-5 xs:p-7 mb-5 relative bav-card-radius {{ cart.free_shipping_bar ? '' : 'hidden' }}" id="free-shipping">
                         <div class="flex rtl:space-x-reverse space-x-3 items-center">
                             <i class="bg-primary text-white rounded-icon sicon-shipping-fast {{ theme.is_rtl ? 'flip-x':'' }}"></i>
                             {% set is_free=cart.free_shipping_bar.has_free_shipping %}
@@ -205,12 +208,12 @@
                         </salla-loyalty-panel>
                     {% endif %}
 
-                    <div id="cart-gifting" class="shadow-default bg-white xs:p-2 rounded-md mb-5 relative  {{gift.enabled ? '' : 'hidden' }}">
+                    <div id="cart-gifting" class="shadow-default bg-white xs:p-2 mb-5 relative bav-card-radius {{gift.enabled ? '' : 'hidden' }}">
                         <salla-gifting data-testid="store-cart-gifting" id="salla-gifting" class="mt-5" widget-title="{{ trans("pages.cart.gift_widget_title") }}"  widget-subtitle="{{ gift.text }}" class="mt-5" {{gift.type}}-products  vertical></salla-gifting>
                     </div>
 
                     {% if store.settings.cart.apply_coupon_enabled %}
-                        <div class="shadow-default bg-white px-5 xs:px-7 rounded-md mt-5 lg:mt-0 mb-5 relative">
+                        <div class="shadow-default bg-white px-5 xs:px-7 mt-5 lg:mt-0 mb-5 relative bav-card-radius">
                             {% hook 'cart:coupon.start' %}
                             <salla-cart-coupons data-testid="store-cart-coupons"></salla-cart-coupons>
                             {% hook 'cart:coupon.end' %}

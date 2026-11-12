@@ -24,15 +24,15 @@
                 </h1>
                 <p style="margin:0;font-size:21px;line-height:1.85;color:#B9B9C2;max-width:500px">{{ theme.settings.get('hero_subtitle') }}</p>
                 <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">
-                    <a href="#choose-game" class="btn btn-p">
+                    <a href="{{ theme.settings.get('currency_category_url', '#choose-game') }}" class="btn btn-p">
                         {{ trans('bav.nav.choose_game') }}
                         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
                     </a>
-                    <a href="#services" class="btn btn-g">{{ trans('bav.nav.services') }}</a>
+                    <a href="{{ theme.settings.get('offers_category_url', '#offers') }}" class="btn btn-g">{{ trans('bav.nav.offers') }}</a>
                 </div>
                 <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03);max-width:100%">
                     <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                    <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ theme.settings.get('execution_time_text') }}</span>
+                    <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ trans('bav.hero_execution_note', {time: theme.settings.get('execution_time_text')}) }}</span>
                 </div>
             </div>
         </div>
@@ -40,81 +40,111 @@
 
     {# Mobile hero (simplified, stacked) #}
     <section class="mob" style="position:relative;overflow:hidden;border-bottom:1px solid #1D1D22">
-        <div class="wrap" style="position:relative;padding-top:30px;padding-bottom:36px;display:flex;flex-direction:column;gap:18px">
+        {% if hero_image %}
+            <div class="hero-bg" style="width:100%;background-image:url('{{ hero_image|cdn(900) }}')"></div>
+        {% endif %}
+        <div class="wrap hero-wrap" style="position:relative;padding-top:30px;padding-bottom:36px;display:flex;flex-direction:column;gap:18px">
             <h1 class="disp" style="margin:0;font-size:46px;line-height:1.15">
                 <span style="display:block">{{ theme.settings.get('hero_title_line1') }}</span>
                 <span style="display:block;color:var(--accent)">{{ theme.settings.get('hero_title_line2') }}</span>
             </h1>
             <p style="margin:0;font-size:16px;line-height:1.85;color:#B9B9C2">{{ theme.settings.get('hero_subtitle') }}</p>
-            <a href="#choose-game" class="btn btn-p" style="height:54px;font-size:17px;width:100%">{{ trans('bav.nav.choose_game') }}</a>
-            <a href="#services" class="btn btn-g" style="height:54px;font-size:17px;width:100%">{{ trans('bav.nav.services') }}</a>
+            <div style="display:flex;flex-wrap:wrap;gap:12px">
+                <a href="{{ theme.settings.get('currency_category_url', '#choose-game') }}" class="btn btn-p" style="flex:1;min-width:150px;height:54px;font-size:16px;padding:0 18px">{{ trans('bav.nav.choose_game') }}</a>
+                <a href="{{ theme.settings.get('offers_category_url', '#offers') }}" class="btn btn-g" style="flex:1;min-width:150px;height:54px;font-size:16px;padding:0 18px">{{ trans('bav.nav.offers') }}</a>
+            </div>
             <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03)">
                 <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ theme.settings.get('execution_time_text') }}</span>
+                <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ trans('bav.hero_execution_note', {time: theme.settings.get('execution_time_text')}) }}</span>
             </div>
         </div>
     </section>
 
-    {# Trust row #}
+    {#
+        Trust row — a glowing circular badge + disp-font headline per item
+        with thin dividers, instead of the generic "4 equal bordered boxes"
+        feature-grid pattern (flagged as too cliché/off-the-shelf looking).
+    #}
     <div class="wrap dsk" style="margin-top:-62px;position:relative;z-index:2">
-        <div class="trust">
-            <div>
-                <span class="ico"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg></span>
-                <div><div style="font-weight:700;font-size:17px">معرّف اللاعب يكفي!</div><div style="font-size:14px;color:#8E8E98;margin-top:4px">راجع معرّفك بشكل صحيح قبل الدفع</div></div>
+        <div class="bav-trust">
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg></span>
+                <div><div class="bav-trust-title">معرّف اللاعب يكفي!</div><div class="bav-trust-desc">راجع معرّفك بشكل صحيح قبل الدفع</div></div>
             </div>
-            <div>
-                <span class="ico"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-                <div><div style="font-weight:700;font-size:17px">حسابك في أمان</div><div style="font-size:14px;color:#8E8E98;margin-top:4px">لا نطلب كلمة سر، ومعرّف اللاعب لا يتيح الدخول لحسابك</div></div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <div><div class="bav-trust-title">حسابك في أمان</div><div class="bav-trust-desc">لا نطلب كلمة سر، ومعرّف اللاعب لا يتيح الدخول لحسابك</div></div>
             </div>
-            <div>
-                <span class="ico"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
-                <div><div style="font-weight:700;font-size:17px">دفع آمن</div><div style="font-size:14px;color:#8E8E98;margin-top:4px">طرق دفع متنوعة وآمنة</div></div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
+                <div><div class="bav-trust-title">دفع آمن</div><div class="bav-trust-desc">طرق دفع متنوعة وآمنة</div></div>
             </div>
-            <div>
-                <span class="ico"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
-                <div><div style="font-weight:700;font-size:17px">دعم بعد الشراء</div><div style="font-size:14px;color:#8E8E98;margin-top:4px">{{ theme.settings.get('working_hours_text') }}</div></div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
+                <div><div class="bav-trust-title">دعم بعد الشراء</div><div class="bav-trust-desc">{{ theme.settings.get('working_hours_text') }}</div></div>
             </div>
         </div>
     </div>
 
     <div class="wrap mob" style="padding-top:30px">
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-            <div style="padding:16px;border-radius:16px;border:1px solid #232329;background:#0F0F12"><div style="font-weight:700;font-size:15px">معرّف اللاعب يكفي!</div><div style="font-size:12px;color:#8E8E98;margin-top:4px">راجعه قبل الدفع</div></div>
-            <div style="padding:16px;border-radius:16px;border:1px solid #232329;background:#0F0F12"><div style="font-weight:700;font-size:15px">حسابك في أمان</div><div style="font-size:12px;color:#8E8E98;margin-top:4px">بدون كلمة سر</div></div>
-            <div style="padding:16px;border-radius:16px;border:1px solid #232329;background:#0F0F12"><div style="font-weight:700;font-size:15px">دفع آمن</div><div style="font-size:12px;color:#8E8E98;margin-top:4px">طرق متعددة</div></div>
-            <div style="padding:16px;border-radius:16px;border:1px solid #232329;background:#0F0F12"><div style="font-weight:700;font-size:15px">دعم بعد الشراء</div><div style="font-size:12px;color:#8E8E98;margin-top:4px">{{ theme.settings.get('working_hours_text') }}</div></div>
+        <div class="bav-trust bav-trust--mobile">
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg></span>
+                <div><div class="bav-trust-title">معرّف اللاعب يكفي!</div><div class="bav-trust-desc">راجعه قبل الدفع</div></div>
+            </div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+                <div><div class="bav-trust-title">حسابك في أمان</div><div class="bav-trust-desc">بدون كلمة سر</div></div>
+            </div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
+                <div><div class="bav-trust-title">دفع آمن</div><div class="bav-trust-desc">طرق متعددة</div></div>
+            </div>
+            <div class="bav-trust-item">
+                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
+                <div><div class="bav-trust-title">دعم بعد الشراء</div><div class="bav-trust-desc">{{ theme.settings.get('working_hours_text') }}</div></div>
+            </div>
         </div>
     </div>
 
-    {# Choose your game — category cards, merchant-managed #}
-    {% set games = theme.settings.get('featured_games') %}
-    {% if games|length %}
-        <section id="choose-game" style="padding:110px 0 40px">
+    {# Offers — merchant-selected, on-sale products #}
+    {% set offers_products = [] %}
+    {% for item in theme.settings.get('offers_products')|default([]) %}{% set offers_products = offers_products|merge([item.value]) %}{% endfor %}
+    {% if offers_products|length %}
+        <section id="offers" style="padding:60px 0 40px">
             <div class="wrap">
                 <div class="sechead">
-                    <h2>اختر لعبتك</h2>
+                    <h2>{{ trans('bav.nav.offers') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
-                    <p>نبدأ بـ Call of Duty: Mobile، ونضيف ألعابًا جديدة تباعًا.</p>
+                    <p>{{ trans('bav.offers_subtitle') }}</p>
                 </div>
-                <div class="g3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px">
-                    {% for game in games %}
-                        <a href="{{ game['featured_games.url']|default('#') }}" class="pcard">
-                            <div class="pimg"><img src="{{ (game['featured_games.image']|default('images/placeholder.png'))|cdn(600) }}" alt="{{ game['featured_games.name'] }}" loading="lazy"></div>
-                            <div class="pbody">
-                                <div class="pname" style="font-size:24px">{{ game['featured_games.name'] }}</div>
-                            </div>
-                        </a>
-                    {% endfor %}
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                    <salla-products-list
+                        source="selected"
+                        source-value="{{ offers_products|json_encode }}"
+                        product-card-component="custom-salla-product-card">
+                    </salla-products-list>
                 </div>
+                {% if theme.settings.get('offers_category_url') and offers_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('offers_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
 
-    {# Game products (shipped CP, Battle Pass, etc.) — merchant-selected #}
-    {% set game_products = (theme.settings.get('game_products')|default([]))|map(item => item.value) %}
+    {# Choose your currency — merchant-selected products (no game names shown) #}
+    {% set game_products = [] %}
+    {% for item in theme.settings.get('game_products')|default([]) %}{% set game_products = game_products|merge([item.value]) %}{% endfor %}
     {% if game_products|length %}
-        <section style="padding:40px 0 40px">
+        <section id="choose-game" style="padding:110px 0 40px">
             <div class="wrap">
+                <div class="sechead">
+                    <h2>{{ trans('bav.nav.choose_game') }}</h2>
+                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                    <p>فئات عملات متنوعة تناسب احتياجك، ونضيف المزيد تباعًا.</p>
+                </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px">
                     <salla-products-list
                         source="selected"
@@ -122,18 +152,25 @@
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
+                {% if theme.settings.get('currency_category_url') and game_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('currency_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
 
     {# Double CP — merchant-selected products #}
-    {% set double_cp_products = (theme.settings.get('double_cp_products')|default([]))|map(item => item.value) %}
+    {% set double_cp_products = [] %}
+    {% for item in theme.settings.get('double_cp_products')|default([]) %}{% set double_cp_products = double_cp_products|merge([item.value]) %}{% endfor %}
     {% if double_cp_products|length %}
         <section id="double-cp" style="padding:40px 0 40px">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.double_cp') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                    <p>{{ trans('bav.double_cp_subtitle') }}</p>
                 </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                     <salla-products-list
@@ -142,18 +179,25 @@
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
+                {% if theme.settings.get('double_cp_category_url') and double_cp_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('double_cp_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
 
     {# Gift Double CP — separate, same tiers, "ID" field instead of Player ID #}
-    {% set double_cp_gift_products = (theme.settings.get('double_cp_gift_products')|default([]))|map(item => item.value) %}
+    {% set double_cp_gift_products = [] %}
+    {% for item in theme.settings.get('double_cp_gift_products')|default([]) %}{% set double_cp_gift_products = double_cp_gift_products|merge([item.value]) %}{% endfor %}
     {% if double_cp_gift_products|length %}
         <section id="double-cp-gift" style="padding:40px 0 40px">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.double_cp_gift') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                    <p>{{ trans('bav.double_cp_gift_subtitle') }}</p>
                 </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                     <salla-products-list
@@ -162,18 +206,25 @@
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
+                {% if theme.settings.get('double_cp_gift_category_url') and double_cp_gift_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('double_cp_gift_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
 
     {# Digital files — merchant-selected #}
-    {% set digital_files = (theme.settings.get('digital_files_products')|default([]))|map(item => item.value) %}
+    {% set digital_files = [] %}
+    {% for item in theme.settings.get('digital_files_products')|default([]) %}{% set digital_files = digital_files|merge([item.value]) %}{% endfor %}
     {% if digital_files|length %}
         <section id="digital-files" style="padding:40px 0 40px">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.digital_files') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                    <p>{{ trans('bav.digital_files_subtitle') }}</p>
                 </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                     <salla-products-list
@@ -182,18 +233,25 @@
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
+                {% if theme.settings.get('digital_files_category_url') and digital_files|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('digital_files_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
 
     {# Services — merchant-selected #}
-    {% set services_products = (theme.settings.get('services_products')|default([]))|map(item => item.value) %}
+    {% set services_products = [] %}
+    {% for item in theme.settings.get('services_products')|default([]) %}{% set services_products = services_products|merge([item.value]) %}{% endfor %}
     {% if services_products|length %}
         <section id="services" style="padding:40px 0 40px">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.services') }}</h2>
                     <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                    <p>{{ trans('bav.services_subtitle') }}</p>
                 </div>
                 <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                     <salla-products-list
@@ -202,6 +260,42 @@
                         product-card-component="custom-salla-product-card">
                     </salla-products-list>
                 </div>
+                {% if theme.settings.get('services_category_url') and services_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('services_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    {% endif %}
+
+    {#
+        Weapon charging — merchant-selected. The available weapons change
+        from time to time (طلبات_صاحب_المتجر.md), so this reads whatever
+        the merchant currently has selected in theme settings exactly like
+        the other homepage sections, instead of a fixed hardcoded list.
+    #}
+    {% set weapons_products = [] %}
+    {% for item in theme.settings.get('weapons_products')|default([]) %}{% set weapons_products = weapons_products|merge([item.value]) %}{% endfor %}
+    {% if weapons_products|length %}
+        <section id="weapons" style="padding:40px 0 40px">
+            <div class="wrap">
+                <div class="sechead">
+                    <h2>{{ trans('bav.nav.weapons') }}</h2>
+                    <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
+                    <salla-products-list
+                        source="selected"
+                        source-value="{{ weapons_products|json_encode }}"
+                        product-card-component="custom-salla-product-card">
+                    </salla-products-list>
+                </div>
+                {% if theme.settings.get('weapons_category_url') and weapons_products|length > 3 %}
+                    <div style="text-align:center;margin-top:30px">
+                        <a href="{{ theme.settings.get('weapons_category_url') }}" class="btn btn-g">{{ trans('bav.see_more') }}</a>
+                    </div>
+                {% endif %}
             </div>
         </section>
     {% endif %}
@@ -216,6 +310,7 @@
                 <p>{{ trans('bav.rewards_subtitle') }}</p>
             </div>
             <div class="ladder" id="bav-ladder"
+                 data-initial-total="{{ cart.total }}"
                  data-lang-add-more="{{ trans('bav.rewards_add_more') }}"
                  data-lang-all-unlocked="{{ trans('bav.rewards_all_unlocked') }}"
                  data-lang-cart-value="{{ trans('bav.rewards_cart_value') }}"
@@ -247,7 +342,7 @@
     </section>
 
     {# How to top up — 3 steps #}
-    <section style="padding:100px 0 40px">
+    <section id="how" style="padding:100px 0 40px">
         <div class="wrap">
             <div class="sechead">
                 <h2>{{ trans('bav.how_title') }}</h2>
@@ -277,7 +372,7 @@
                         <span class="num" style="font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #34343B">03</span>
                     </div>
                     <div class="disp" style="font-size:26px;margin-top:26px">{{ trans('bav.how_step3_title') }}</div>
-                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ theme.settings.get('execution_time_text') }}، وتصلك رسالة تأكيد فور اكتمال التنفيذ.</div>
+                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ trans('bav.how_step3_desc', {time: theme.settings.get('execution_time_text'), hours: theme.settings.get('working_hours_text')}) }}</div>
                 </div>
             </div>
         </div>
@@ -292,22 +387,23 @@
             </div>
             <div class="faq">
                 <details>
-                    <summary>أين أجد معرّف اللاعب؟</summary>
-                    <p>افتح اللعبة ثم الإعدادات، ثم إعدادات المستخدم من القائمة على اليسار، وفي الأسفل ستجد معرّف اللاعب. اضغط على أيقونة النسخ للتأكد من أن المعرّف مسجّل بالشكل الصحيح وبدون أخطاء.</p>
+                    <summary>{{ trans('bav.faq_q1') }}</summary>
+                    <p>{{ trans('bav.faq_a1') }}</p>
                 </details>
                 <details>
-                    <summary>هل تحتاجون كلمة سر حسابي؟</summary>
-                    <p>لا. الشحن يتم بمعرّف اللاعب فقط، ولن نطلب منك كلمة سر أو بيانات تسجيل الدخول.</p>
+                    <summary>{{ trans('bav.faq_q3') }}</summary>
+                    <p>{{ trans('bav.faq_a3', {time: theme.settings.get('execution_time_text'), hours: theme.settings.get('working_hours_text')}) }}</p>
                 </details>
                 <details>
-                    <summary>متى يصل الشحن؟</summary>
-                    <p>{{ theme.settings.get('execution_time_text') }}، وتصلك رسالة تأكيد فور اكتمال الشحن.</p>
-                </details>
-                <details>
-                    <summary>هل يمكن استرجاع الملفات الرقمية؟</summary>
-                    <p>لا. الملفات الرقمية غير قابلة للاسترجاع.</p>
+                    <summary>{{ trans('bav.faq_q5') }}</summary>
+                    <p>{{ trans('bav.faq_a5') }}</p>
                 </details>
             </div>
+            {% if theme.settings.get('faq_page_url') %}
+                <div style="text-align:center;margin-top:28px">
+                    <a href="{{ theme.settings.get('faq_page_url') }}" class="btn btn-g">{{ trans('bav.faq_page_title') }}</a>
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

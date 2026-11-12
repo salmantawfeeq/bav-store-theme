@@ -17,6 +17,8 @@ class Product extends BasePage {
 
         this.initProductOptionValidations();
         this.initNativeGallery();
+        this.initConfirmGate();
+        this.initQuantitySubtotalElements();
 
         if(imageZoom){
             // call the function when the page is ready
@@ -47,6 +49,63 @@ class Product extends BasePage {
             event.preventDefault();
             event.stopPropagation();
         }, { capture: true });
+    }
+
+    /**
+     * Products with options (Player ID, tier, etc.) show a confirmation
+     * checkbox the customer must tick before the order is placed. The
+     * add-to-cart button is dimmed while unchecked, and the submit is
+     * hard-blocked in the capture phase on `document` - that runs before
+     * the form's own inline `onsubmit` handler reaches the target phase,
+     * so an unchecked box genuinely stops `cart.addItem` from firing.
+     */
+    initConfirmGate() {
+        const checkbox = document.querySelector('#confirm-ok');
+        const form = document.querySelector('.product-form');
+        if (!checkbox || !form) return;
+
+        const sync = () => form.classList.toggle('needs-confirm', !checkbox.checked);
+        sync();
+        checkbox.addEventListener('change', () => {
+            sync();
+            if (checkbox.checked) app.element('#confirm-err').style.display = 'none';
+        });
+
+        document.addEventListener('submit', (event) => {
+            if (event.target !== form || checkbox.checked) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            const err = app.element('#confirm-err');
+            err.style.display = 'block';
+            const wrap = checkbox.closest('.chk');
+            wrap.classList.remove('shake');
+            void wrap.offsetWidth; // trigger reflow so the animation can replay
+            wrap.classList.add('shake');
+        }, true);
+    }
+
+    /**
+     * salla-add-product-button/salla-quantity-input don't multiply price by
+     * quantity on their own (not documented anywhere) - this is a plain
+     * line-total preview so the customer sees what they're about to pay
+     * before adding to cart. It's cosmetic: the real order total is always
+     * computed server-side by Salla regardless of what this shows.
+     */
+    initQuantitySubtotalElements() {
+        this.subtotalEl = document.querySelector('#bav-line-subtotal');
+        this.qtyInput = document.querySelector('salla-quantity-input');
+        if (!this.subtotalEl) return;
+
+        this.unitPrice = Number(this.subtotalEl.dataset.unitPrice) || 0;
+        if (this.qtyInput) {
+            ['input', 'change'].forEach((evt) => this.qtyInput.addEventListener(evt, () => this.recomputeSubtotal()));
+        }
+    }
+
+    recomputeSubtotal() {
+        if (!this.subtotalEl) return;
+        const qty = Number(this.qtyInput?.value) || 1;
+        this.subtotalEl.innerHTML = salla.money(this.unitPrice * qty);
     }
 
     initImagesZooming() {
@@ -91,7 +150,30 @@ class Product extends BasePage {
         document.querySelectorAll(wrapperSelector).forEach((el) => el.classList.toggle('hidden', !value));
     }
 
+    /**
+     * The displayed wishlist count is a stable per-product placeholder
+     * rendered server-side (product.id has no real public wishlist total
+     * in Salla) - but the increment/decrement itself is real, driven by
+     * the actual salla.wishlist events, so it only moves on a real action.
+     */
+    initWishlistCounter() {
+      const el = app.element('[id^="wishlist-count-"]');
+      if (!el) return;
+      const productId = el.closest('[data-product-id]')?.dataset.productId;
+      if (!productId) return;
+
+      const bump = (delta) => {
+        const next = Math.max(0, Number(el.textContent) + delta);
+        el.textContent = next;
+      };
+
+      salla.wishlist.event.onAdded((event, id) => { if (String(id) === String(productId)) bump(1); });
+      salla.wishlist.event.onRemoved((response, id) => { if (String(id) === String(productId)) bump(-1); });
+    }
+
     registerEvents() {
+      this.initWishlistCounter();
+
       salla.event.on('product::price.updated.failed',()=>{
         app.element('.price-wrapper').classList.add('hidden');
         const outOfStock = app.element('.out-of-stock');
@@ -118,6 +200,9 @@ class Product extends BasePage {
 
         app.toggleClassIf('.price_is_on_sale','showed','hidden', ()=> is_on_sale)
         app.toggleClassIf('.starting-or-normal-price','hidden','showed', ()=> is_on_sale)
+
+        this.unitPrice = Number(data.price) || 0;
+        this.recomputeSubtotal();
 
         document.querySelectorAll('.total-price, .product-weight').forEach(el => {
           el.classList.remove('scale-pulse');

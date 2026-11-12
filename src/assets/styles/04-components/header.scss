@@ -2,11 +2,28 @@
 /* ============================
    Bav header — ported to match the approved mockup exactly
    ============================ */
+// The marquee + header stick together as one block, on every screen size -
+// see the note in header.twig for why the sticky positioning lives here and
+// not on <header> alone.
+.bav-sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
 header[data-testid="store-header"] {
   background: rgba(9, 9, 11, .92);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid #1D1D22;
-  position: relative;
-  z-index: 5;
+}
+
+// The reference design hid the marquee entirely on mobile and never shipped
+// a mobile version of it - it needs one now that it's shown on every
+// screen, sized down the same way the rest of the header is at this
+// breakpoint.
+@media (max-width: 700px) {
+  .mq { height: 36px; }
+  .mq-track { gap: 40px; }
 }
 
 .bav-header-inner {
@@ -59,6 +76,16 @@ header[data-testid="store-header"] {
   }
 }
 
+// salla-menu renders its own <ul><li><a> for merchant-added pages (FAQ,
+// about us, policies…) — lay it out inline like the rest of the nav links
+// instead of the default block list, and let .nav a style the links.
+.bav-nav-menu, .bav-nav-menu ul {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+.bav-nav-menu li { list-style: none; }
+
 .bav-nav {
   display: flex;
   gap: 34px;
@@ -70,32 +97,45 @@ header[data-testid="store-header"] {
   }
 }
 
-.bav-header-search {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 46px;
-  padding: 0 16px;
-  border-radius: 14px;
+/* Collapsible search bar - hidden by default, slides down under the header
+   on every screen size (not just mobile) when the search icon is clicked,
+   instead of a permanently-visible input box. */
+.bav-search-bar {
+  max-height: 0;
+  overflow: hidden;
   background: #111114;
-  border: 1px solid #232329;
-  width: 250px;
+  border-bottom: 1px solid #232329;
+  transition: max-height .25s ease;
+}
+.bav-search-bar.is-open { max-height: 80px; }
+.bav-search-bar .wrap { padding: 16px 36px; }
+.bav-search-bar input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #F4F4F2;
+  font-family: inherit;
+  font-size: 15px;
 
-  input {
-    flex: 1;
-    min-width: 0;
-    background: transparent;
-    border: 0;
-    outline: 0;
-    color: #F4F4F2;
-    font-family: inherit;
-    font-size: 15px;
-
-    &::placeholder {
-      color: #8E8E98;
-    }
+  &::placeholder {
+    color: #8E8E98;
   }
 }
+.bav-search-close {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.bav-search-close:hover { background: #1D1D22; }
 
 .bav-icon-btn {
   position: relative;
@@ -133,8 +173,8 @@ salla-cart-summary {
   color: #0A0A0B !important;
 }
 
-/* search component sizing inside the pill */
-.bav-header-search salla-search {
+/* search component sizing inside the collapsible bar */
+.bav-search-bar salla-search {
   width: 100%;
 }
 

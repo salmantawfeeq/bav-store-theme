@@ -18,6 +18,7 @@ class App extends AppHelpers {
       this.initiateStickyMenu();
     }
     this.initAddToCart();
+    this.initiateSearchToggle();
     this.initiateDropdowns();
     this.initiateModals();
     this.initiateCollapse();
@@ -155,10 +156,13 @@ isElementLoaded(selector){
   this.isElementLoaded('#mobile-menu').then((menu) => {
 
  
-  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
+  // "all" (not a max-width query) - the drawer is now the only nav on every
+  // screen size, not just mobile, since the page list got too long to fit
+  // as a single horizontal row even on a wide desktop screen.
+  const mobileMenu = new MobileMenu(menu, "all", "( slidingSubmenus: false)");
 
   salla.lang.onLoaded(() => {
-    mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
+    mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu'), theme: 'dark' });
   });
   const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
 
@@ -170,6 +174,15 @@ isElementLoaded(selector){
   this.onClick(".close-mobile-menu", event => {
     document.body.classList.remove('menu-opened');
     event.preventDefault() || drawer.close()
+  });
+  // Picking a page from the drawer should close it too - most links leave
+  // the page anyway (so this is moot), but a same-page anchor like
+  // #choose-game clicked from the homepage itself doesn't reload, and would
+  // otherwise leave the drawer sitting open over the section it just
+  // scrolled to.
+  this.onClick("#mobile-menu a:not(.close-mobile-menu)", () => {
+    document.body.classList.remove('menu-opened');
+    drawer.close();
   });
   });
 
@@ -196,6 +209,19 @@ isElementLoaded(selector){
     let height = this.element('#mainnav .inner').clientHeight,
       header = this.element('#mainnav');
     header.style.height = height + 'px';
+  }
+
+  initiateSearchToggle() {
+    const bar = this.element('#bav-search-bar');
+    const toggle = this.element('#bav-search-toggle');
+    if (!bar || !toggle) return;
+    const setOpen = (isOpen) => {
+      bar.classList.toggle('is-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) setTimeout(() => bar.querySelector('input')?.focus(), 260);
+    };
+    this.onClick('#bav-search-toggle', () => setOpen(!bar.classList.contains('is-open')));
+    this.onClick('#bav-search-close', () => setOpen(false));
   }
 
   initiateDropdowns() {

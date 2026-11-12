@@ -19,8 +19,7 @@
 {% extends "layouts.master" %}
 {% block content %}
 	{% if theme.settings.get('product_index_show_breadcrumbs', true) %}
-		<div
-			class="container container--breadcrumbs">
+		<div class="wrap" style="padding-top:30px;padding-bottom:10px">
 			{# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
 			<nav class="breadcrumbs w-full py-5">
 				<salla-breadcrumb></salla-breadcrumb>
@@ -35,25 +34,52 @@
   #}
 	<div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
 
-	<div class="container container--products-list flex items-start flex-col md:flex-row">
+	<div class="wrap s-products-index flex items-start flex-col md:flex-row" style="padding-bottom:90px">
 		{% if filters %}
 			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
-			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
+			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none" id="filters-menu"></salla-filters>
 		{% endif %}
 
 		<div class="main-content flex-1 w-full {{ filters ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
-			<div class="mb-4 sm:mb-6 flex justify-between items-center">
-				<h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
-				<div class="flex items-center space-x-2 rtl:space-x-reverse">
+			{#
+			    A short, genuine description per known section (same copy
+			    already used for its homepage preview) instead of a bare
+			    title - matched off category.name since that's the only
+			    per-page signal this generic template gets. Any category
+			    outside this known list (the merchant's own categories once
+			    the store is live on Salla) just shows the title alone.
+			#}
+			{% set category_subtitle = null %}
+			{% if category.name == 'فئات شحن العملات' or category.name == 'اختر عملاتك' %}
+				{% set category_subtitle = 'فئات عملات متنوعة تناسب احتياجك، ونضيف المزيد تباعًا.' %}
+			{% elseif category.name == 'العروض' %}
+				{% set category_subtitle = trans('bav.offers_subtitle') %}
+			{% elseif category.name == 'الدبل CP' %}
+				{% set category_subtitle = trans('bav.double_cp_subtitle') %}
+			{% elseif category.name == 'إهداء الدبل CP' %}
+				{% set category_subtitle = trans('bav.double_cp_gift_subtitle') %}
+			{% elseif category.name == 'الملفات الرقمية' %}
+				{% set category_subtitle = trans('bav.digital_files_subtitle') %}
+			{% elseif category.name == 'الخدمات' %}
+				{% set category_subtitle = trans('bav.services_subtitle') %}
+			{% endif %}
+			<div class="mb-6 sm:mb-8 flex justify-between items-center flex-wrap gap-4">
+				<div>
+					<h1 class="disp" style="font-size:32px" id="page-main-title">{{ page.title|raw }}</h1>
+					{% if category_subtitle %}
+						<p style="font-size:15px;color:#9B9BA5;margin-top:8px;max-width:520px">{{ category_subtitle }}</p>
+					{% endif %}
+				</div>
+				<div class="flex items-center gap-3">
 					{% if filters %}
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger bg-border-color text-primary lg:hidden mt-2">
-							<i class="sicon-filter text-gray-text text-2xl me-2.5"></i>
+						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
+							<i class="sicon-filter text-2xl"></i>
 						</a>
 					{% endif %}
 					{% if sort_options|length %}
-						<div class="flex items-center">
-							<label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap" for="product-filter">{{ trans('pages.categories.sorting') }}</label>
-							<select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10">
+						<div class="flex items-center gap-3">
+							<label class="hidden sm:block whitespace-nowrap" style="color:#9B9BA5;font-size:14px" for="product-filter">{{ trans('pages.categories.sorting') }}</label>
+							<select id="product-filter" style="height:48px;min-width:170px;border-radius:14px;border:1px solid #2E2E35;background:#0E0E11;color:#F4F4F2;font-family:inherit;font-size:15px;font-weight:500;padding:0 16px;outline:0">
 								{% for sort in sort_options %}
 									<option value="{{ sort.id }}" {{ sort.is_selected?'selected':'' }}>{{ sort.name }}</option>
 								{% endfor %}
@@ -68,10 +94,11 @@
 			{# nothing is marked selected when the store default sort is disabled, so send the shown option with the first request #}
 			{% set sort_list = sort_options|default([]) %}
 			{% set first_sort = sort_list|first %}
-			{% set has_selected_sort = sort_list|filter(sort => sort.is_selected)|length %}
+			{% set has_selected_sort = 0 %}
+			{% for sort in sort_list %}{% if sort.is_selected %}{% set has_selected_sort = has_selected_sort + 1 %}{% endif %}{% endfor %}
 			{% set fallback_sort = (sort_list|length and not has_selected_sort and first_sort.id != 'ourSuggest') ? first_sort.id : '' %}
 
-			<div class="flex">
+			<div class="s-products-index-grid">
 				<salla-products-list data-testid="store-products-list" class="flex-1 min-w-0" source="{{ page.slug }}" source-value="{{ page.id }}" sort-by="{{ fallback_sort }}" {{ filters ?'filters-Results':'' }}></salla-products-list>
 			</div>
 

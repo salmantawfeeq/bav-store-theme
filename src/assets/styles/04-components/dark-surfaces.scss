@@ -1,0 +1,41 @@
+/*
+  Raed (the base theme this was forked from) assumes a light storefront and
+  hardcodes Tailwind light-surface utilities (bg-white, text-gray-*, ...) on
+  several pieces this theme reuses as-is for real functionality: product
+  options, SKU/barcode rows, quantity controls, cart, customer pages.
+  Re-skinning those utility classes here keeps that functionality intact
+  while making every page readable on Bav's dark background, without
+  duplicating each twig file's markup.
+*/
+// Reused on cart-page cards (item rows, free-shipping box, coupon box,
+// gifting box) so they match the rest of the site's card radius instead of
+// Raed's default rounded-md.
+.bav-card-radius { border-radius: 22px !important; border: 1px solid var(--border-1) !important; }
+
+.theme-bav {
+  .bg-white { background-color: var(--bg-surface-1) !important; }
+  .bg-gray-50, .bg-gray-100 { background-color: var(--bg-surface-2) !important; }
+  .text-gray-800, .text-gray-700, .text-gray-900 { color: var(--main-text-color) !important; }
+  .text-gray-500, .text-gray-600 { color: var(--color-text-secondary) !important; }
+  .text-gray-400 { color: var(--color-text-muted) !important; }
+  .border-gray-200, .border-gray-100, .divide-gray-200 { border-color: var(--border-2) !important; }
+  .shadow-default, .shadow-huge { box-shadow: 0 20px 50px -24px rgba(0,0,0,.6) !important; }
+
+  /* Tailwind's dark reds assume a white page behind them for contrast;
+     on Bav's near-black surfaces they read as low-contrast and muddy. */
+  .text-red-800, .text-red-700, .text-red-600 { color: #FF6B5A !important; }
+
+  /* @tailwindcss/forms resets every bare input/select/textarea to a white
+     background, and Raed's own `.form-input` re-asserts gray-600 in dark
+     mode (`.dark .form-input`) at the same specificity as a plain override
+     here - whichever rule lands later in the compiled file wins on a tie,
+     which is exactly the bug: some inputs rendered white/gray instead of
+     Bav's near-black. !important sidesteps that cascade-order gamble.
+  */
+  input, textarea, select, .form-input, .s-form-control {
+    background-color: var(--bg-surface-4) !important;
+    border-color: var(--border-3) !important;
+    color: var(--main-text-color) !important;
+  }
+  input[type="checkbox"], input[type="radio"] { background-color: var(--bg-surface-5) !important; }
+}

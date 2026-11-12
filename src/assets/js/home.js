@@ -5,6 +5,21 @@ class Home extends BasePage {
         this.initRewardsLadder();
     }
 
+    /**
+     * `cart.total` (the global header-context variable, real on every page -
+     * not just views/pages/cart.twig's own richer `cart` object) is a
+     * pre-formatted display string (currency symbol, thousands separator,
+     * possibly Eastern Arabic-Indic digits), not a raw float. Converting
+     * digits first then stripping everything else is what makes this safe
+     * regardless of which digit set or separators the active locale uses.
+     */
+    parseMoneyString(value) {
+        const arabicIndicDigits = '٠١٢٣٤٥٦٧٨٩';
+        const normalized = String(value ?? '').replace(/[٠-٩]/g, (d) => arabicIndicDigits.indexOf(d));
+        const numeric = normalized.replace(/[^0-9.]/g, '');
+        return Number(numeric) || 0;
+    }
+
     initRewardsLadder() {
         const ladder = document.getElementById('bav-ladder');
         if (!ladder) return;
@@ -66,7 +81,7 @@ class Home extends BasePage {
             });
         };
 
-        render(Number(ladder.dataset.initialTotal) || 0);
+        render(this.parseMoneyString(ladder.dataset.initialTotal));
         salla.cart.event.onUpdated(summary => render(Number(summary.total) || 0));
     }
 }
