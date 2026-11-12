@@ -212,10 +212,20 @@
 
     {% elseif page.title == trans('bav.refund_policy_title') %}
         {#
-            Approved as final by Salman (2026-11-12) - built from facts
-            already established elsewhere in the project (digital files
-            non-refundable, exact-id-entered execution, working hours/
-            contact channel), not invented from nothing.
+            Expanded to a fuller policy per صاحب المتجر's direct request
+            (طلبات_صاحب_المتجر.md point 7, 2026-11-12) - supersedes the
+            shorter version Salman approved earlier the same day. Covers
+            pre-fulfillment cancellation, payment-gateway fee deduction on
+            refunds, post-fulfillment non-refundability, store-side errors/
+            mismatched service, and special cases (duplicate payment,
+            unregistered order, unfulfilled service) - built only from
+            policy principles already established elsewhere in the project
+            (exact-id-entered execution, working hours/contact channel) plus
+            general, factual refund mechanics (a refund can't be approved
+            before fulfillment starts; a payment gateway's own fee on a
+            refund, if any, isn't ours to absorb). No invented legal clauses
+            about liability, jurisdiction, or specific regulation citations -
+            those need real legal review this theme can't provide.
         #}
         <div class="wrap" style="padding:60px 0 100px;max-width:760px">
             <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
@@ -232,11 +242,39 @@
                     </div>
                 </div>
                 <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-wallet" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.refund_policy_before_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.refund_policy_before_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-receipt" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.refund_policy_fees_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.refund_policy_fees_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
                     <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-file-off" style="color:var(--accent);font-size:20px"></i></span>
                     <div>
                         <div class="disp" style="font-size:16px">{{ trans('bav.refund_policy_digital_title') }}</div>
                         <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.refund_policy_digital_desc') }}</p>
                         <p style="font-size:13px;line-height:1.8;color:#7C7C86;margin-top:8px">{{ trans('bav.refund_policy_known_note') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-warning" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.refund_policy_store_error_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.refund_policy_store_error_desc') }}</p>
+                    </div>
+                </div>
+                <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
+                    <span class="ico" style="flex:none;width:44px;height:44px;border-radius:14px"><i class="sicon-swap" style="color:var(--accent);font-size:20px"></i></span>
+                    <div>
+                        <div class="disp" style="font-size:16px">{{ trans('bav.refund_policy_special_cases_title') }}</div>
+                        <p style="font-size:14px;line-height:1.8;color:#A6A6AF;margin-top:6px">{{ trans('bav.refund_policy_special_cases_desc') }}</p>
                     </div>
                 </div>
                 <div class="step" style="display:flex;align-items:flex-start;gap:16px;padding:24px">
