@@ -131,6 +131,15 @@
                 {% for opt in product.options|default([]) %}
                     {% if 'المستلم' in opt.name %}{% set is_recipient_id_product = true %}{% endif %}
                 {% endfor %}
+                {#
+                    Double CP (regular and gift) looked identical to a plain
+                    CP tier at a glance - same coin render, no visual cue
+                    this one doubles the amount. Detected off the product's
+                    own category name (set by Salman in Salla, "الدبل CP" /
+                    "إهداء الدبل CP") rather than slug, same convention as
+                    the recipient-id detection above.
+                #}
+                {% set is_double_cp_product = 'الدبل' in (product.category.name ?? '') %}
                 {% set explainer_image = is_recipient_id_product
                     ? {id: 'recipient-id-explainer', url: 'images/recipient-id-schematic.svg'|asset, alt: 'معرّف المستلم: ادخل على الحساب الشخصي لصديقك، وانسخ الآيدي', video_url: null, video_type: null, type: 'image'}
                     : {id: 'player-id-explainer', url: 'images/player-id-schematic.svg'|asset, alt: 'رسم توضيحي يوضح مكان معرّف اللاعب: الإعدادات، ثم إعدادات المستخدم، ثم نسخ المعرّف', video_url: null, video_type: null, type: 'image'} %}
@@ -163,6 +172,9 @@
                     {% endif %}
                     {% if is_recipient_id_product %}
                         {{ bav_gift_ribbon_svg }}
+                    {% endif %}
+                    {% if is_double_cp_product %}
+                        <span class="bav-x2-badge" aria-hidden="true">×2</span>
                     {% endif %}
 
                     <salla-button

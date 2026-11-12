@@ -186,6 +186,13 @@ class ProductCard extends HTMLElement {
     return (this.product.options || []).some((opt) => (opt.name || '').includes('المستلم'));
   }
 
+  // Same category-name convention single.twig uses for the "×2" badge -
+  // covers both the regular and gift Double CP category since both names
+  // contain "الدبل".
+  isDoubleCpProduct() {
+    return (this.product.category?.name || '').includes('الدبل');
+  }
+
   // Digital files and services have no product photo to show - instead the
   // image slot shows a branded gradient with the Bav mark watermarked in
   // the corner and an inset frame, same visual language either way, with
@@ -230,6 +237,7 @@ class ProductCard extends HTMLElement {
           ${percentOff > 0 ? `<span class="save num" dir="ltr">-${percentOff}%</span>` : ''}
           ${this.getBadgeHtml()}
           ${this.isGiftProduct() ? GIFT_RIBBON_HTML : ''}
+          ${this.isDoubleCpProduct() ? '<span class="bav-x2-badge" aria-hidden="true">×2</span>' : ''}
         </div>`}
       </a>
       <div class="pbody">

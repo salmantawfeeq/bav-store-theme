@@ -7194,6 +7194,30 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   font-size: 13px;
   backdrop-filter: blur(6px);
 }
+/* Double CP (regular and gift) used the exact same coin render as a plain
+   CP tier of that size, with nothing on the photo itself hinting it's
+   worth double. Placed in the bottom corner, opposite .badge/.save up top,
+   so it never collides with a sale badge or the gift ribbon's bow. */
+.bav-x2-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FF5A1F, #FFB27A);
+  background: linear-gradient(135deg, var(--accent), #FFB27A);
+  color: #0A0A0B;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 16px -4px rgba(255, 90, 31, 0.55);
+}
 /* Gift Double CP products show the same coin photo as their regular
    counterpart (same quantity, only the delivery method differs - a
    different coin render would misrepresent the amount) - a wrapped-box
@@ -7623,6 +7647,14 @@ html[dir=ltr] .hero-bg {
     left: 8px;
     padding: 2px 6px;
     font-size: 10px;
+  }
+  .bav-x2-badge {
+    bottom: 8px;
+    left: 8px;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 7px;
+    font-size: 12px;
   }
 }
 @media (max-width: 700px) {

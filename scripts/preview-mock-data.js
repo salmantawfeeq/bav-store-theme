@@ -186,6 +186,11 @@ function card(p) {
     : isFree ? `<span class="badge">مجانًا</span>`
     : p.badge ? `<span class="badge">${p.badge}</span>`
     : (p.digitalFile || p.service) ? `<span class="badge">تنفيذ سريع</span>` : '';
+  // Same "الدبل" category convention product-card.js/single.twig use, via
+  // the mock product's own slug prefix (regular and gift Double CP tiers
+  // both start with "double-cp").
+  const isDoubleCp = (p.slug || '').startsWith('double-cp');
+  const x2Badge = isDoubleCp ? `<span class="bav-x2-badge" aria-hidden="true">×2</span>` : '';
   const nameLine = p.unit
     ? `<div class="pname num">${p.name} <small>${p.unit}</small></div>`
     : `<div style="font-size:20px;font-weight:700;line-height:1.5">${p.name}</div>`;
@@ -216,7 +221,7 @@ function card(p) {
         </div>
         ${badge}
       </div>`
-    : `<div class="pimg${p.digitalFile ? ' pimg--contain' : ''}"${giftImgStyle}><img src="${img}" alt="${p.name}" loading="lazy">${badge}${p.gift ? GIFT_RIBBON_HTML : ''}
+    : `<div class="pimg${p.digitalFile ? ' pimg--contain' : ''}"${giftImgStyle}><img src="${img}" alt="${p.name}" loading="lazy">${badge}${p.gift ? GIFT_RIBBON_HTML : ''}${x2Badge}
       </div>`;
 
   return `
@@ -323,6 +328,7 @@ function productGallery(product) {
       <img src="${main.url}" alt="${main.alt}" style="width:100%;height:100%;object-fit:${fit};display:block">
       ${product.is_on_sale ? `<span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px">-${product.discount_percentage}</span>` : ''}
       ${product.isGiftProduct ? GIFT_RIBBON_HTML : ''}
+      ${(product.category?.name || '').includes('الدبل') ? '<span class="bav-x2-badge" aria-hidden="true">×2</span>' : ''}
     </div>
     ${slides.length > 1 ? `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px">${thumbs}
     </div>` : ''}`;
