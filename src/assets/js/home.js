@@ -32,11 +32,16 @@ class Home extends BasePage {
 
         const lang = {
             addMore: ladder.dataset.langAddMore,
+            almostThere: ladder.dataset.langAlmostThere,
             allUnlocked: ladder.dataset.langAllUnlocked,
             unlocked: ladder.dataset.langUnlocked,
             next: ladder.dataset.langNext,
             locked: ladder.dataset.langLocked,
         };
+        // "Almost there" only replaces the generic "add :amount SAR" line once
+        // the shopper is genuinely close to the next level - showing it at any
+        // distance would read as misleading ("one step away" while still far).
+        const ALMOST_THERE_RATIO = 0.2;
 
         const fill = document.getElementById('bav-lad-fill');
         const text = document.getElementById('bav-lad-text');
@@ -48,7 +53,10 @@ class Home extends BasePage {
 
             const nextLevel = levels.find(level => cartTotal < level.amount);
             if (nextLevel) {
-                text.textContent = lang.addMore.replace(':amount', salla.helpers.number(nextLevel.amount - cartTotal, 2));
+                const remaining = nextLevel.amount - cartTotal;
+                text.textContent = (remaining <= nextLevel.amount * ALMOST_THERE_RATIO)
+                    ? lang.almostThere
+                    : lang.addMore.replace(':amount', salla.helpers.number(remaining, 2));
             } else {
                 text.textContent = lang.allUnlocked;
             }
