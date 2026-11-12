@@ -726,11 +726,21 @@ function build() {
     { file: 'faq-full.html', titleKey: 'bav.faq_page_title', label: 'الأسئلة الشائعة (الصفحة الكاملة)' },
     { file: 'about.html', titleKey: 'bav.about_eyebrow', label: 'من نحن' },
     { file: 'refund-policy.html', titleKey: 'bav.refund_policy_title', label: 'سياسة الاستبدال والاسترجاع' },
-    { file: 'terms.html', titleKey: 'bav.terms_title', label: 'الشروط والأحكام' },
+    {
+      file: 'terms.html',
+      titleKey: 'bav.terms_title',
+      label: 'الشروط والأحكام',
+      // "الشروط والأحكام" has no dedicated design branch in page-single.twig
+      // on purpose - it falls to the generic page content block and shows
+      // whatever Salman writes for it in the Salla dashboard's own page
+      // editor. This sample text is preview-only, just to prove that path
+      // renders correctly; it is never shipped.
+      content: '<p>هنا تظهر نص الشروط والأحكام بالضبط كما تكتبه في لوحة تحكم سلة (المحتوى &lt; الصفحات)، بدون أي تصميم مخصص يحجبه.</p>',
+    },
   ];
   for (const sp of SINGLE_PAGES) {
     const html = buildPageHtml('views/pages/page-single.twig', sp.label, {
-      page: { slug: 'page.single', title: transLookup(sp.titleKey), id: 1, type: 'normal' },
+      page: { slug: 'page.single', title: transLookup(sp.titleKey), id: 1, type: 'normal', content: sp.content || '' },
     });
     fs.writeFileSync(path.join(PREVIEW_DIR, sp.file), html, 'utf8');
   }
