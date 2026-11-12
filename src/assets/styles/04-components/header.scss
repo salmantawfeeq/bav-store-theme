@@ -99,16 +99,31 @@ header[data-testid="store-header"] {
 
 /* Collapsible search bar - hidden by default, slides down under the header
    on every screen size (not just mobile) when the search icon is clicked,
-   instead of a permanently-visible input box. */
+   instead of a permanently-visible input box.
+
+   max-height was previously capped at a fixed 80px even while open, which
+   clips anything taller than that with overflow:hidden - <salla-search>'s
+   own input alone (its documented default height is 60px, plus this bar's
+   own 16px top/bottom padding = 92px) already exceeded it, and its real
+   results dropdown (shown once the shopper types, on a live store) is
+   taller still. That's what read as search "freezing" on mobile: the
+   input was already being cut off, and typed results had no visible room
+   to render at all. The open state now gets a tall ceiling that nothing
+   realistically reaches, and switches to overflow:visible once settled so
+   the results dropdown is never clipped. */
 .bav-search-bar {
+  position: relative;
   max-height: 0;
   overflow: hidden;
   background: #111114;
   border-bottom: 1px solid #232329;
   transition: max-height .25s ease;
 }
-.bav-search-bar.is-open { max-height: 80px; }
+.bav-search-bar.is-open { max-height: 640px; overflow: visible; }
 .bav-search-bar .wrap { padding: 16px 36px; }
+@media (max-width: 480px) {
+  .bav-search-bar .wrap { padding: 14px 16px; }
+}
 .bav-search-bar input {
   flex: 1;
   min-width: 0;
