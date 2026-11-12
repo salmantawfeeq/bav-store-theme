@@ -65,16 +65,24 @@
 .bav-gift-ribbon__v, .bav-gift-ribbon__h {
   position: absolute;
   background: linear-gradient(135deg, #E23C30 0%, #B3241A 55%, #8C1912 100%);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.18) inset, 0 2px 10px rgba(0,0,0,.35);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.18) inset, 0 3px 12px rgba(0,0,0,.4);
 }
-.bav-gift-ribbon__v { top: 0; bottom: 0; left: 50%; width: 15%; transform: translateX(-50%); }
-.bav-gift-ribbon__h { left: 0; right: 0; top: 50%; height: 15%; transform: translateY(-50%); }
+.bav-gift-ribbon__v { top: 0; bottom: 0; left: 50%; width: 11%; transform: translateX(-50%); }
+.bav-gift-ribbon__h { left: 0; right: 0; top: 50%; height: 11%; transform: translateY(-50%); }
+/* A thin lighter fold-line down the middle of each band (a flat solid
+   ribbon reads as a sticker; a visible fold is what makes it read as an
+   actual wrapped strip of material). */
+.bav-gift-ribbon__v::before, .bav-gift-ribbon__h::before {
+  content: ""; position: absolute; background: rgba(255,255,255,.4);
+}
+.bav-gift-ribbon__v::before { top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); }
+.bav-gift-ribbon__h::before { left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); }
 .bav-gift-ribbon__v::after, .bav-gift-ribbon__h::after {
-  content: ""; position: absolute; inset: 0; opacity: .5;
+  content: ""; position: absolute; inset: 0; opacity: .45;
 }
-.bav-gift-ribbon__v::after { background: linear-gradient(90deg, rgba(255,255,255,.35), transparent 40%); }
-.bav-gift-ribbon__h::after { background: linear-gradient(180deg, rgba(255,255,255,.35), transparent 40%); }
-.bav-gift-ribbon__bow { position: absolute; top: 50%; left: 50%; width: 30%; aspect-ratio: 1; transform: translate(-50%, -50%); filter: drop-shadow(0 3px 8px rgba(0,0,0,.4)); }
+.bav-gift-ribbon__v::after { background: linear-gradient(90deg, rgba(255,255,255,.3), transparent 50%); }
+.bav-gift-ribbon__h::after { background: linear-gradient(180deg, rgba(255,255,255,.3), transparent 50%); }
+.bav-gift-ribbon__bow { position: absolute; top: 50%; left: 50%; width: 32%; aspect-ratio: 1; transform: translate(-50%, -50%); filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
 .pbody { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
 .pname { font-size: 34px; line-height: 1; direction: ltr; text-align: right; display: flex; align-items: baseline; gap: 8px; justify-content: flex-end; }
 .pname small { font-size: 16px; color: var(--accent); letter-spacing: .12em; }

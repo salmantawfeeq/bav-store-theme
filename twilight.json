@@ -199,9 +199,9 @@
             "item_label": "مستوى",
             "value": [
                 { "reward_levels.amount": 50, "reward_levels.text": "مفاجأة خاصة بانتظارك 🎁" },
-                { "reward_levels.amount": 150, "reward_levels.text": "مكافأة حصرية تنكشف عند الوصول" },
-                { "reward_levels.amount": 300, "reward_levels.text": "مفاجأة أكبر تستاهل توصل لها" },
-                { "reward_levels.amount": 600, "reward_levels.text": "أقوى مكافأة بالقائمة... تكتشفها بنفسك" }
+                { "reward_levels.amount": 150, "reward_levels.text": "مكافأة حصرية تنكشف عند الوصول 🎁" },
+                { "reward_levels.amount": 300, "reward_levels.text": "مفاجأة أكبر تستاهل توصل لها 🎁" },
+                { "reward_levels.amount": 600, "reward_levels.text": "أقوى مكافأة بالقائمة... تكتشفها بنفسك 🎁" }
             ],
             "fields": [
                 {

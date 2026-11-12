@@ -26,11 +26,14 @@ const GIFT_RIBBON_HTML = `<div class="bav-gift-ribbon" aria-hidden="true">
   <span class="bav-gift-ribbon__v"></span>
   <span class="bav-gift-ribbon__h"></span>
   <span class="bav-gift-ribbon__bow"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#CC2E24"/>
-    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#CC2E24"/>
-    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#9E1F17" opacity=".35"/>
-    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#9E1F17" opacity=".35"/>
-    <rect x="38" y="40" width="24" height="20" rx="6" fill="#A61B12"/>
+    <path d="M50 52C38 34 12 32 8 48c-3 14 16 20 42 4Z" fill="#D7352B"/>
+    <path d="M50 52C62 34 88 32 92 48c3 14-16 20-42 4Z" fill="#D7352B"/>
+    <path d="M50 52C40 40 20 39 14 48c-2 6 8 10 36 4Z" fill="#fff" opacity=".18"/>
+    <path d="M50 52C60 40 80 39 86 48c2 6-8 10-36 4Z" fill="#000" opacity=".15"/>
+    <path d="M44 58L38 94L48 84Z" fill="#A61B12"/>
+    <path d="M56 58L62 94L52 84Z" fill="#A61B12"/>
+    <rect x="42" y="42" width="16" height="16" rx="3" fill="#A61B12" transform="rotate(45 50 50)"/>
+    <rect x="42" y="42" width="16" height="16" rx="3" fill="none" stroke="#7A1210" stroke-width="1.5" transform="rotate(45 50 50)"/>
   </svg></span>
 </div>`;
 
