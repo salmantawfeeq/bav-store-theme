@@ -30,10 +30,6 @@
                     </a>
                     <a href="{{ theme.settings.get('offers_category_url', '#offers') }}" class="btn btn-g">{{ trans('bav.nav.offers') }}</a>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03);max-width:100%">
-                    <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                    <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ trans('bav.hero_execution_note', {time: theme.settings.get('execution_time_text')}) }}</span>
-                </div>
             </div>
         </div>
     </section>
@@ -52,10 +48,6 @@
             <div style="display:flex;flex-wrap:wrap;gap:12px">
                 <a href="{{ theme.settings.get('currency_category_url', '#choose-game') }}" class="btn btn-p" style="flex:1;min-width:150px;height:54px;font-size:16px;padding:0 18px">{{ trans('bav.nav.choose_game') }}</a>
                 <a href="{{ theme.settings.get('offers_category_url', '#offers') }}" class="btn btn-g" style="flex:1;min-width:150px;height:54px;font-size:16px;padding:0 18px">{{ trans('bav.nav.offers') }}</a>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;border:1px solid #2E2E35;background:rgba(255,255,255,.03)">
-                <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                <span style="font-size:14px;line-height:1.7;color:#C7C7CF">{{ trans('bav.hero_execution_note', {time: theme.settings.get('execution_time_text')}) }}</span>
             </div>
         </div>
     </section>
@@ -341,7 +333,7 @@
                         <span class="num" style="font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #34343B">03</span>
                     </div>
                     <div class="disp" style="font-size:26px;margin-top:26px">{{ trans('bav.how_step3_title') }}</div>
-                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ trans('bav.how_step3_desc', {time: theme.settings.get('execution_time_text'), hours: theme.settings.get('working_hours_text')}) }}</div>
+                    <div style="font-size:16px;line-height:1.85;color:#9B9BA5;margin-top:10px">{{ trans('bav.how_step3_desc', {hours: theme.settings.get('working_hours_text')}) }}</div>
                 </div>
             </div>
         </div>
@@ -361,7 +353,7 @@
                 </details>
                 <details>
                     <summary>{{ trans('bav.faq_q3') }}</summary>
-                    <p>{{ trans('bav.faq_a3', {time: theme.settings.get('execution_time_text'), hours: theme.settings.get('working_hours_text')}) }}</p>
+                    <p>{{ trans('bav.faq_a3', {hours: theme.settings.get('working_hours_text')}) }}</p>
                 </details>
                 <details>
                     <summary>{{ trans('bav.faq_q5') }}</summary>

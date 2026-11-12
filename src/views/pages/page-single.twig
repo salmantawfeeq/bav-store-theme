@@ -114,7 +114,7 @@
                 {% for i in 1..6 %}
                     <details>
                         <summary>{{ trans('bav.faq_q' ~ i) }}</summary>
-                        <p>{% if i == 3 %}{{ trans('bav.faq_a3', {time: theme.settings.get('execution_time_text'), hours: theme.settings.get('working_hours_text')}) }}{% else %}{{ trans('bav.faq_a' ~ i) }}{% endif %}</p>
+                        <p>{% if i == 3 %}{{ trans('bav.faq_a3', {hours: theme.settings.get('working_hours_text')}) }}{% else %}{{ trans('bav.faq_a' ~ i) }}{% endif %}</p>
                     </details>
                 {% endfor %}
             </div>
@@ -147,7 +147,7 @@
                     <div class="about-commit-card">
                         <span class="bav-trust-icon"><i class="sicon-time" style="color:var(--accent);font-size:20px"></i></span>
                         <div class="disp" style="font-size:20px;margin-top:20px">{{ trans('bav.about_commit2_title') }}</div>
-                        <p style="font-size:14.5px;line-height:1.8;color:#9B9BA5;margin-top:10px">{{ trans('bav.about_commit2_desc', {time: theme.settings.get('execution_time_text')}) }}</p>
+                        <p style="font-size:14.5px;line-height:1.8;color:#9B9BA5;margin-top:10px">{{ trans('bav.about_commit2_desc') }}</p>
                     </div>
                     <div class="about-commit-card">
                         <span class="bav-trust-icon"><i class="sicon-shield-check" style="color:var(--accent);font-size:20px"></i></span>
