@@ -193,6 +193,24 @@ salla-cart-summary {
   width: 100%;
 }
 
+/* <salla-search> is a plain (non-shadow-DOM) component - confirmed by its
+   zero encapsulation flag in Salla's own component registry - so its own
+   classes are reachable here. Its results dropdown (.s-search-results) ships
+   with `position:absolute` but no `top`/`margin` value, which leaves the
+   browser to fall back to the element's own "static position" - exactly
+   where it would've landed in normal flow, which can end up overlapping the
+   input text instead of sitting below it (the merchant's report: "the
+   suggestions list covers what I'm typing"). Pinning it explicitly to the
+   bottom edge of its positioned ancestor is the standard fix for a dropdown
+   meant to open below its trigger. */
+.bav-search-bar .s-search-container {
+  overflow: visible;
+}
+.bav-search-bar .s-search-results {
+  top: 100% !important;
+  margin: 0 !important;
+}
+
 #mainnav .sicon-menu {
   width: 1rem;
   display: inline-block;
