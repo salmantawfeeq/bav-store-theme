@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="حل مشاكل الإعدادات والتحكم">
+  <defs>
+    <linearGradient id="bavFixBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1A20"/>
+      <stop offset="1" stop-color="#0E0E11"/>
+    </linearGradient>
+  </defs>
+  <!-- Full-bleed, no internal frame/radius - matches how a real photo sits
+       in the same card (.pcard/.pimg already round and clip the corners). -->
+  <rect width="400" height="300" fill="url(#bavFixBg)"/>
+
+  <!-- Game controller -->
+  <g transform="translate(200,132)">
+    <path d="M-100 -6c0-24 18-34 42-34h116c24 0 42 10 42 34v8c0 26-10 48-28 48-13 0-16-10-28-10h-88c-12 0-15 10-28 10-18 0-28-22-28-48z"
+          fill="#232329" stroke="#2E2E35" stroke-width="2"/>
+    <!-- d-pad -->
+    <g fill="#F4F4F2">
+      <rect x="-70" y="-20" width="12" height="32" rx="2"/>
+      <rect x="-82" y="-8" width="36" height="12" rx="2"/>
+    </g>
+    <!-- action buttons -->
+    <g fill="#FF5A1F">
+      <circle cx="64" cy="-16" r="7"/>
+      <circle cx="80" cy="0" r="7"/>
+      <circle cx="64" cy="16" r="7"/>
+      <circle cx="48" cy="0" r="7"/>
+    </g>
+  </g>
+
+  <!-- wrench badge: adjusting / fixing the controls -->
+  <g transform="translate(288,66) rotate(45)">
+    <circle r="23" fill="#17171C" stroke="#FF5A1F" stroke-width="2.4"/>
+    <path d="M-10 -10a9 9 0 1013 13l9 9 4-4-9-9a9 9 0 00-17-9z" fill="#FF5A1F"/>
+  </g>
+
+  <text x="200" y="232" fill="#F4F4F2" font-size="22" font-weight="700" text-anchor="middle" font-family="sans-serif">حل مشاكل الإعدادات والتحكم</text>
+  <text x="200" y="256" fill="#8E8E98" font-size="14" text-anchor="middle" font-family="sans-serif">ضبط الحساسية بما يناسب أسلوبك</text>
+</svg>

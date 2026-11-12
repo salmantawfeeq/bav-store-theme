@@ -3126,9 +3126,19 @@ salla-button.copied i:before {
   color: #9B9BA5;
   color: var(--color-text-secondary);
 }
-.btn--wishlist.is-added{
-    color: #FF5A1F;
-    color: var(--color-primary);
+.btn--wishlist .bav-heart-filled {
+  display: none;
+}
+.btn--wishlist.is-added {
+  color: #FF5A1F !important;
+  color: var(--accent) !important;
+}
+.btn--wishlist.is-added .sicon-heart {
+  display: none;
+}
+.btn--wishlist.is-added .bav-heart-filled {
+  display: inline-flex;
+  animation: bavWishlistPop 0.35s ease;
 }
 .btn--rounded-gray{
     display: inline-flex;
@@ -7181,6 +7191,65 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   font-size: 13px;
   backdrop-filter: blur(6px);
 }
+/* Gift Double CP products show the same coin photo as their regular
+   counterpart (same quantity, only the delivery method differs - a
+   different coin render would misrepresent the amount) - a wrapped-box
+   ribbon overlay is a clearer, more festive "this one's a gift" signal
+   than a small badge, works over any photo underneath, and scales to
+   every size (card thumbnail or the full product gallery) since it's
+   sized in percentages of its own container, not fixed pixels. */
+.bav-gift-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.bav-gift-ribbon__v, .bav-gift-ribbon__h {
+  position: absolute;
+  background: linear-gradient(135deg, #E23C30 0%, #B3241A 55%, #8C1912 100%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18) inset, 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.bav-gift-ribbon__v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 15%;
+  transform: translateX(-50%);
+}
+.bav-gift-ribbon__h {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 15%;
+  transform: translateY(-50%);
+}
+.bav-gift-ribbon__v::after, .bav-gift-ribbon__h::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.5;
+}
+.bav-gift-ribbon__v::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.35), transparent 40%);
+}
+.bav-gift-ribbon__h::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%);
+}
+.bav-gift-ribbon__bow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
+}
 .pbody {
   padding: 22px 24px 24px;
   display: flex;
@@ -7306,7 +7375,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   font-family: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 17px;
+  font-size: 16px;
 }
 .bav-trust-desc {
   font-size: 13px;
@@ -7380,7 +7449,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
 }
 .faq summary::-webkit-details-marker {
@@ -7400,7 +7469,7 @@ input[type=radio].sr-only:checked ~ div.s-block--slider-with-bg .slider-bg:befor
 }
 .faq p {
   margin: 14px 0 0;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.9;
   color: #A6A6AF;
   max-width: 760px;
@@ -7649,7 +7718,7 @@ html[dir=ltr] .hero-bg {
     margin-top: 6px !important;
   }
   .ladder .lad-text {
-    font-size: 17px !important;
+    font-size: 16px !important;
   }
 }
 /* Merchant-authored rich text pages (About, policies, how-to-find-id, ...) */
@@ -8050,7 +8119,7 @@ html[dir=ltr] .drawer {
   display: block;
   padding: 16px 4px;
   border-bottom: 1px solid #1D1D22;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
 }
 .menu input {
@@ -8409,7 +8478,7 @@ html[dir=ltr] .drawer {
 .bav-mobile-nav li > a, .bav-mobile-nav li > span {
   display: block;
   padding: 16px 4px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #F4F4F2;
   -webkit-text-decoration: none;
@@ -8488,7 +8557,7 @@ html[dir=ltr] .drawer {
   color: #F4F4F2;
 }
 .mm-spn a, .mm-spn span {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
 }
 .mm-spn li:after {
@@ -8500,7 +8569,7 @@ html[dir=ltr] .drawer {
   color: var(--accent);
 }
 .mm-spn salla-menu a {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: #F4F4F2;
   display: block;
@@ -8606,6 +8675,22 @@ body.menu-opened .bav-whatsapp-fab {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+@keyframes bavWishlistPop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn--wishlist.is-added .bav-heart-filled {
+    animation: none;
   }
 }
 /*
