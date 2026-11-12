@@ -132,7 +132,7 @@
                     {% if 'المستلم' in opt.name %}{% set is_recipient_id_product = true %}{% endif %}
                 {% endfor %}
                 {% set explainer_image = is_recipient_id_product
-                    ? {id: 'recipient-id-explainer', url: 'images/recipient-id-schematic.svg'|asset, alt: 'آيدي صديقك: روح لقائمة أصدقائك، افتح ملف صديقك، وانسخ الآيدي', video_url: null, video_type: null, type: 'image'}
+                    ? {id: 'recipient-id-explainer', url: 'images/recipient-id-schematic.svg'|asset, alt: 'معرّف المستلم: ادخل على الحساب الشخصي لصديقك، وانسخ الآيدي', video_url: null, video_type: null, type: 'image'}
                     : {id: 'player-id-explainer', url: 'images/player-id-schematic.svg'|asset, alt: 'رسم توضيحي يوضح مكان معرّف اللاعب: الإعدادات، ثم إعدادات المستخدم، ثم نسخ المعرّف', video_url: null, video_type: null, type: 'image'} %}
                 {#
                     Only "codes" products (currency tiers, Battle Pass,
@@ -402,7 +402,11 @@
                             <input id="confirm-ok" type="checkbox">
                             <span style="font-size:15px;line-height:1.8;color:#C7C7CF">
                                 {{ trans('bav.product.confirm_label') }}
-                                <a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.product.how_to_find_id') }}</a>
+                                {% if is_recipient_id_product %}
+                                    <a href="{{ theme.settings.get('find_recipient_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.find_recipient_id_title') }}</a>
+                                {% else %}
+                                    <a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.product.how_to_find_id') }}</a>
+                                {% endif %}
                             </span>
                         </label>
                         <div class="pid-err" id="confirm-err" style="display:none">{{ trans('bav.product.confirm_required') }}</div>

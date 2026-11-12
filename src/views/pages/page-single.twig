@@ -51,6 +51,57 @@
             </div>
         </div>
 
+    {% elseif page.title == trans('bav.find_recipient_id_title') %}
+        {#
+            Separate from "كيف أجد معرّفي؟" on purpose - a gift Double CP
+            order needs the RECIPIENT's id, found from a different place
+            (their own profile, not the buyer's settings) and in a
+            different format (a long UID, not the short player ID). Per
+            direct request (2026-11-12), built around two confirmations
+            flagged as critical: the recipient hasn't already activated
+            this same tier before, and the id entered is theirs, not the
+            buyer's own.
+        #}
+        <div class="wrap" style="padding:60px 0 100px;max-width:1040px">
+            <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
+            <div class="sechead">
+                <h1 class="disp" style="font-size:34px">{{ trans('bav.find_recipient_id_title') }}</h1>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.find_recipient_id_subtitle') }}</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:40px">
+                <img src="{{ 'images/recipient-id-schematic.svg'|asset }}" alt="رسم توضيحي يوضح مكان آيدي المستلم: ادخل على حسابه الشخصي، وانسخ الآيدي" style="width:100%;border-radius:22px;border:1px solid #232329">
+                <div style="display:flex;flex-direction:column;gap:22px">
+                    {% for step_text in [trans('bav.find_recipient_id_step1'), trans('bav.find_recipient_id_step2')] %}
+                        <div style="display:flex;align-items:flex-start;gap:16px">
+                            <span class="num" style="flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#0A0A0B;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700">{{ loop.index }}</span>
+                            <p style="font-size:16px;line-height:1.85;color:#C7C7CE;margin:6px 0 0">{{ step_text }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px;margin-top:40px">
+                <div style="background:#1A1208;border:1px solid #3A2A14;border-radius:20px;padding:26px">
+                    <div style="display:flex;align-items:center;gap:16px">
+                        <span class="bav-trust-icon" style="flex:none"><i class="sicon-info" style="color:var(--accent);font-size:22px"></i></span>
+                        <div>
+                            <div class="bav-trust-title">{{ trans('bav.find_recipient_id_confirm1_title') }}</div>
+                            <div class="bav-trust-desc">{{ trans('bav.find_recipient_id_confirm1_desc') }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background:#1A1208;border:1px solid #3A2A14;border-radius:20px;padding:26px">
+                    <div style="display:flex;align-items:center;gap:16px">
+                        <span class="bav-trust-icon" style="flex:none"><i class="sicon-shield-check" style="color:var(--accent);font-size:22px"></i></span>
+                        <div>
+                            <div class="bav-trust-title">{{ trans('bav.find_recipient_id_confirm2_title') }}</div>
+                            <div class="bav-trust-desc">{{ trans('bav.find_recipient_id_confirm2_desc') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% elseif page.title == trans('bav.faq_page_title') %}
         <div class="wrap" style="padding:60px 0 100px;max-width:900px">
             <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>

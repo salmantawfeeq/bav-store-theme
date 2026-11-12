@@ -313,7 +313,7 @@ function productGallery(product) {
   // for an email instead and services have no fixed field at all, so
   // showing this schematic there was a leftover irrelevant second photo.
   const explainerSlide = product.type !== 'codes' ? null : product.isGiftProduct
-    ? { url: '../bav-store-theme/public/images/recipient-id-schematic.svg', alt: 'آيدي صديقك: روح لقائمة أصدقائك، افتح ملف صديقك، وانسخ الآيدي' }
+    ? { url: '../bav-store-theme/public/images/recipient-id-schematic.svg', alt: 'معرّف المستلم: ادخل على الحساب الشخصي لصديقك، وانسخ الآيدي' }
     : { url: '../bav-store-theme/public/images/player-id-schematic.svg', alt: 'رسم توضيحي يوضح مكان معرّف اللاعب' };
   const slides = explainerSlide ? [main, explainerSlide] : [main];
   const thumbs = slides.map((img, i) => `
@@ -392,10 +392,22 @@ function toProductContext(p, sectionKey, index) {
     // "إنشاء حساب" is the one service with real required fields (email +
     // phone, per صاحب المتجر) - every other service still has none.
     has_options: meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account',
-    // Non-empty only so the real {% if product.options|length %} guard in
-    // options.twig renders <salla-product-options> at all during preview -
-    // the mock swap below replaces its contents either way.
-    options: (meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account') ? [{}] : [],
+    // Real option names (not just an empty placeholder object) so single.twig's
+    // OWN "المستلم" detection - real server-rendered twig logic, not something
+    // the mock swap below replaces - actually runs the same way here as it
+    // would against a real Salla product's options.
+    options: p.gift
+      ? [{ name: 'معرّف المستلم (Recipient ID)', placeholder: 'UID: 7295435626912859009' }]
+      : meta.type === 'codes'
+        ? [{ name: 'معرّف اللاعب (Player ID)', placeholder: '4PHMKA' }]
+        : meta.type === 'digital'
+          ? [{ name: 'البريد الإلكتروني لاستلام الملف', placeholder: 'name@example.com' }]
+          : p.slug === 'cheap-account'
+            ? [
+                { name: 'البريد الإلكتروني (غير مستخدم أبدًا على أي حساب Activision آخر)', placeholder: 'name@example.com' },
+                { name: 'رقم جوالك (للتواصل وتسليم الحساب وكلمة المرور)', placeholder: '05xxxxxxxx' },
+              ]
+            : [],
     is_on_sale: isOnSale,
     is_hidden_quantity: false,
     is_require_shipping: false,
@@ -424,7 +436,7 @@ function renderOptionFieldsPreview(product) {
   } else if (product.type === 'codes') {
     fields.push(
       product.isGiftProduct
-        ? { label: 'آيدي المستلم (Recipient ID)', placeholder: '6742910358918', dir: 'ltr' }
+        ? { label: 'معرّف المستلم (Recipient ID)', placeholder: 'UID: 7295435626912859009', dir: 'ltr' }
         : { label: 'معرّف اللاعب (Player ID)', placeholder: '4PHMKA', dir: 'ltr' }
     );
   } else if (product.url === 'product-cheap-account.html') {

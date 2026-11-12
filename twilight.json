@@ -277,6 +277,16 @@
             "required": false
         },
         {
+            "id": "find_recipient_id_page_url",
+            "type": "string",
+            "format": "text",
+            "label": "رابط صفحة \"كيف أجد الآيدي؟\"",
+            "description": "خاصة بمنتجات إهداء الدبل CP بس (مختلفة عن صفحة \"كيف أجد معرّفي؟\" العادية). لصقه بعد إنشاء هذه الصفحة في لوحة تحكم سلة بعنوان \"كيف أجد الآيدي؟\" بالضبط. اتركه فاضي لإخفاء أي زر يوديك لها لحد ما تتوفر.",
+            "icon": "sicon-link",
+            "value": "",
+            "required": false
+        },
+        {
             "id": "refund_policy_page_url",
             "type": "string",
             "format": "text",
