@@ -182,7 +182,7 @@ class ProductCard extends HTMLElement {
 
   render(){
     this.classList.add('pcard');
-    this.setAttribute('id', this.product.id);
+    this.setAttribute('id', `product-${this.product.id}`);
     const percentOff = this.getPercentOff();
     const img = this.product?.image?.url || this.placeholder || '';
     const alt = this.escapeHTML(this.product?.image?.alt || this.product.name);

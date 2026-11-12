@@ -145,7 +145,7 @@
                 <h2 class="disp" style="font-size:28px">{{ trans('bav.about_cta_title') }}</h2>
                 <p style="font-size:16px;color:#9B9BA5;margin-top:10px">{{ trans('bav.about_cta_desc') }}</p>
                 <div style="display:flex;justify-content:center;gap:14px;margin-top:26px;flex-wrap:wrap">
-                    <a href="{{ store.url }}#services" class="btn btn-p">{{ trans('bav.about_cta_primary') }}</a>
+                    <a href="{{ theme.settings.get('services_category_url', store.url ~ '#services') }}" class="btn btn-p">{{ trans('bav.about_cta_primary') }}</a>
                     {% if theme.settings.get('find_id_page_url') %}
                         <a href="{{ theme.settings.get('find_id_page_url') }}" class="btn btn-g">{{ trans('bav.about_cta_secondary') }}</a>
                     {% endif %}
