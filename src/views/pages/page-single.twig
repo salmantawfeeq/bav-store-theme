@@ -111,10 +111,10 @@
                 <p>{{ trans('bav.faq_page_subtitle') }}</p>
             </div>
             <div class="faq" style="margin-top:30px">
-                {% for i in 1..6 %}
+                {% for i in 1..14 %}
                     <details>
                         <summary>{{ trans('bav.faq_q' ~ i) }}</summary>
-                        <p>{% if i == 3 %}{{ trans('bav.faq_a3', {hours: theme.settings.get('working_hours_text')}) }}{% else %}{{ trans('bav.faq_a' ~ i) }}{% endif %}</p>
+                        <p>{% if i == 6 or i == 8 %}{{ trans('bav.faq_a' ~ i, {hours: theme.settings.get('working_hours_text')}) }}{% else %}{{ trans('bav.faq_a' ~ i) }}{% endif %}</p>
                     </details>
                 {% endfor %}
             </div>
