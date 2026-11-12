@@ -7646,8 +7646,8 @@ html[dir=ltr] .hero-bg {
     right: auto !important;
     bottom: auto !important;
     left: auto !important;
-    height: 330px;
-    background-size: auto 330px !important;
+    height: 210px;
+    background-size: auto 210px !important;
     background-position: 0% center !important;
     background-repeat: no-repeat;
     -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
@@ -7656,17 +7656,31 @@ html[dir=ltr] .hero-bg {
   .hero-grad, .hero-bot {
     display: none !important;
   }
+  /* The whole mobile intro (header + hero image + headline + buttons) was
+     taller than a typical phone viewport, so a shopper had to scroll just
+     to see the call-to-action buttons. Shrunk the image and tightened
+     every gap/padding below it so the full intro fits in one screen on
+     most phones instead of needing a scroll first. */
   .hero-wrap {
     min-height: 0 !important;
-    padding-bottom: 84px !important;
-    margin-top: -34px;
+    padding-top: 14px !important;
+    padding-bottom: 20px !important;
+    margin-top: -20px;
     align-items: flex-start !important;
+    gap: 12px !important;
   }
   .hero-wrap > div {
-    gap: 18px !important;
+    gap: 12px !important;
+  }
+  .hero-wrap h1 {
+    font-size: 34px !important;
   }
   .hero-wrap p {
-    font-size: 16px !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+  .hero-wrap > div:last-child {
+    padding: 10px 14px !important;
   }
   /* The two hero buttons size themselves explicitly now (flex:1 in a
      flex-wrap row, side by side when there's room) - a blanket width:100%
