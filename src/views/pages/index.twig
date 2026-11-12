@@ -61,53 +61,6 @@
     </section>
 
     {#
-        Trust row — a glowing circular badge + disp-font headline per item
-        with thin dividers, instead of the generic "4 equal bordered boxes"
-        feature-grid pattern (flagged as too cliché/off-the-shelf looking).
-    #}
-    <div class="wrap dsk" style="margin-top:-62px;position:relative;z-index:2">
-        <div class="bav-trust">
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg></span>
-                <div><div class="bav-trust-title">معرّف اللاعب يكفي!</div><div class="bav-trust-desc">راجع معرّفك بشكل صحيح قبل الدفع</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-                <div><div class="bav-trust-title">حسابك في أمان</div><div class="bav-trust-desc">لا نطلب كلمة سر، ومعرّف اللاعب لا يتيح الدخول لحسابك</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
-                <div><div class="bav-trust-title">دفع آمن</div><div class="bav-trust-desc">طرق دفع متنوعة وآمنة</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
-                <div><div class="bav-trust-title">دعم بعد الشراء</div><div class="bav-trust-desc">{{ theme.settings.get('working_hours_text') }}</div></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="wrap mob" style="padding-top:30px">
-        <div class="bav-trust bav-trust--mobile">
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg></span>
-                <div><div class="bav-trust-title">معرّف اللاعب يكفي!</div><div class="bav-trust-desc">راجعه قبل الدفع</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-                <div><div class="bav-trust-title">حسابك في أمان</div><div class="bav-trust-desc">بدون كلمة سر</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.6-1.4 1.6-2 2.5-2s1.9.6 2.5 2M14 10h4M14 14h3"/></svg></span>
-                <div><div class="bav-trust-title">دفع آمن</div><div class="bav-trust-desc">طرق متعددة</div></div>
-            </div>
-            <div class="bav-trust-item">
-                <span class="bav-trust-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
-                <div><div class="bav-trust-title">دعم بعد الشراء</div><div class="bav-trust-desc">{{ theme.settings.get('working_hours_text') }}</div></div>
-            </div>
-        </div>
-    </div>
-
-    {#
         Offers — any product currently on sale, pulled automatically by
         Salla itself (source="offers" is a real, built-in Twilight source
         type for this exact purpose) instead of a merchant having to
