@@ -402,10 +402,22 @@
                             <input id="confirm-ok" type="checkbox">
                             <span style="font-size:15px;line-height:1.8;color:#C7C7CF">
                                 {{ trans('bav.product.confirm_label') }}
-                                {% if is_recipient_id_product %}
-                                    <a href="{{ theme.settings.get('find_recipient_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.find_recipient_id_title') }}</a>
-                                {% else %}
-                                    <a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.product.how_to_find_id') }}</a>
+                                {#
+                                    This "how to find id" link only makes sense for
+                                    the player-ID / recipient-ID field on "codes"
+                                    products (currency tiers, Battle Pass, Double CP).
+                                    Digital files ask for an email and the
+                                    "إنشاء حساب" service asks for email+phone - neither
+                                    has a player ID at all, so the link was showing
+                                    there too before this type check, pointing a
+                                    confused shopper at an irrelevant help page.
+                                #}
+                                {% if product.type == 'codes' %}
+                                    {% if is_recipient_id_product %}
+                                        <a href="{{ theme.settings.get('find_recipient_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.find_recipient_id_title') }}</a>
+                                    {% else %}
+                                        <a href="{{ theme.settings.get('find_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.product.how_to_find_id') }}</a>
+                                    {% endif %}
                                 {% endif %}
                             </span>
                         </label>
