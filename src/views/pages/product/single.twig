@@ -380,6 +380,21 @@
 
                     {% hook 'product:single.form.start' %}
 
+                    {#
+                        The placeholder text inside each option field (set by
+                        the merchant per-field in Salla's own dashboard, see
+                        طلبات_صاحب_المتجر.md) disappears the moment a shopper
+                        starts typing or taps the field - easy to mistake for
+                        their own already-saved data instead of a sample. A
+                        persistent "مثال:" line above the real field, built
+                        from each option's own real placeholder value rather
+                        than a hardcoded guess, stays visible the whole time.
+                    #}
+                    {% for opt in product.options|default([]) %}
+                        {% if opt.placeholder %}
+                            <p style="font-size:13px;color:#8E8E98;margin:-4px 0 10px">{{ trans('bav.product.placeholder_example_note', {example: opt.placeholder}) }}</p>
+                        {% endif %}
+                    {% endfor %}
                     {% include 'pages.partials.product.options' %}
 
                     {% if product.has_options %}

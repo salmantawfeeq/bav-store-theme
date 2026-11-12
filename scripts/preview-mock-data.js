@@ -389,11 +389,13 @@ function toProductContext(p, sectionKey, index) {
     can_add_note: false,
     can_upload_file: false,
     has_metadata: false,
-    has_options: meta.type === 'codes' || meta.type === 'digital',
+    // "إنشاء حساب" is the one service with real required fields (email +
+    // phone, per صاحب المتجر) - every other service still has none.
+    has_options: meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account',
     // Non-empty only so the real {% if product.options|length %} guard in
     // options.twig renders <salla-product-options> at all during preview -
     // the mock swap below replaces its contents either way.
-    options: (meta.type === 'codes' || meta.type === 'digital') ? [{}] : [],
+    options: (meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account') ? [{}] : [],
     is_on_sale: isOnSale,
     is_hidden_quantity: false,
     is_require_shipping: false,
@@ -425,11 +427,20 @@ function renderOptionFieldsPreview(product) {
         ? { label: 'آيدي المستلم (Recipient ID)', placeholder: '6742910358918', dir: 'ltr' }
         : { label: 'معرّف اللاعب (Player ID)', placeholder: '4PHMKA', dir: 'ltr' }
     );
+  } else if (product.url === 'product-cheap-account.html') {
+    // Per صاحب المتجر's direct request (2026-11-12): this one service, not
+    // services in general, needs these two fields so he can personally
+    // deliver the finished account and password afterwards.
+    fields.push(
+      { label: 'البريد الإلكتروني (غير مستخدم أبدًا على أي حساب Activision آخر)', placeholder: 'name@example.com', dir: 'ltr' },
+      { label: 'رقم جوالك (للتواصل وتسليم الحساب وكلمة المرور)', placeholder: '05xxxxxxxx', dir: 'ltr' }
+    );
   }
   if (!fields.length) return '';
 
   const rows = fields.map((f) => `
     <div style="margin-bottom:18px">
+      <p style="font-size:13px;color:#8E8E98;margin:0 0 10px">مثال: ${f.placeholder} — ده رقم توضيحي بس، اكتب رقمك الحقيقي أنت في الخانة.</p>
       <label style="display:block;font-weight:700;font-size:15px;margin-bottom:10px">${f.label} <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:rgba(255,90,31,.14);color:var(--accent);margin-right:8px">مطلوب</span></label>
       <input class="field" type="text" dir="${f.dir}" placeholder="${f.placeholder}" style="${f.dir === 'rtl' ? 'font-family:inherit;font-weight:500;letter-spacing:0;font-size:16px;text-align:right' : ''}">
     </div>`).join('');
