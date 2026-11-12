@@ -19,12 +19,52 @@ const SERVICE_ICON_SVG = '<svg aria-hidden="true" width="44" height="44" viewBox
   '<line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2" fill="#0E0E11"/></svg>';
 
 const gameProducts = [
+  // Six CP tiers per the store owner's hand-drawn product map (قسم عملات لـ
+  // CP > "* الفئات:") and the trial prices already agreed in
+  // برومبت_بناء_موقع_Bav.md section 13 - each a standalone product, not
+  // options on one shared product (per the earlier decision logged in
+  // طلبات_صاحب_المتجر.md point 1).
   {
-    slug: 'cp-charge', name: 'شحن CP',
+    slug: 'cp-80', name: '80', unit: 'CP',
+    subtitle: 'بمعرّف اللاعب',
+    image: `${IMG}/02_product_images/CP_80.webp`,
+    price: '3.50', oldPrice: '3.69',
+    description: 'أصغر فئة شحن عندنا، مثالية لو تبي تجرّب أو تحتاج رصيد سريع. أدخل معرّف اللاعب بس، وما نطلب أي بيانات دخول لحسابك أبدًا.',
+  },
+  {
+    slug: 'cp-420', name: '420', unit: 'CP',
+    subtitle: 'بمعرّف اللاعب',
+    image: `${IMG}/02_product_images/CP_420.webp`,
+    price: '17.00', oldPrice: '17.99',
+    description: 'رصيد أكبر بسعر يناسب الاستخدام المتوسط. أدخل معرّف اللاعب بس، وخلك مطمئن — ما نطلب أي بيانات دخول لحسابك أبدًا.',
+  },
+  {
+    slug: 'cp-880', name: '880', unit: 'CP',
+    subtitle: 'بمعرّف اللاعب',
+    image: `${IMG}/02_product_images/CP_880.webp`,
+    price: '34.00', oldPrice: '36.99',
+    description: 'فئة وسط لو تبي رصيد يكفيك فترة أطول من غير ما تدفع في الفئات الكبيرة. أدخل معرّف اللاعب بس ويوصلك الشحن بعد تأكيد الدفع.',
+  },
+  {
+    slug: 'cp-2400', name: '2,400', unit: 'CP',
     subtitle: 'بمعرّف اللاعب',
     image: `${IMG}/02_product_images/CP_2400.webp`,
-    price: '3.50', oldPrice: null, startingFrom: true,
-    description: 'تبي تشحن بسرعة؟ اختر الفئة اللي تناسبك، أدخل معرّف اللاعب بس، وخلك مطمئن — ما نطلب أي بيانات دخول لحسابك أبدًا. عندنا فئات تناسب الكل، من أصغر شحنة لحد الباقات الكبيرة.',
+    price: '84.00', oldPrice: '89.99', badge: 'الأكثر مبيعًا',
+    description: 'الفئة الأكثر طلبًا عندنا — توازن ممتاز بين الكمية والسعر. أدخل معرّف اللاعب بس، وما نطلب أي بيانات دخول لحسابك أبدًا.',
+  },
+  {
+    slug: 'cp-5000', name: '5,000', unit: 'CP',
+    subtitle: 'بمعرّف اللاعب',
+    image: `${IMG}/02_product_images/CP_5000.webp`,
+    price: '172.00', oldPrice: '184.99',
+    description: 'رصيد كبير لمن يحتاج شحن بكميات أكبر بسعر أوفر نسبيًا من الفئات الصغيرة. أدخل معرّف اللاعب بس ويوصلك الشحن فور تأكيد الدفع.',
+  },
+  {
+    slug: 'cp-10800', name: '10,800', unit: 'CP',
+    subtitle: 'بمعرّف اللاعب',
+    image: `${IMG}/02_product_images/CP_10800.webp`,
+    price: '345.00', oldPrice: '369.99', badge: 'أفضل قيمة',
+    description: 'أكبر فئة شحن عندنا وأفضلها من ناحية القيمة مقابل السعر. أدخل معرّف اللاعب بس، وما نطلب أي بيانات دخول لحسابك أبدًا.',
   },
   {
     slug: 'battle-pass', name: 'Battle Pass',
@@ -54,10 +94,17 @@ const gameProducts = [
 ];
 
 const doubleCpProducts = [
-  { slug: 'double-cp-160', name: '160', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_80.webp`, price: '3.69', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-800', name: '800', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_420.webp`, price: '17.99', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-1600', name: '1,600', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_880.webp`, price: '36.99', note: 'مرة واحدة فقط لكل حساب' },
-  { slug: 'double-cp-4000', name: '4,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_2400.webp`, price: '89.99', note: 'مرة واحدة فقط لكل حساب' },
+  // Six tiers per صاحب المتجر's confirmed Double CP price table (طلبات_
+  // صاحب_المتجر.md, "أسعار عملات الدبل" - these are the cost/source prices
+  // he gave; he separately flagged wanting extra margin on the GIFT version
+  // specifically before going live, so treat these as the trial sale prices
+  // for now, same as every other trial price in this file).
+  { slug: 'double-cp-160', name: '160', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_80.webp`, price: '3.69', subtitle: '+5 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-800', name: '800', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_420.webp`, price: '17.99', subtitle: '+10 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-1600', name: '1,600', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_880.webp`, price: '36.99', subtitle: '+15 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-4000', name: '4,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_2400.webp`, price: '89.99', subtitle: '+20 Bonus Strongboxes', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-8000', name: '8,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_5000.webp`, price: '184.99', subtitle: '+60 Bonus Mythic Coins', note: 'مرة واحدة فقط لكل حساب' },
+  { slug: 'double-cp-16000', name: '16,000', unit: 'CP', image: `${IMG}/06_coin_only_renders/CP_10800.webp`, price: '369.99', subtitle: '+120 Bonus Mythic Coins', note: 'مرة واحدة فقط لكل حساب' },
 ].map((p) => ({
   ...p,
   description: `تحب تاخذ ضعف رصيدك من CP بنفس السعر؟ أدخل معرّف اللاعب واشحن ${p.name} ${p.unit}، وتتضاعف الكمية تلقائيًا في حسابك فور تأكيد الدفع. للعلم: الميزة دي تتفعّل مرة وحدة بس لكل حساب.`,
