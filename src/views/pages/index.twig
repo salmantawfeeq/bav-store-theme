@@ -61,6 +61,51 @@
     </section>
 
     {#
+        Rewards ladder — reacts to live cart value. Placed before the
+        Offers section (moved up from its old spot near the bottom) so
+        it catches the eye early, per direct request.
+    #}
+    {% set reward_levels = theme.settings.get('reward_levels') %}
+    <section style="padding:60px 0 40px">
+        <div class="wrap">
+            <div class="sechead">
+                <h2>{{ trans('bav.rewards_title') }}</h2>
+                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
+                <p>{{ trans('bav.rewards_subtitle') }}</p>
+            </div>
+            <div class="ladder" id="bav-ladder"
+                 data-initial-total="{{ cart.total }}"
+                 data-lang-add-more="{{ trans('bav.rewards_add_more') }}"
+                 data-lang-all-unlocked="{{ trans('bav.rewards_all_unlocked') }}"
+                 data-lang-cart-value="{{ trans('bav.rewards_cart_value') }}"
+                 data-lang-unlocked="{{ trans('bav.reward_unlocked') }}"
+                 data-lang-next="{{ trans('bav.reward_next') }}"
+                 data-lang-locked="{{ trans('bav.reward_locked') }}"
+                 style="padding:36px 36px 40px;border-radius:28px;border:1px solid #232329;background:linear-gradient(180deg,#101013,#0B0B0D)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+                    <div class="lad-text" id="bav-lad-text" style="font-size:20px;font-weight:600"></div>
+                    <div style="font-size:15px;color:#8E8E98">{{ trans('bav.rewards_cart_value') }} <span class="num lad-total" id="bav-lad-total" style="color:#fff">0.00</span> ر.س</div>
+                </div>
+                <div style="position:relative;height:10px;border-radius:999px;background:#1B1B20;margin-bottom:30px">
+                    <div class="lad-fill" id="bav-lad-fill" style="position:absolute;top:0;right:0;height:100%;width:0%;border-radius:999px;background:linear-gradient(270deg,var(--accent),#FFB27A);box-shadow:0 0 24px var(--accent);transition:width .6s cubic-bezier(.2,.8,.2,1)"></div>
+                </div>
+                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+                    {% for level in reward_levels %}
+                        <div class="lv" data-n="{{ loop.index }}" data-amt="{{ level['reward_levels.amount'] }}" style="position:relative;padding:26px 24px;border-radius:20px;border:1px solid #232329;background:#0F0F12">
+                            <div style="display:flex;align-items:center;justify-content:space-between">
+                                <span class="num" style="font-size:13px;letter-spacing:.16em;color:#8E8E98">LEVEL 0{{ loop.index }}</span>
+                                <span class="lv-chip" style="font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:#131316;border:1px solid #2A2A31;color:#6E6E78">{{ trans('bav.reward_locked') }}</span>
+                            </div>
+                            <div class="num" style="font-size:34px;margin-top:20px">{{ level['reward_levels.amount'] }}<span class="cur" style="font-family:var(--font-main);margin-right:6px">ر.س</span></div>
+                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ level['reward_levels.text'] }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {#
         Offers — any product currently on sale, pulled automatically by
         Salla itself (source="offers" is a real, built-in Twilight source
         type for this exact purpose) instead of a merchant having to
@@ -81,6 +126,7 @@
             <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                 <salla-products-list
                     source="offers"
+                    limit="4"
                     product-card-component="custom-salla-product-card">
                 </salla-products-list>
             </div>
@@ -257,47 +303,6 @@
             </div>
         </section>
     {% endif %}
-
-    {# Rewards ladder — reacts to live cart value #}
-    {% set reward_levels = theme.settings.get('reward_levels') %}
-    <section style="padding:100px 0 40px">
-        <div class="wrap">
-            <div class="sechead">
-                <h2>{{ trans('bav.rewards_title') }}</h2>
-                <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
-                <p>{{ trans('bav.rewards_subtitle') }}</p>
-            </div>
-            <div class="ladder" id="bav-ladder"
-                 data-initial-total="{{ cart.total }}"
-                 data-lang-add-more="{{ trans('bav.rewards_add_more') }}"
-                 data-lang-all-unlocked="{{ trans('bav.rewards_all_unlocked') }}"
-                 data-lang-cart-value="{{ trans('bav.rewards_cart_value') }}"
-                 data-lang-unlocked="{{ trans('bav.reward_unlocked') }}"
-                 data-lang-next="{{ trans('bav.reward_next') }}"
-                 data-lang-locked="{{ trans('bav.reward_locked') }}"
-                 style="padding:36px 36px 40px;border-radius:28px;border:1px solid #232329;background:linear-gradient(180deg,#101013,#0B0B0D)">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
-                    <div class="lad-text" id="bav-lad-text" style="font-size:20px;font-weight:600"></div>
-                    <div style="font-size:15px;color:#8E8E98">{{ trans('bav.rewards_cart_value') }} <span class="num lad-total" id="bav-lad-total" style="color:#fff">0.00</span> ر.س</div>
-                </div>
-                <div style="position:relative;height:10px;border-radius:999px;background:#1B1B20;margin-bottom:30px">
-                    <div class="lad-fill" id="bav-lad-fill" style="position:absolute;top:0;right:0;height:100%;width:0%;border-radius:999px;background:linear-gradient(270deg,var(--accent),#FFB27A);box-shadow:0 0 24px var(--accent);transition:width .6s cubic-bezier(.2,.8,.2,1)"></div>
-                </div>
-                <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
-                    {% for level in reward_levels %}
-                        <div class="lv" data-n="{{ loop.index }}" data-amt="{{ level['reward_levels.amount'] }}" style="position:relative;padding:26px 24px;border-radius:20px;border:1px solid #232329;background:#0F0F12">
-                            <div style="display:flex;align-items:center;justify-content:space-between">
-                                <span class="num" style="font-size:13px;letter-spacing:.16em;color:#8E8E98">LEVEL 0{{ loop.index }}</span>
-                                <span class="lv-chip" style="font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:#131316;border:1px solid #2A2A31;color:#6E6E78">{{ trans('bav.reward_locked') }}</span>
-                            </div>
-                            <div class="num" style="font-size:34px;margin-top:20px">{{ level['reward_levels.amount'] }}<span class="cur" style="font-family:var(--font-main);margin-right:6px">ر.س</span></div>
-                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ level['reward_levels.text'] }}</div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </section>
 
     {# How to top up — 3 steps #}
     <section id="how" style="padding:100px 0 40px">

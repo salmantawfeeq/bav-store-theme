@@ -18,6 +18,22 @@ const SERVICE_ICON_SVG = '<svg aria-hidden="true" width="44" height="44" viewBox
   '<line x1="4" y1="12" x2="20" y2="12"/><circle cx="8" cy="12" r="2" fill="#0E0E11"/>' +
   '<line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2" fill="#0E0E11"/></svg>';
 
+// Wrapped-box ribbon overlay for gift products - a cross of ribbon bands
+// (sized in CSS as % of the image, see .bav-gift-ribbon in bav.scss) plus
+// this bow at the center. Identical markup also lives in product-card.js
+// and single.twig for the real theme - keep all three in sync if changed.
+const GIFT_RIBBON_HTML = `<div class="bav-gift-ribbon" aria-hidden="true">
+  <span class="bav-gift-ribbon__v"></span>
+  <span class="bav-gift-ribbon__h"></span>
+  <span class="bav-gift-ribbon__bow"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#CC2E24"/>
+    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#CC2E24"/>
+    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#9E1F17" opacity=".35"/>
+    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#9E1F17" opacity=".35"/>
+    <rect x="38" y="40" width="24" height="20" rx="6" fill="#A61B12"/>
+  </svg></span>
+</div>`;
+
 const gameProducts = [
   // Six CP tiers per the store owner's hand-drawn product map (قسم عملات لـ
   // CP > "* الفئات:") and the trial prices already agreed in
@@ -160,7 +176,10 @@ function card(p) {
   // real theme's product-card.js, so a free product never needs p.badge
   // set by hand.
   const isFree = Number(p.price) === 0;
-  const badge = p.gift ? `<span class="badge" style="background:linear-gradient(135deg,var(--accent),#FFB27A)">🎁 هدية</span>`
+  // Gift products get the wrapped-ribbon overlay instead (see imgBlock
+  // below) - it's unambiguous on its own, a text badge on top would be
+  // redundant clutter.
+  const badge = p.gift ? ''
     : isFree ? `<span class="badge">مجانًا</span>`
     : p.badge ? `<span class="badge">${p.badge}</span>`
     : (p.digitalFile || p.service) ? `<span class="badge">تنفيذ سريع</span>` : '';
@@ -194,7 +213,7 @@ function card(p) {
         </div>
         ${badge}
       </div>`
-    : `<div class="pimg${p.digitalFile ? ' pimg--contain' : ''}"${giftImgStyle}><img src="${img}" alt="${p.name}" loading="lazy">${badge}
+    : `<div class="pimg${p.digitalFile ? ' pimg--contain' : ''}"${giftImgStyle}><img src="${img}" alt="${p.name}" loading="lazy">${badge}${p.gift ? GIFT_RIBBON_HTML : ''}
       </div>`;
 
   return `
@@ -300,6 +319,7 @@ function productGallery(product) {
     <div style="position:relative;border-radius:26px;overflow:hidden;border:1px solid #232329;aspect-ratio:${ratio};background:#09090B">
       <img src="${main.url}" alt="${main.alt}" style="width:100%;height:100%;object-fit:${fit};display:block">
       ${product.is_on_sale ? `<span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px">-${product.discount_percentage}</span>` : ''}
+      ${product.isGiftProduct ? GIFT_RIBBON_HTML : ''}
     </div>
     ${slides.length > 1 ? `<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px">${thumbs}
     </div>` : ''}`;

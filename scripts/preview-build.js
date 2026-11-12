@@ -483,15 +483,20 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
   // order - otherwise every "اكتشف أكثر" button landed on the exact same
   // page showing the offers section regardless of which section it was
   // actually under.
+  // Every homepage section is merchant-curated with a 4-item cap in real
+  // life (each "_products" theme setting has maxLength: 4 in twilight.json)
+  // - the full arrays here exist for the category pages (unlimited), so
+  // slice to 4 specifically for the homepage view to match what a real
+  // storefront will actually show, not the whole catalog at once.
   const sectionsInOrder = categoryProducts
     ? [mock.renderSection(categoryProducts)]
     : [
-        mock.renderSection(mock.offersProducts),
-        mock.renderSection(mock.gameProducts),
-        mock.renderSection(mock.doubleCpProducts),
-        mock.renderSection(mock.doubleCpGiftProducts),
-        mock.renderSection(mock.digitalFilesProducts),
-        mock.renderSection(mock.servicesProducts),
+        mock.renderSection(mock.offersProducts.slice(0, 4)),
+        mock.renderSection(mock.gameProducts.slice(0, 4)),
+        mock.renderSection(mock.doubleCpProducts.slice(0, 4)),
+        mock.renderSection(mock.doubleCpGiftProducts.slice(0, 4)),
+        mock.renderSection(mock.digitalFilesProducts.slice(0, 4)),
+        mock.renderSection(mock.servicesProducts.slice(0, 4)),
       ];
   let i = 0;
   rendered = rendered.replace(/<salla-products-list[\s\S]*?<\/salla-products-list>/g, () => {
