@@ -173,6 +173,21 @@
             "required": false
         },
         {
+            "id": "offers_products",
+            "type": "items",
+            "format": "dropdown-list",
+            "label": "منتجات قسم \"العروض\" في الرئيسية",
+            "description": "اختر حتى 4 منتجات بحيث كل واحد من قسم مختلف (مثلاً: فئة عملات، Battle Pass، ملف رقمي، خدمة) — عشان القسم يبين متنوع ومش نفس منتجات قسم فئات الشحن اللي تحته",
+            "icon": "sicon-keyboard_arrow_down",
+            "selected": [],
+            "options": [],
+            "source": "products",
+            "multichoice": true,
+            "searchable": true,
+            "maxLength": 4,
+            "required": false
+        },
+        {
             "id": "game_products",
             "type": "items",
             "format": "dropdown-list",

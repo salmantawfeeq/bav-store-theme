@@ -56,6 +56,7 @@ function load() {
   // cards are swapped in afterwards from preview-mock-data.js (real design
   // assets + the trial prices from طلبات_صاحب_المتجر.md).
   const PREVIEW_SECTION_KEYS = [
+    'offers_products',
     'game_products',
     'double_cp_products',
     'double_cp_gift_products',

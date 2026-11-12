@@ -448,9 +448,16 @@ const allProductPages = [
   ...servicesProducts.map((p, i) => ({ slug: p.slug, context: toProductContext(p, 'services', i) })),
 ];
 
-// "العروض" homepage section - whichever existing mock products already
-// carry a real oldPrice (same products, not separately invented ones).
-const offersProducts = [...gameProducts, ...doubleCpProducts].filter((p) => p.oldPrice);
+// "العروض" homepage section - one standout per section (not all from the
+// same category, which read as a duplicate of "اختر عملاتك" right below
+// it when every slot happened to be a currency tier). Trial picks only;
+// the merchant chooses the real 4 from theme settings.
+const offersProducts = [
+  gameProducts.find((p) => p.slug === 'cp-2400'),
+  gameProducts.find((p) => p.slug === 'battle-pass-bundle'),
+  digitalFilesProducts.find((p) => p.slug === 'guide-views'),
+  servicesProducts.find((p) => p.slug === 'cheap-account'),
+].filter(Boolean);
 
 module.exports = {
   gameProducts,

@@ -106,16 +106,21 @@
     </section>
 
     {#
-        Offers — any product currently on sale, pulled automatically by
-        Salla itself (source="offers" is a real, built-in Twilight source
-        type for this exact purpose) instead of a merchant having to
-        hand-pick products here every time a sale starts or ends.
-        Twig can no longer know in advance whether there are zero or a
-        hundred such products (that's resolved client-side by the real
-        component at runtime, same as Theme Raed's own offers slider
-        component does) so this section always renders rather than being
-        gated on a selection count like the other homepage sections.
+        Offers — merchant-curated, same as every other homepage section.
+        Tried Salla's automatic source="offers" here, but it just surfaces
+        whichever products happen to be on sale with no awareness of
+        category - since currency tiers outnumber every other section,
+        it kept filling all 4 slots with currency products, making this
+        section look like a duplicate of "اختر عملاتك" right below it.
+        A hand-picked selection lets the merchant feature one standout
+        per section (currency, Battle Pass, files, services...) instead.
+        The full, unlimited, always-up-to-date offers listing still
+        exists for whoever clicks "اكتشف أكثر" - only this homepage
+        teaser is curated.
     #}
+    {% set offers_products = [] %}
+    {% for item in theme.settings.get('offers_products')|default([]) %}{% set offers_products = offers_products|merge([item.value]) %}{% endfor %}
+    {% if offers_products|length %}
     <section id="offers" style="padding:60px 0 40px">
         <div class="wrap">
             <div class="sechead">
@@ -125,8 +130,8 @@
             </div>
             <div class="g3" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px">
                 <salla-products-list
-                    source="offers"
-                    limit="4"
+                    source="selected"
+                    source-value="{{ offers_products|json_encode }}"
                     product-card-component="custom-salla-product-card">
                 </salla-products-list>
             </div>
@@ -137,6 +142,7 @@
             {% endif %}
         </div>
     </section>
+    {% endif %}
 
     {# Choose your currency — merchant-selected products (no game names shown) #}
     {% set game_products = [] %}
