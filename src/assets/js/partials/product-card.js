@@ -16,6 +16,21 @@ const SERVICE_ICON_SVG = `<svg aria-hidden="true" width="44" height="44" viewBox
   <line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2" fill="#0E0E11"/>
 </svg>`;
 
+// Wrapped-box ribbon for gift products (see .bav-gift-ribbon in bav.scss) -
+// identical markup also lives in scripts/preview-mock-data.js and
+// product/single.twig; keep all three in sync if this changes.
+const GIFT_RIBBON_HTML = `<div class="bav-gift-ribbon" aria-hidden="true">
+  <span class="bav-gift-ribbon__v"></span>
+  <span class="bav-gift-ribbon__h"></span>
+  <span class="bav-gift-ribbon__bow"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#CC2E24"/>
+    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#CC2E24"/>
+    <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#9E1F17" opacity=".35"/>
+    <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#9E1F17" opacity=".35"/>
+    <rect x="38" y="40" width="24" height="20" rx="6" fill="#A61B12"/>
+  </svg></span>
+</div>`;
+
 class ProductCard extends HTMLElement {
   constructor(){
     super()
@@ -160,6 +175,14 @@ class ProductCard extends HTMLElement {
     return '';
   }
 
+  // Same detection single.twig uses for the gallery explainer image: a
+  // real, merchant-configured text option whose name contains "المستلم"
+  // (recipient) - that's how a gift Double CP product is told apart from
+  // its identical-looking regular counterpart, not from its name/slug.
+  isGiftProduct() {
+    return (this.product.options || []).some((opt) => (opt.name || '').includes('المستلم'));
+  }
+
   // Digital files and services have no product photo to show - instead the
   // image slot shows a branded gradient with the Bav mark watermarked in
   // the corner and an inset frame, same visual language either way, with
@@ -203,6 +226,7 @@ class ProductCard extends HTMLElement {
           <img src="${img}" alt="${alt}" loading="lazy">
           ${percentOff > 0 ? `<span class="save num" dir="ltr">-${percentOff}%</span>` : ''}
           ${this.getBadgeHtml()}
+          ${this.isGiftProduct() ? GIFT_RIBBON_HTML : ''}
         </div>`}
       </a>
       <div class="pbody">

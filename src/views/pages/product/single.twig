@@ -81,6 +81,24 @@
         so the whole heart visibly fills with colour, not just an outline.
     #}
     {% set bav_heart_filled_svg %}<svg class="bav-heart-filled" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 21.35c-.3 0-.59-.1-.83-.28C7.14 18 2 13.36 2 8.86 2 5.42 4.42 3 7.86 3c1.74 0 3.41.86 4.14 2.22C12.73 3.86 14.4 3 16.14 3 19.58 3 22 5.42 22 8.86c0 4.5-5.14 9.14-9.17 12.21-.24.18-.53.28-.83.28z"/></svg>{% endset %}
+    {#
+        Wrapped-box ribbon for gift products (identical markup also lives in
+        product-card.js and scripts/preview-mock-data.js - keep all three in
+        sync if this changes). Sizes itself in % of its container via
+        .bav-gift-ribbon in bav.scss, so it works on both the card thumbnail
+        and this full-size gallery image.
+    #}
+    {% set bav_gift_ribbon_svg %}<div class="bav-gift-ribbon" aria-hidden="true">
+        <span class="bav-gift-ribbon__v"></span>
+        <span class="bav-gift-ribbon__h"></span>
+        <span class="bav-gift-ribbon__bow"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#CC2E24"/>
+            <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#CC2E24"/>
+            <path d="M48 50C30 28 4 30 4 48c0 16 20 18 44 6Z" fill="#9E1F17" opacity=".35"/>
+            <path d="M52 50C70 28 96 30 96 48c0 16-20 18-44 6Z" fill="#9E1F17" opacity=".35"/>
+            <rect x="38" y="40" width="24" height="20" rx="6" fill="#A61B12"/>
+        </svg></span>
+    </div>{% endset %}
     {% if theme.settings.get('product_show_breadcrumbs', true) %}
       <div class="container container--breadcrumbs">
           <nav class="breadcrumbs w-full py-5">
@@ -139,6 +157,9 @@
                     {% endif %}
                     {% if product.discount_percentage %}
                         <span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px;z-index:2">-{{ product.discount_percentage }}</span>
+                    {% endif %}
+                    {% if is_recipient_id_product %}
+                        {{ bav_gift_ribbon_svg }}
                     {% endif %}
 
                     <salla-button
