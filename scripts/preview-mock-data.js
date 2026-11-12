@@ -200,7 +200,10 @@ function card(p) {
     : p.startingFrom
     ? `<div class="prow"><span style="font-size:14px;color:#8E8E98">يبدأ من</span><span class="price num">${money(p.price)}</span><span class="cur">ر.س</span></div>`
     : `<div class="prow"><span class="price num">${money(p.price)}</span><span class="cur">ر.س</span>${p.note ? `<span style="margin-right:auto;font-size:13px;color:#8E8E98">${p.note}</span>` : ''}</div>`;
-  const btnLabel = p.gift ? 'أهدِ الآن' : (p.unit ? 'اختر الفئة' : 'اطلب الخدمة');
+  // Matches the real card's actual fallback (salla.lang.get('pages.cart.add_to_cart')
+  // = "أضف للسلة") per صاحب المتجر's request (بند 1) - "اختر الفئة" never
+  // existed in the real product-card.js, only here in this older preview copy.
+  const btnLabel = p.gift ? 'أهدِ الآن' : (p.service ? 'اطلب الخدمة' : 'أضف للسلة');
   const noteLine = (!p.oldPrice && !p.startingFrom) ? '' : (p.note ? `<div style="font-size:12px;color:#8E8E98;margin-top:-6px">${p.note}</div>` : '');
 
   // Digital files show their own real cover image when the merchant has
