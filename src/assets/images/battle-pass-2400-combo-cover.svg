@@ -10,8 +10,10 @@
       <stop offset="1" stop-color="#FF5A1F"/>
     </linearGradient>
   </defs>
-  <rect width="400" height="300" rx="22" fill="url(#bavComboBg)"/>
-  <rect x="1" y="1" width="398" height="298" rx="21" fill="none" stroke="#2E2412" stroke-width="2"/>
+  <!-- Full-bleed, no internal frame/radius - the card's own CSS (.pcard,
+       .pimg) handles rounding and clipping identically to a real photo, so
+       this cover doesn't look "double-framed" sitting next to one. -->
+  <rect width="400" height="300" fill="url(#bavComboBg)"/>
 
   <!-- Battle Pass ticket, left -->
   <g transform="translate(60,96)">

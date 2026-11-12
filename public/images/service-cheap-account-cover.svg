@@ -5,8 +5,9 @@
       <stop offset="1" stop-color="#0E0E11"/>
     </linearGradient>
   </defs>
-  <rect width="400" height="300" rx="22" fill="url(#bavAcctBg)"/>
-  <rect x="1" y="1" width="398" height="298" rx="21" fill="none" stroke="#2A2A31" stroke-width="2"/>
+  <!-- Full-bleed, no internal frame/radius - matches how a real photo sits
+       in the same card (.pcard/.pimg already round and clip the corners). -->
+  <rect width="400" height="300" fill="url(#bavAcctBg)"/>
 
   <!-- ID card -->
   <g transform="translate(200,128)">

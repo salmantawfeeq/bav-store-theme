@@ -196,7 +196,7 @@
     {% set double_cp_gift_products = [] %}
     {% for item in theme.settings.get('double_cp_gift_products')|default([]) %}{% set double_cp_gift_products = double_cp_gift_products|merge([item.value]) %}{% endfor %}
     {% if double_cp_gift_products|length %}
-        <section id="double-cp-gift" style="padding:40px 0 40px">
+        <section id="double-cp-gift" style="padding:40px 0 40px;background:#0D0D10">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.double_cp_gift') }}</h2>
@@ -250,7 +250,7 @@
     {% set services_products = [] %}
     {% for item in theme.settings.get('services_products')|default([]) %}{% set services_products = services_products|merge([item.value]) %}{% endfor %}
     {% if services_products|length %}
-        <section id="services" style="padding:40px 0 40px">
+        <section id="services" style="padding:40px 0 40px;background:#0D0D10">
             <div class="wrap">
                 <div class="sechead">
                     <h2>{{ trans('bav.nav.services') }}</h2>
@@ -305,7 +305,7 @@
     {% endif %}
 
     {# How to top up — 3 steps #}
-    <section id="how" style="padding:100px 0 40px">
+    <section id="how" style="padding:100px 0 40px;background:#0D0D10">
         <div class="wrap">
             <div class="sechead">
                 <h2>{{ trans('bav.how_title') }}</h2>
