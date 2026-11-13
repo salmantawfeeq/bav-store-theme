@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import Anime from './partials/anime';
 import initTootTip from './partials/tooltip';
 import AppHelpers from "./app-helpers";
+import { initPreviewLinks } from './partials/preview-links';
 
 class App extends AppHelpers {
   constructor() {
@@ -11,6 +12,7 @@ class App extends AppHelpers {
   }
 
   loadTheApp() {
+    initPreviewLinks(salla.config.get('store.url'));
     this.commonThings();
     this.initiateNotifier();
     this.initiateMobileMenu();
@@ -42,7 +44,7 @@ class App extends AppHelpers {
   }
 
   log(message) {
-    salla.log(`ThemeApp(Raed)::${message}`);
+    salla.log(`ThemeApp(Bav)::${message}`);
     return this;
   }
 

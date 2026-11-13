@@ -32,8 +32,9 @@
   .bav-preview-filter-panel.is-open { visibility: visible; pointer-events: auto; transform: translateX(0); }
   .bav-preview-filter-content > .btn { min-height: 44px; }
 }
+.s-products-index-grid > salla-products-list { display: block; grid-column: 1 / -1; min-width: 0; }
 .s-products-index-grid,
-.s-products-index-grid salla-products-list {
+.s-products-index-grid salla-products-list .s-products-list-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 28px;
@@ -42,7 +43,7 @@
 
 @media (max-width: 1000px) {
   .s-products-index-grid,
-  .s-products-index-grid salla-products-list {
+  .s-products-index-grid salla-products-list .s-products-list-wrapper {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -53,7 +54,7 @@
      per row on a phone read as too plain/sparse, and the two card styles
      need to stay visually consistent across the site. */
   .s-products-index-grid,
-  .s-products-index-grid salla-products-list {
+  .s-products-index-grid salla-products-list .s-products-list-wrapper {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

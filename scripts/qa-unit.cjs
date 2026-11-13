@@ -92,4 +92,17 @@ for(const text of ['80 CP هدية',{ar:'80 CP هدية',en:'80 CP gift'}]){
 }
 const master=fs.readFileSync('src/views/layouts/master.twig','utf8');
 assert(!/<script[^>]*\bdefer\b[^>]*src="{{ 'product-card.js'/.test(master));assertions++;
+context.URL=URL;
+vm.runInContext(fs.readFileSync('src/assets/js/partials/preview-links.js','utf8').replaceAll('export function','function'),context);
+const preview='https://salla.design/dev-bav/';
+for(const [href,current,expected]of [
+  ['https://demostore.salla.sa/dev-bav/category/c1',preview,'https://salla.design/dev-bav/category/c1'],
+  ['https://demostore.salla.sa/dev-bav/page-1?sort=price#faq',preview,'https://salla.design/dev-bav/page-1?sort=price#faq'],
+  ['https://demostore.salla.sa/another-store/c1',preview,'https://demostore.salla.sa/another-store/c1'],
+  ['https://example.com/dev-bav/c1',preview,'https://example.com/dev-bav/c1'],
+  ['https://demostore.salla.sa/dev-bav/c1','https://real-store.com/','https://demostore.salla.sa/dev-bav/c1'],
+  ['#faq',preview,'#faq'],
+  ['https://',preview,'https://'],
+  ['https://salla.design/dev-bav/cart',preview,'https://salla.design/dev-bav/cart'],
+])equal(context.resolvePreviewLink(href,current,preview),expected);
 console.log(JSON.stringify({passed:true,behaviorAssertions:assertions,previewPages:pages,emptySettingsPages:rendered.size}));

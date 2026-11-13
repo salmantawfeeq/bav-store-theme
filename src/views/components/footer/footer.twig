@@ -116,7 +116,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         dedupeFooterLinks();
         var menu = document.querySelector('.bav-footer-menu');
-        if (menu && window.MutationObserver) { new MutationObserver(dedupeFooterLinks).observe(menu, { childList: true, subtree: true }); }
+        if (menu && window.MutationObserver) { new MutationObserver(dedupeFooterLinks).observe(menu.parentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] }); }
     });
 })();
 </script>

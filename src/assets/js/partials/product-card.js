@@ -220,6 +220,10 @@ class ProductCard extends HTMLElement {
     const img = this.product?.image?.url || this.placeholder || '';
     const alt = this.escapeHTML(this.product?.image?.alt || this.product.name);
     const addLabel = this.product.add_to_cart_label || this.getAddButtonLabel();
+    const currencyName = String(this.product.name).match(/^([\d,\u0660-\u0669\u066c]+)\s+CP$/i);
+    const nameLine = currencyName
+      ? `<div class="pname num">${this.escapeHTML(currencyName[1])} <small>CP</small></div>`
+      : `<div class="pname--text">${this.escapeHTML(this.product.name)}</div>`;
     // The branded placeholder is only a fallback for a digital file or
     // service with no cover image at all — a real uploaded cover (common
     // for digital files, rare for services) always takes priority.
@@ -241,7 +245,7 @@ class ProductCard extends HTMLElement {
         </div>`}
       </a>
       <div class="pbody">
-        <a href="${this.product?.url}"><div class="pname">${this.escapeHTML(this.product?.name)}</div></a>
+        <a href="${this.product?.url}">${nameLine}</a>
         ${this.product?.subtitle ? `<div class="psub">${this.escapeHTML(this.product.subtitle)}</div>` : ''}
         <div class="prow">
           ${this.product.is_on_sale

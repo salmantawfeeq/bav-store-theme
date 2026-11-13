@@ -1,5 +1,8 @@
 .s-add-product-toast {
-  @apply fixed z-[9999] flex flex-col gap-4 bg-white shadow-default overflow-hidden w-screen p-5;
+  @apply fixed z-[9999] flex flex-col gap-4 shadow-default overflow-hidden w-screen p-5;
+  background: var(--bg-surface-1);
+  color: var(--main-text-color);
+  border: 1px solid var(--border-1);
   top: 0;
   left: 0;
   right: 0;
@@ -13,7 +16,8 @@
   }
 
   @media (min-width: 768px) {
-    @apply w-[400px] rounded-lg;
+    @apply w-[400px];
+    border-radius: 22px;
     top: 1rem;
     left: auto;
     right: auto;
@@ -38,11 +42,13 @@
   }
 
   &__progress {
-    @apply h-2 w-full bg-gray-100;
+    @apply h-2 w-full;
+    background: var(--bg-surface-3);
   }
 
   &__progress-bar {
-    @apply h-full bg-green-500;
+    @apply h-full;
+    background: var(--accent);
     transition: width 50ms linear;
   }
 
@@ -59,7 +65,8 @@
   }
 
   &__title {
-    @apply text-sm font-bold text-gray-800;
+    @apply text-sm font-bold;
+    color: var(--main-text-color);
   }
 
   &__close {
@@ -70,12 +77,13 @@
     }
 
     &:hover i {
-      @apply text-gray-600;
+      color: var(--main-text-color);
     }
   }
 
   &__divider {
-    @apply h-px bg-gray-200;
+    @apply h-px;
+    background: var(--border-2);
   }
 
   &__body {
@@ -83,7 +91,9 @@
   }
 
   &__image {
-    @apply flex-shrink-0 w-20 h-20 rounded-lg object-contain overflow-hidden bg-gray-50 border border-gray-100;
+    @apply flex-shrink-0 w-20 h-20 rounded-lg object-contain overflow-hidden border;
+    background: var(--bg-surface-2);
+    border-color: var(--border-2);
 
     img {
       @apply w-full h-full object-contain;
@@ -99,7 +109,8 @@
   }
 
   &__name {
-    @apply text-sm font-semibold text-gray-800 leading-snug no-underline block transition-colors;
+    @apply text-sm font-semibold leading-snug no-underline block transition-colors;
+    color: var(--main-text-color);
 
     &:hover {
       @apply text-primary;
@@ -110,7 +121,8 @@
     @apply flex flex-col gap-0.5 mt-1;
 
     span {
-      @apply text-xs text-gray-500 leading-relaxed;
+      @apply text-xs leading-relaxed;
+      color: var(--color-text-secondary);
 
       @media (min-width: 768px) {
         @apply text-sm;
@@ -131,7 +143,8 @@
   }
 
   &__price {
-    @apply flex-shrink-0 flex flex-col items-end gap-1 text-sm font-bold text-gray-800;
+    @apply flex-shrink-0 flex flex-col items-end gap-1 text-sm font-bold;
+    color: var(--main-text-color);
 
     @media (min-width: 768px) {
       @apply text-base;
@@ -139,11 +152,12 @@
   }
 
   &__price-sale {
-    @apply text-red-800;
+    color: #FF6B5A;
   }
 
   &__price-original {
-    @apply text-xs text-gray-500 line-through font-normal;
+    @apply text-xs line-through font-normal;
+    color: var(--color-text-secondary);
 
     @media (min-width: 768px) {
       @apply text-sm;

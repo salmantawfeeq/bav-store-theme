@@ -184,9 +184,9 @@
 
             <div class="about-doc-card" data-reveal>
                 <img src="{{ 'images/freelance-badge.svg'|asset }}" alt="شعار منصة العمل الحر" width="150" height="56">
-                <span style="font-size:13px;color:#6B6B76;font-weight:600">{{ trans('bav.about_doc_title') }}</span>
+                <span style="font-size:13px;color:var(--color-text-secondary);font-weight:600">{{ trans('bav.about_doc_title') }}</span>
                 <span class="num" dir="ltr">{{ theme.settings.get('freelance_doc_code')|default('FL-522999221') }}</span>
-                <p style="font-size:14.5px;color:#4A4A52;margin-top:4px">{{ trans('bav.about_doc_line') }}</p>
+                <p style="font-size:14.5px;color:var(--color-text-secondary);margin-top:4px">{{ trans('bav.about_doc_line') }}</p>
             </div>
 
             {% set whatsapp_number_raw = theme.settings.get('whatsapp_number', '966564622432') %}
