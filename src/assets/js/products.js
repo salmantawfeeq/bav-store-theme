@@ -17,7 +17,6 @@ class Products extends BasePage {
             window.history.replaceState(null, null, salla.helpers.addParamToUrl('sort', event.currentTarget.value));
             productsList.sortBy = event.currentTarget.value;
             await productsList.reload();
-            productsList.setAttribute('filters', `{"sort": "${event.currentTarget.value}"}`)
         });
 
         salla.event.on('salla-products-list::products.fetched', res=>{
@@ -36,23 +35,25 @@ class Products extends BasePage {
         if (!filters) {
             return;
         }
-        filters = new MobileMenu(filters, "(max-width: 1024px)", "( slidingSubmenus: false)");
+        filters = new MobileMenu(filters, "(max-width: 1023px)");
         const drawer = filters.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
-        trigger.addEventListener('click', event => {
+        const closeDrawer = () => {
+            document.body.classList.remove('filters-opened');
+            trigger?.setAttribute('aria-expanded', 'false');
+            drawer.close();
+        };
+        trigger?.addEventListener('click', event => {
+            event.preventDefault();
             document.body.classList.add('filters-opened');
-            event.preventDefault() || drawer.close() || drawer.open()
+            trigger.setAttribute('aria-expanded', 'true');
+            drawer.open();
         });
-        close.addEventListener('click', event => {
-            document.body.classList.remove('filters-opened');
-            event.preventDefault() || drawer.close()
+        close?.addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeDrawer();
         });
-        salla.event.on('salla-filters::changed', filters => {
-            if (!Object.entries(filters).length) {
-                return
-            }
-            document.body.classList.remove('filters-opened');
-            drawer.close()
-        })
+        window.matchMedia('(min-width: 1024px)').addEventListener('change', closeDrawer);
+        salla.event.on('salla-filters::changed', closeDrawer);
     }
 }
 

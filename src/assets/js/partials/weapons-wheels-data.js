@@ -39,6 +39,7 @@ export const WEAPON_WHEELS = [
   {
     id: 'mythic-weapon',
     label: 'سلاح الميثك (10 سحبات)',
+    upgrades: [{ id: 'full', label: 'تطوير سلاح الميثك بالكامل', costs: { gulf: 14400, medium: 9900, african: 5700 } }],
     pulls: {
       gulf: [30, 80, 120, 300, 500, 800, 1300, 2400, 3400, 5800],
       medium: [20, 55, 80, 210, 350, 560, 900, 1600, 2300, 4000],
@@ -48,6 +49,10 @@ export const WEAPON_WHEELS = [
   {
     id: 'mythic-character',
     label: 'شخصية الميثك (10 سحبات)',
+    upgrades: [
+      { id: 'finisher', label: 'الفنش فقط للشخصية', costs: { gulf: 5760, medium: 4680, african: 3420 } },
+      { id: 'max', label: 'التطوير الكامل ماكس للشخصية', costs: { gulf: 20200, medium: 16400, african: 12000 } },
+    ],
     pulls: {
       gulf: [50, 130, 220, 400, 700, 1100, 1700, 2800, 4200, 6700],
       medium: [35, 90, 155, 300, 490, 770, 1200, 2000, 2900, 4700],
@@ -62,5 +67,13 @@ export const WEAPON_WHEELS = [
       medium: [20, 80, 250, 550, 1100, 2000, 2600],
       african: [10, 50, 140, 300, 600, 1100, 1600],
     },
+  },
+  {
+    id: 'weapon-series', label: 'سلسلة الأسلحة (75 سحبة)',
+    pulls: { gulf: Array(75).fill(120), medium: Array(75).fill(80), african: Array(75).fill(50) },
+  },
+  {
+    id: 'mythic-series', label: 'سلسلة أسلحة الميثك - تعاون هونكاي (120 سحبة)',
+    pulls: { gulf: Array(120).fill(120), medium: Array(120).fill(80), african: Array(120).fill(50) },
   },
 ];

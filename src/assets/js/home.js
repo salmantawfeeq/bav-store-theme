@@ -16,11 +16,11 @@ class Home extends BasePage {
     parseMoneyString(value) {
         const arabicIndicDigits = '٠١٢٣٤٥٦٧٨٩';
         const normalized = String(value ?? '').replace(/[٠-٩]/g, (d) => arabicIndicDigits.indexOf(d));
-        const numeric = normalized.replace(/[^0-9.]/g, '');
+        const numeric = normalized.replace(/[,٬]/g, '').replace(/٫/g, '.').match(/\d+(?:\.\d+)?/)?.[0];
         return Number(numeric) || 0;
     }
 
-    initRewardsLadder() {
+    initRewardsLadder({ formatNumber = (value) => salla.helpers.number(value, 2), subscribe = (callback) => salla.cart.event.onUpdated(callback) } = {}) {
         const ladder = document.getElementById('bav-ladder');
         if (!ladder) return;
 
@@ -49,14 +49,16 @@ class Home extends BasePage {
         const maxAmount = levels.length ? levels[levels.length - 1].amount : 0;
 
         const render = (cartTotal) => {
-            total.textContent = salla.helpers.number(cartTotal, 2);
+            total.textContent = formatNumber(cartTotal);
 
+            cartTotal = Math.max(0, cartTotal);
+            const currentLevel = levels.filter(level => cartTotal >= level.amount).pop();
             const nextLevel = levels.find(level => cartTotal < level.amount);
             if (nextLevel) {
                 const remaining = nextLevel.amount - cartTotal;
                 text.textContent = (remaining <= nextLevel.amount * ALMOST_THERE_RATIO)
                     ? lang.almostThere
-                    : lang.addMore.replace(':amount', salla.helpers.number(remaining, 2));
+                    : lang.addMore.replace(':amount', formatNumber(remaining));
             } else {
                 text.textContent = lang.allUnlocked;
             }
@@ -65,7 +67,7 @@ class Home extends BasePage {
             fill.style.width = `${progress}%`;
 
             levels.forEach(level => {
-                const isUnlocked = cartTotal >= level.amount;
+                const isUnlocked = level === currentLevel;
                 const isNext = !isUnlocked && level === nextLevel;
                 level.el.style.borderColor = isUnlocked || isNext ? 'var(--accent)' : '#232329';
                 level.el.style.boxShadow = isNext ? '0 20px 60px -30px var(--accent)' : 'none';
@@ -90,8 +92,9 @@ class Home extends BasePage {
         };
 
         render(this.parseMoneyString(ladder.dataset.initialTotal));
-        salla.cart.event.onUpdated(summary => render(Number(summary.total) || 0));
+        subscribe(summary => render(this.parseMoneyString(summary.total)));
     }
 }
 
 Home.initiateWhenReady(['index']);
+export default Home;

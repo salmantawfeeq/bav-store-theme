@@ -149,7 +149,7 @@
   }
 }
 // Mobile Slide Menu
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1023px) {
   /* <salla-filters> (#filters-menu) never had the same hidden-until-opened
      rule .mobile-menu gets below - it just rendered open and inline, full
      height, pushing the actual product grid down and overlapping the page
@@ -164,11 +164,11 @@
      hide it there regardless of .is-open, since display always beats
      visibility. Real store pages never carry that class, so this changes
      nothing about the real fix. */
-  #filters-menu:not(.bav-preview-drawer) {
+  #filters-menu:not(.bav-preview-filter-panel) {
     display: none;
   }
   .filters-opened {
-    #filters-menu:not(.bav-preview-drawer) {
+    #filters-menu:not(.bav-preview-filter-panel) {
       display: block;
     }
     .close-filters{

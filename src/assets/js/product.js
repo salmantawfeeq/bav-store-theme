@@ -110,19 +110,11 @@ class Product extends BasePage {
         this.subtotalEl.innerHTML = salla.money(this.unitPrice * qty);
     }
 
-    /**
-     * Mini "how much CP do I need for this weapon" calculator, embedded
-     * directly in a weapon product's own page (طلبات_صاحب_المتجر.md,
-     * "حاسبة شحن الأسلحة") - single.twig only renders the container div for
-     * products in the weapons category, so no extra detection is needed
-     * here. Locked to the first defined wheel for now since only one real
-     * wheel exists; once more wheels are added, map product.slug -> wheel id
-     * here instead of always using the first one.
-     */
+    // Show the shared wheel picker so the customer can choose the matching wheel.
     initWeaponsCalculator() {
         const container = document.getElementById('bav-weapons-calculator-mini');
         if (!container) return;
-        new WeaponsCalculator(container, { lockWheel: true });
+        new WeaponsCalculator(container);
     }
 
     initImagesZooming() {
@@ -167,30 +159,7 @@ class Product extends BasePage {
         document.querySelectorAll(wrapperSelector).forEach((el) => el.classList.toggle('hidden', !value));
     }
 
-    /**
-     * The displayed wishlist count is a stable per-product placeholder
-     * rendered server-side (product.id has no real public wishlist total
-     * in Salla) - but the increment/decrement itself is real, driven by
-     * the actual salla.wishlist events, so it only moves on a real action.
-     */
-    initWishlistCounter() {
-      const el = app.element('[id^="wishlist-count-"]');
-      if (!el) return;
-      const productId = el.closest('[data-product-id]')?.dataset.productId;
-      if (!productId) return;
-
-      const bump = (delta) => {
-        const next = Math.max(0, Number(el.textContent) + delta);
-        el.textContent = next;
-      };
-
-      salla.wishlist.event.onAdded((event, id) => { if (String(id) === String(productId)) bump(1); });
-      salla.wishlist.event.onRemoved((response, id) => { if (String(id) === String(productId)) bump(-1); });
-    }
-
     registerEvents() {
-      this.initWishlistCounter();
-
       salla.event.on('product::price.updated.failed',()=>{
         app.element('.price-wrapper').classList.add('hidden');
         const outOfStock = app.element('.out-of-stock');

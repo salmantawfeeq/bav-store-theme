@@ -5,6 +5,33 @@
   is responsible for the grid. Covers both cases of exactly where the cards
   end up nested, since that's an internal detail of the component.
 */
+.filters-trigger { flex: 0 0 46px; display: inline-flex; align-items: center; justify-content: center; }
+.bav-preview-filter-panel { display: block; min-width: 0; background: #0F0F12; border: 1px solid #232329; border-radius: 14px; align-self: flex-start; }
+.bav-preview-filter-content { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+.bav-preview-filter-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bav-preview-filter-heading button { width: 36px; height: 36px; font-size: 26px; }
+.bav-preview-filter-content fieldset { min-width: 0; }
+.bav-preview-filter-content legend { margin-bottom: 14px; font-weight: 700; }
+.bav-preview-filter-content fieldset > label { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+.bav-preview-price-range { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.bav-preview-price-range label { min-width: 0; }
+.bav-preview-price-range input { display: block; width: 100%; min-width: 0; height: 42px; margin-top: 8px; border-radius: 10px; border: 1px solid #2A2A31; background: #17171B; color: #F4F4F2; padding: 0 10px; }
+.bav-preview-filter-content [data-filter-error] { color: #FF6B5A; font-size: 13px; margin-top: 10px; }
+.bav-preview-empty { padding: 24px 0; }
+.s-products-index-grid .pcard[hidden], .bav-preview-empty[hidden] { display: none; }
+@media (min-width: 1024px) {
+  .filters-trigger, .bav-preview-filter-heading [data-filter-close] { display: none; }
+  .bav-preview-filter-panel { width: 260px; }
+}
+@media (max-width: 1023px) {
+  .bav-preview-filter-panel {
+    position: fixed; top: 0; bottom: 0; inset-inline-start: 0; width: min(88vw, 360px); max-width: 100%; height: 100dvh;
+    z-index: 9999; overflow-y: auto; overscroll-behavior: contain; border-radius: 0;
+    visibility: hidden; pointer-events: none; transform: translateX(110%);
+  }
+  .bav-preview-filter-panel.is-open { visibility: visible; pointer-events: auto; transform: translateX(0); }
+  .bav-preview-filter-content > .btn { min-height: 44px; }
+}
 .s-products-index-grid,
 .s-products-index-grid salla-products-list {
   display: grid;

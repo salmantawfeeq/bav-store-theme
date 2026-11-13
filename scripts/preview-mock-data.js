@@ -133,7 +133,7 @@ const doubleCpProducts = [
 
 const doubleCpGiftProducts = doubleCpProducts.map((p) => ({
   ...p, slug: `${p.slug}-gift`, gift: true, note: 'إهداء بالآيدي',
-  description: `عاوز تفاجئ صديقك بهدية مختلفة؟ أهدِه مضاعفة شحنة ${p.name} ${p.unit} من غير ما تدخل بيانات حسابك إنت خالص — تكتب آيدي المستلم بس، وتتضاعف الكمية في حسابه هو مباشرة.`,
+  description: `تبي تفاجئ صديقك بهدية مختلفة؟ أهدِه مضاعفة شحنة ${p.name} ${p.unit} من غير ما تدخل بيانات حسابك أبدًا — تكتب آيدي المستلم بس، وتتضاعف الكمية في حسابه هو مباشرة.`,
 }));
 
 const digitalFilesProducts = [
@@ -267,7 +267,7 @@ function card(p) {
       </div>`;
 
   return `
-    <a href="product-${p.slug}.html" class="pcard"${giftStyle}>
+    <a href="product-${p.slug}.html" class="pcard" data-price="${Number(p.price)}" data-category="${p.digitalFile ? 'digital' : p.service ? 'service' : 'currency'}"${giftStyle}>
         ${imgBlock}
         <div class="pbody">
             ${nameLine}

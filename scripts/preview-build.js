@@ -331,8 +331,6 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
       setSaved(ids);
       document.querySelectorAll('.btn--wishlist[data-id="' + id + '"]').forEach(function (b) { apply(b, !wasAdded); });
 
-      var countEl = document.getElementById('wishlist-count-' + id);
-      if (countEl) countEl.textContent = Math.max(0, Number(countEl.textContent) + (wasAdded ? -1 : 1));
     }, true);
   })();
   </script>
@@ -392,29 +390,6 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
     window.addEventListener('resize', function () {
       if (window.innerWidth > 700) setOpen(false);
     });
-  })();
-  </script>
-  <script>
-  (function () {
-    // Category page's filter sidebar - same off-canvas drawer mechanics as
-    // the header's mobile nav (reuses the same .bav-preview-drawer /
-    // .bav-preview-backdrop classes), for the same reason: products.js's
-    // real initiateMobileMenu() never runs without a live Salla runtime.
-    var panel = document.getElementById('filters-menu');
-    var trigger = document.querySelector('a[href="#filters-menu"]');
-    var closeBtn = document.querySelector('button.close-filters');
-    if (!panel || !trigger) return;
-    var backdrop = document.createElement('div');
-    backdrop.className = 'bav-preview-backdrop';
-    document.body.appendChild(backdrop);
-    function setOpen(isOpen) {
-      panel.classList.toggle('is-open', isOpen);
-      backdrop.classList.toggle('is-open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-    trigger.addEventListener('click', function (e) { e.preventDefault(); setOpen(true); });
-    if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
-    backdrop.addEventListener('click', function () { setOpen(false); });
   })();
   </script>
   <script>
@@ -565,27 +540,23 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
   rendered = rendered.replace(/(<salla-social-share[^>]*>)(\s*)(<\/salla-social-share>)/g, (m, open, ws, close) =>
     `${open}<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F4F4F2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>${close}`);
 
-  // <salla-filters> (category page sidebar) renders real merchant-defined
-  // filter groups from Salla's own catalog API at runtime - inert here, and
-  // its mobile trigger (products.js's own initiateMobileMenu, same mmenu-
-  // light pattern as the header's drawer) never runs either without a live
-  // Salla runtime, so clicking it did nothing. Stand-in content + the same
-  // open/close drawer classes used for the header's mobile nav, purely so
-  // the interaction can be reviewed; real filtering logic is Salla's.
+  // Preview controls operate only on the local catalog.
   rendered = rendered.replace(/(<salla-filters[^>]*class=")([^"]*)("[^>]*id="filters-menu"[^>]*>)\s*<\/salla-filters>/, (m, pre, cls, post) =>
-    `${pre}${cls} bav-preview-drawer${post}
-      <div style="padding:24px 20px">
-        <div style="font-weight:700;font-size:16px;margin-bottom:16px">الفئة</div>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> فئات شحن العملات</label>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> الملفات الرقمية</label>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> الخدمات</label>
-        <div style="font-weight:700;font-size:16px;margin:22px 0 16px">نطاق السعر</div>
-        <div style="display:flex;gap:10px">
-          <input type="number" placeholder="من" style="flex:1;height:42px;border-radius:10px;border:1px solid #2A2A31;background:#17171B;color:#F4F4F2;padding:0 12px">
-          <input type="number" placeholder="إلى" style="flex:1;height:42px;border-radius:10px;border:1px solid #2A2A31;background:#17171B;color:#F4F4F2;padding:0 12px">
-        </div>
-      </div>
-    </salla-filters>`);
+    pre + cls + ' bav-preview-filter-panel' + post + `
+      <div class="bav-preview-filter-content">
+        <div class="bav-preview-filter-heading"><strong>تصفية المنتجات</strong><button type="button" data-filter-close aria-label="إغلاق الفلاتر">×</button></div>
+        <fieldset><legend>الفئة</legend>
+          <label><input type="checkbox" value="currency" data-filter-category> فئات شحن العملات</label>
+          <label><input type="checkbox" value="digital" data-filter-category> الملفات الرقمية</label>
+          <label><input type="checkbox" value="service" data-filter-category> الخدمات</label>
+        </fieldset>
+        <fieldset><legend>نطاق السعر</legend><div class="bav-preview-price-range">
+          <label>من<input type="number" min="0" step="0.01" data-filter-min></label>
+          <label>إلى<input type="number" min="0" step="0.01" data-filter-max></label>
+        </div><p data-filter-error role="status"></p></fieldset>
+        <button type="button" class="btn btn-g" data-filter-reset>مسح الفلاتر</button>
+        <button type="button" class="btn btn-p lg:hidden" data-filter-close>عرض النتائج</button>
+      </div></salla-filters>`);
 
   // <salla-user-menu avatar-only> renders its own icon from Salla's JS at
   // runtime (no slotted markup in the .twig source to begin with) - inert
@@ -626,6 +597,8 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
       </div>`);
   }
 
+  rendered = rendered.replace(/<script\b[^>]*\bsrc=["'][^"']+["'][^>]*>[\s\S]*?<\/script>/gi, '');
+  rendered = rendered.replace(/<\/body>/, '<script defer src="../bav-store-theme/public/preview.js"></script></body>');
   return rendered;
 }
 
@@ -640,11 +613,6 @@ function build() {
   // images — not every card (or a stray bookmark) converging on one fixed
   // demo page. There's no generic product.html anymore on purpose: every
   // product has its own URL, same as the real store.
-  for (const file of fs.readdirSync(PREVIEW_DIR)) {
-    if (file === 'product.html' || (file.startsWith('product-') && file.endsWith('.html'))) {
-      fs.unlinkSync(path.join(PREVIEW_DIR, file));
-    }
-  }
   for (const { slug, context: product } of mock.allProductPages) {
     const html = buildPageHtml('views/pages/product/single.twig', `صفحة المنتج — ${product.name}`, {
       product,

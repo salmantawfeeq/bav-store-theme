@@ -36,7 +36,7 @@
 
 	<div class="wrap s-products-index flex items-start flex-col md:flex-row" style="padding-bottom:90px">
 		{% if filters %}
-			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
+			<button type="button" aria-label="إغلاق الفلاتر" class="btn--close-sm close-filters sicon-cancel hidden"></button>
 			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none" id="filters-menu"></salla-filters>
 		{% endif %}
 
@@ -72,7 +72,7 @@
 				</div>
 				<div class="flex items-center gap-3">
 					{% if filters %}
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
+						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" aria-label="تصفية المنتجات" aria-controls="filters-menu" aria-expanded="false" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
 							<i class="sicon-filter text-2xl"></i>
 						</a>
 					{% endif %}

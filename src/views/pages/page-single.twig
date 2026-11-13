@@ -29,7 +29,7 @@
                 <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
                 <p>{{ trans('bav.find_id_subtitle') }}</p>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:40px">
+            <div class="bav-id-guide">
                 <img src="{{ 'images/player-id-schematic.svg'|asset }}" alt="رسم توضيحي يوضح مكان معرّف اللاعب: الإعدادات، ثم إعدادات المستخدم، ثم نسخ المعرّف" style="width:100%;border-radius:22px;border:1px solid #232329">
                 <div style="display:flex;flex-direction:column;gap:22px">
                     {% for step_text in [trans('bav.find_id_step1'), trans('bav.find_id_step2'), trans('bav.find_id_step3')] %}
@@ -69,7 +69,7 @@
                 <div class="orn"><b></b>{{ ornament_svg }}<b></b></div>
                 <p>{{ trans('bav.find_recipient_id_subtitle') }}</p>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:40px">
+            <div class="bav-id-guide">
                 <img src="{{ 'images/recipient-id-schematic.svg'|asset }}" alt="رسم توضيحي يوضح مكان آيدي المستلم: ادخل على حسابه الشخصي، وانسخ الآيدي" style="width:100%;border-radius:22px;border:1px solid #232329">
                 <div style="display:flex;flex-direction:column;gap:22px">
                     {% for step_text in [trans('bav.find_recipient_id_step1'), trans('bav.find_recipient_id_step2')] %}

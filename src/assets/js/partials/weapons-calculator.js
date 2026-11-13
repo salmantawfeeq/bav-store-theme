@@ -1,19 +1,6 @@
 import { ACCOUNT_TYPES, WEAPON_WHEELS } from './weapons-wheels-data';
 
-/**
- * Renders a working "how much CP do I need for this wheel" calculator into
- * a container element. Used two ways (طلبات_صاحب_المتجر.md, "حاسبة شحن
- * الأسلحة"):
- *   - full mode: a dedicated page, wheel is pickable (lockedWheelId omitted).
- *   - mini mode: embedded in one weapon's own product page, already scoped
- *     to that weapon's wheel (lockedWheelId set, no wheel dropdown shown).
- *
- * Mirrors the reference tool's own interaction model (gmlstore.app,
- * screenshot 2026-11-12): every pull starts "included" (green); clicking one
- * excludes it (red) - for a shopper who already did some pulls themselves
- * and only needs to buy the rest. The two optional fields (CP already owned,
- * % discount) reduce the total further on top of that.
- */
+// Shared calculator for the live storefront and static preview.
 // Fallback Arabic strings, overridable per-instance via data-lang-* attributes
 // on the container (same convention as home.js's rewards ladder), so a
 // bilingual store can still localize this without touching the JS.
@@ -21,35 +8,26 @@ const DEFAULT_LANG = {
   accountType: 'نوع الحساب',
   wheelType: 'نوع العجلة',
   pullsLabel: 'اختر السحبات المطلوبة',
-  pullsHint: 'اضغط على السحبة لاستبعادها — الخضراء تُحسب، الحمراء مستبعدة.',
+  pullsHint: 'اضغط على السحبة لاستبعادها — البرتقالية محسوبة، والرمادية مستبعدة.',
   includeAll: 'تفعيل الكل',
   excludeAll: 'استبعاد الكل',
   ownedLabel: 'كم معك من نقاط CP في حسابك؟ (اختياري)',
   ownedNote: 'لأفضل نتيجة دقيقة، اكتب كمية CP الموجودة فعليًا في حسابك.',
   discountLabel: 'خصم على العجلة % (اختياري)',
-  discountNote: 'لو فيه خصم على كل سحبة، اكتب النسبة هنا، وسيبها فاضية لو مفيش.',
+  discountNote: 'إذا فيه خصم على السحبات، اكتب النسبة هنا، وخلّها فاضية إذا ما فيه. الخصم ما يشمل التطوير.',
   resultLabel: 'النتيجة',
 };
 
 export class WeaponsCalculator {
-  constructor(container, { lockWheel = false } = {}) {
+  constructor(container) {
     this.container = container;
-    // Mini mode (lockWheel: true) never shows the wheel dropdown, always
-    // scoped to whichever wheel is first in the data - decoupled from a
-    // specific wheel id, since there's no real product -> wheel mapping yet
-    // (طلبات_صاحب_المتجر.md - no real weapons products exist either).
-    this.lockWheel = lockWheel;
-    // Real price tables now live in the merchant's own theme settings
-    // (twilight.json's weapon_wheel_prices collection), passed down from
-    // twig as a JSON data attribute - no code redeploy needed when prices
-    // change. Falls back to the bundled example table only if that
-    // attribute is missing (e.g. this standalone demo/artifact file).
     this.wheels = this._parseWheels(container.dataset.wheels) || WEAPON_WHEELS;
     this.accountType = ACCOUNT_TYPES[0].id;
     this.wheelId = this.wheels[0].id;
     this.excluded = new Set();
     this.ownedCp = 0;
     this.discountPercent = 0;
+    this.upgradeId = '';
     this.lang = { ...DEFAULT_LANG };
     Object.keys(DEFAULT_LANG).forEach((key) => {
       const attr = container.dataset[`lang${key[0].toUpperCase()}${key.slice(1)}`];
@@ -62,7 +40,11 @@ export class WeaponsCalculator {
     if (!json) return null;
     try {
       const wheels = JSON.parse(json);
-      return Array.isArray(wheels) && wheels.length ? wheels : null;
+      if (!Array.isArray(wheels) || !wheels.length) return null;
+      return wheels.map(wheel => ({
+        ...wheel,
+        upgrades: WEAPON_WHEELS.find(known => known.label === wheel.label)?.upgrades || [],
+      }));
     } catch (e) {
       return null;
     }
@@ -83,14 +65,17 @@ export class WeaponsCalculator {
 
   compute() {
     const total = this.pulls.reduce((sum, cost, i) => (this.excluded.has(i) ? sum : sum + cost), 0);
-    const afterOwned = Math.max(0, total - (Number(this.ownedCp) || 0));
     const discount = Math.min(100, Math.max(0, Number(this.discountPercent) || 0));
-    return Math.round(afterOwned * (1 - discount / 100));
+    const upgrade = this.wheel.upgrades?.find(item => item.id === this.upgradeId);
+    const upgradeCost = upgrade?.costs[this.accountType] || 0;
+    const owned = Math.max(0, Number(this.ownedCp) || 0);
+    return Math.max(0, Math.ceil(total * (1 - discount / 100) + upgradeCost - owned));
   }
 
   render() {
-    const wheelOptions = this.wheels.map((w) => `<option value="${w.id}" ${w.id === this.wheelId ? 'selected' : ''}>${w.label}</option>`).join('');
-    const accountTabs = ACCOUNT_TYPES.map((a) => `<button type="button" class="bav-wcalc-tab${a.id === this.accountType ? ' is-active' : ''}" data-account="${a.id}">${a.label}</button>`).join('');
+    const escape = value => String(value).replace(/[&<>"']/g, char => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[char]));
+    const wheelOptions = this.wheels.map((w) => `<option value="${escape(w.id)}" ${w.id === this.wheelId ? 'selected' : ''}>${escape(w.label)}</option>`).join('');
+    const accountTabs = ACCOUNT_TYPES.map((a) => `<button type="button" aria-pressed="${a.id === this.accountType}" class="bav-wcalc-tab${a.id === this.accountType ? ' is-active' : ''}" data-account="${a.id}">${a.label}</button>`).join('');
 
     const t = this.lang;
     this.container.innerHTML = `
@@ -99,11 +84,11 @@ export class WeaponsCalculator {
           <div class="bav-wcalc-label">${t.accountType}</div>
           <div class="bav-wcalc-tabs">${accountTabs}</div>
         </div>
-        ${this.lockWheel ? '' : `
+
         <div class="bav-wcalc-row">
-          <div class="bav-wcalc-label">${t.wheelType}</div>
-          <select class="bav-wcalc-select" data-role="wheel-select">${wheelOptions}</select>
-        </div>`}
+          <label class="bav-wcalc-label" for="wcalc-wheel-${this._uid()}">${t.wheelType}</label>
+          <select id="wcalc-wheel-${this._uid()}" class="bav-wcalc-select" data-role="wheel-select">${wheelOptions}</select>
+        </div>
         <div class="bav-wcalc-row">
           <div class="bav-wcalc-label-wrap">
             <div class="bav-wcalc-label">${t.pullsLabel}</div>
@@ -115,6 +100,7 @@ export class WeaponsCalculator {
           </div>
         </div>
         <div class="bav-wcalc-grid" data-role="grid"></div>
+        <div data-role="upgrades"></div>
         <div class="bav-wcalc-row bav-wcalc-row--split">
           <div>
             <label class="bav-wcalc-label" for="wcalc-owned-${this._uid()}">${t.ownedLabel}</label>
@@ -136,6 +122,7 @@ export class WeaponsCalculator {
 
     this.bindEvents();
     this.renderGrid();
+    this.renderUpgrades();
     this.renderResult();
   }
 
@@ -146,9 +133,23 @@ export class WeaponsCalculator {
 
   renderGrid() {
     const grid = this.container.querySelector('[data-role="grid"]');
+    if (this.pulls.length > 20 && this.pulls.every(cost => cost === this.pulls[0])) {
+      const included = this.pulls.length - this.excluded.size;
+      grid.style.gridTemplateColumns = 'minmax(0, 1fr)';
+      grid.innerHTML = `<label class="bav-wcalc-label" for="wcalc-count-${this._uid()}">عدد السحبات المطلوبة (من 0 إلى ${this.pulls.length})</label>
+        <input id="wcalc-count-${this._uid()}" class="bav-wcalc-input" type="number" min="0" max="${this.pulls.length}" step="1" value="${included}" data-role="pull-count">
+        <p class="bav-wcalc-note">تكلفة السحبة: ${this.pulls[0]} CP — لكل سلاح.</p>`;
+      grid.querySelector('input').addEventListener('input', event => {
+        const count = Math.min(this.pulls.length, Math.max(0, Math.trunc(Number(event.target.value) || 0)));
+        this.excluded = new Set(this.pulls.map((_, i) => i).filter(i => i >= count));
+        this.renderResult();
+      });
+      return;
+    }
+    grid.style.gridTemplateColumns = '';
     grid.innerHTML = this.pulls
       .map((cost, i) => `
-        <button type="button" class="bav-wcalc-pull${this.excluded.has(i) ? ' is-excluded' : ''}" data-index="${i}">
+        <button type="button" aria-pressed="${!this.excluded.has(i)}" class="bav-wcalc-pull${this.excluded.has(i) ? ' is-excluded' : ''}" data-index="${i}">
           <span class="bav-wcalc-pull-n">${i + 1}</span>
           <span class="bav-wcalc-pull-cost num">${cost}<span class="bav-wcalc-pull-cur">CP</span></span>
         </button>`)
@@ -158,8 +159,36 @@ export class WeaponsCalculator {
         const i = Number(btn.dataset.index);
         this.excluded.has(i) ? this.excluded.delete(i) : this.excluded.add(i);
         btn.classList.toggle('is-excluded');
+        btn.setAttribute('aria-pressed', String(!this.excluded.has(i)));
         this.renderResult();
       });
+    });
+  }
+
+  renderUpgrades() {
+    const root = this.container.querySelector('[data-role="upgrades"]');
+    root.replaceChildren();
+    const upgrades = this.wheel.upgrades || [];
+    if (!upgrades.length) return;
+    const title = document.createElement('div');
+    title.className = 'bav-wcalc-label';
+    title.textContent = 'خيارات إضافية للميثك (اختياري)';
+    root.appendChild(title);
+    const choices = upgrades.length > 1 ? [{ id: '', label: 'بدون تطوير', costs: {} }, ...upgrades] : upgrades;
+    choices.forEach(upgrade => {
+      const label = document.createElement('label');
+      label.className = 'bav-wcalc-upgrade';
+      const input = document.createElement('input');
+      input.type = upgrades.length === 1 ? 'checkbox' : 'radio';
+      input.name = 'wcalc-upgrade-' + this._uid();
+      input.value = upgrade.id;
+      input.checked = this.upgradeId === upgrade.id;
+      input.addEventListener('change', () => {
+        this.upgradeId = input.checked ? upgrade.id : '';
+        this.renderResult();
+      });
+      label.append(input, document.createTextNode(upgrade.label + (upgrade.id ? ` + ${upgrade.costs[this.accountType].toLocaleString('en-US')} CP` : '')));
+      root.appendChild(label);
     });
   }
 
@@ -172,9 +201,13 @@ export class WeaponsCalculator {
     this.container.querySelectorAll('.bav-wcalc-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         this.accountType = tab.dataset.account;
-        this.container.querySelectorAll('.bav-wcalc-tab').forEach((t) => t.classList.toggle('is-active', t === tab));
+        this.container.querySelectorAll('.bav-wcalc-tab').forEach(t => {
+          t.classList.toggle('is-active', t === tab);
+          t.setAttribute('aria-pressed', String(t === tab));
+        });
         this.excluded.clear();
         this.renderGrid();
+        this.renderUpgrades();
         this.renderResult();
       });
     });
@@ -183,8 +216,10 @@ export class WeaponsCalculator {
     if (wheelSelect) {
       wheelSelect.addEventListener('change', () => {
         this.wheelId = wheelSelect.value;
+        this.upgradeId = '';
         this.excluded.clear();
         this.renderGrid();
+        this.renderUpgrades();
         this.renderResult();
       });
     }

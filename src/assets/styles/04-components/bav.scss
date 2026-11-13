@@ -552,7 +552,7 @@ body.menu-opened .bav-whatsapp-fab { opacity: 0; pointer-events: none; }
 .bav-wcalc-row > .bav-wcalc-label { margin-bottom: 0; }
 .bav-wcalc-hint { font-size: 12.5px; color: #8E8E98; margin-top: 4px; }
 .bav-wcalc-note { font-size: 12px; color: #7C7C86; margin-top: 6px; line-height: 1.6; }
-.bav-wcalc-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.bav-wcalc-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; }
 .bav-wcalc-tab { padding: 9px 16px; border-radius: 10px; border: 1px solid #2A2A31; background: #17171B; color: #9B9BA5; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all .15s ease; }
 .bav-wcalc-tab.is-active { background: var(--accent); border-color: var(--accent); color: #0A0A0B; }
 .bav-wcalc-select, .bav-wcalc-input { height: 46px; width: 100%; border-radius: 12px; border: 1px solid #2A2A31; background: #17171B; color: #F4F4F2; font-family: inherit; font-size: 14.5px; padding: 0 14px; outline: 0; }
@@ -562,7 +562,11 @@ body.menu-opened .bav-whatsapp-fab { opacity: 0; pointer-events: none; }
 .bav-wcalc-bulk-btn.is-include { color: var(--accent); border-color: rgba(255, 90, 31, .35); }
 .bav-wcalc-bulk-btn.is-exclude { color: #9B9BA5; border-color: #2A2A31; }
 .bav-wcalc-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-@media (max-width: 560px) { .bav-wcalc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.bav-wcalc-upgrade { display: flex; align-items: center; gap: 10px; padding: 12px 0; color: #C7C7CF; font-size: 14px; }
+.bav-wcalc [data-role="upgrades"]:empty { display: none; }
+.bav-wcalc :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.bav-wcalc-row--split { min-width: 0; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+@media (max-width: 400px) { .bav-wcalc { padding: 16px; } .bav-wcalc-tab { padding: 9px 6px; } .bav-wcalc-grid { gap: 6px; } .bav-wcalc-pull { padding: 10px 3px; } }
 .bav-wcalc-pull { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border-radius: 12px; border: 1px solid rgba(255, 90, 31, .35); background: rgba(255, 90, 31, .1); cursor: pointer; transition: all .15s ease; }
 .bav-wcalc-pull-n { font-size: 11px; font-weight: 700; color: #6E6E78; }
 .bav-wcalc-pull-cost { font-size: 14px; font-weight: 700; color: var(--accent); }
@@ -573,3 +577,6 @@ body.menu-opened .bav-whatsapp-fab { opacity: 0; pointer-events: none; }
 .bav-wcalc-result-label { font-size: 14px; font-weight: 700; color: #C7C7CF; }
 .bav-wcalc-result-value { font-size: 26px; font-weight: 800; color: var(--accent); }
 .bav-wcalc-result-cur { font-size: 13px; font-weight: 700; color: var(--accent); }
+
+.bav-id-guide { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: center; margin-top: 40px; }
+@media (max-width: 700px) { .bav-id-guide { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
