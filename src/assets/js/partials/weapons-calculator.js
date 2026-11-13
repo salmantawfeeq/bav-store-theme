@@ -1,4 +1,4 @@
-import { ACCOUNT_TYPES, WEAPON_WHEELS, getWheel } from './weapons-wheels-data';
+import { ACCOUNT_TYPES, WEAPON_WHEELS } from './weapons-wheels-data';
 
 /**
  * Renders a working "how much CP do I need for this wheel" calculator into
@@ -32,11 +32,21 @@ const DEFAULT_LANG = {
 };
 
 export class WeaponsCalculator {
-  constructor(container, { lockedWheelId = null } = {}) {
+  constructor(container, { lockWheel = false } = {}) {
     this.container = container;
-    this.lockedWheelId = lockedWheelId;
+    // Mini mode (lockWheel: true) never shows the wheel dropdown, always
+    // scoped to whichever wheel is first in the data - decoupled from a
+    // specific wheel id, since there's no real product -> wheel mapping yet
+    // (طلبات_صاحب_المتجر.md - no real weapons products exist either).
+    this.lockWheel = lockWheel;
+    // Real price tables now live in the merchant's own theme settings
+    // (twilight.json's weapon_wheel_prices collection), passed down from
+    // twig as a JSON data attribute - no code redeploy needed when prices
+    // change. Falls back to the bundled example table only if that
+    // attribute is missing (e.g. this standalone demo/artifact file).
+    this.wheels = this._parseWheels(container.dataset.wheels) || WEAPON_WHEELS;
     this.accountType = ACCOUNT_TYPES[0].id;
-    this.wheelId = lockedWheelId || WEAPON_WHEELS[0].id;
+    this.wheelId = this.wheels[0].id;
     this.excluded = new Set();
     this.ownedCp = 0;
     this.discountPercent = 0;
@@ -48,8 +58,18 @@ export class WeaponsCalculator {
     this.render();
   }
 
+  _parseWheels(json) {
+    if (!json) return null;
+    try {
+      const wheels = JSON.parse(json);
+      return Array.isArray(wheels) && wheels.length ? wheels : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   get wheel() {
-    return getWheel(this.wheelId);
+    return this.wheels.find((w) => w.id === this.wheelId) || this.wheels[0];
   }
 
   get pulls() {
@@ -64,7 +84,7 @@ export class WeaponsCalculator {
   }
 
   render() {
-    const wheelOptions = WEAPON_WHEELS.map((w) => `<option value="${w.id}" ${w.id === this.wheelId ? 'selected' : ''}>${w.label}</option>`).join('');
+    const wheelOptions = this.wheels.map((w) => `<option value="${w.id}" ${w.id === this.wheelId ? 'selected' : ''}>${w.label}</option>`).join('');
     const accountTabs = ACCOUNT_TYPES.map((a) => `<button type="button" class="bav-wcalc-tab${a.id === this.accountType ? ' is-active' : ''}" data-account="${a.id}">${a.label}</button>`).join('');
 
     const t = this.lang;
@@ -74,7 +94,7 @@ export class WeaponsCalculator {
           <div class="bav-wcalc-label">${t.accountType}</div>
           <div class="bav-wcalc-tabs">${accountTabs}</div>
         </div>
-        ${this.lockedWheelId ? '' : `
+        ${this.lockWheel ? '' : `
         <div class="bav-wcalc-row">
           <div class="bav-wcalc-label">${t.wheelType}</div>
           <select class="bav-wcalc-select" data-role="wheel-select">${wheelOptions}</select>

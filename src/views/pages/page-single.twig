@@ -461,7 +461,30 @@
             الأسلحة") - the actual interactive widget is rendered client-side
             by weapons-calc.js into #bav-weapons-calculator below; this twig
             branch is just the page shell (title, breadcrumb, container).
+
+            Real price tables come from theme.settings.get('weapon_wheel_prices')
+            (twilight.json collection, merchant-editable - no code redeploy
+            needed when prices change) - reshaped here from its flat per-pull
+            fields into the {id, label, pulls: {gulf:[], medium:[], african:[]}}
+            shape weapons-calculator.js expects, then passed down as one JSON
+            data attribute. Mirrored in single.twig's mini widget below.
         #}
+        {% set weapon_wheels = [] %}
+        {% for w in theme.settings.get('weapon_wheel_prices')|default([]) %}
+            {% set gulf_pulls = [] %}
+            {% set medium_pulls = [] %}
+            {% set african_pulls = [] %}
+            {% for i in 1..10 %}
+                {% set gulf_pulls = gulf_pulls|merge([w['weapon_wheel_prices.gulf_' ~ i]]) %}
+                {% set medium_pulls = medium_pulls|merge([w['weapon_wheel_prices.medium_' ~ i]]) %}
+                {% set african_pulls = african_pulls|merge([w['weapon_wheel_prices.african_' ~ i]]) %}
+            {% endfor %}
+            {% set weapon_wheels = weapon_wheels|merge([{
+                id: (loop.index0 ~ ''),
+                label: w['weapon_wheel_prices.name'],
+                pulls: {gulf: gulf_pulls, medium: medium_pulls, african: african_pulls}
+            }]) %}
+        {% endfor %}
         <div class="wrap" style="padding:60px 0 100px;max-width:760px">
             <nav class="breadcrumbs w-full py-5"><salla-breadcrumb></salla-breadcrumb></nav>
             <div class="sechead">
@@ -471,6 +494,7 @@
             </div>
             <div id="bav-weapons-calculator"
                  style="margin-top:30px"
+                 data-wheels='{{ weapon_wheels|json_encode }}'
                  data-lang-account-type="{{ trans('bav.wcalc_account_type') }}"
                  data-lang-wheel-type="{{ trans('bav.wcalc_wheel_type') }}"
                  data-lang-pulls-label="{{ trans('bav.wcalc_pulls_label') }}"

@@ -537,9 +537,26 @@
                     the product's own category name, not its slug/name.
                 #}
                 {% if 'أسلحة' in (product.category.name ?? '') %}
+                    {% set weapon_wheels = [] %}
+                    {% for w in theme.settings.get('weapon_wheel_prices')|default([]) %}
+                        {% set gulf_pulls = [] %}
+                        {% set medium_pulls = [] %}
+                        {% set african_pulls = [] %}
+                        {% for i in 1..10 %}
+                            {% set gulf_pulls = gulf_pulls|merge([w['weapon_wheel_prices.gulf_' ~ i]]) %}
+                            {% set medium_pulls = medium_pulls|merge([w['weapon_wheel_prices.medium_' ~ i]]) %}
+                            {% set african_pulls = african_pulls|merge([w['weapon_wheel_prices.african_' ~ i]]) %}
+                        {% endfor %}
+                        {% set weapon_wheels = weapon_wheels|merge([{
+                            id: (loop.index0 ~ ''),
+                            label: w['weapon_wheel_prices.name'],
+                            pulls: {gulf: gulf_pulls, medium: medium_pulls, african: african_pulls}
+                        }]) %}
+                    {% endfor %}
                     <div style="margin-top:20px">
                         <div class="disp" style="font-size:18px;margin-bottom:14px">{{ trans('bav.weapons_calculator_mini_title') }}</div>
                         <div id="bav-weapons-calculator-mini"
+                             data-wheels='{{ weapon_wheels|json_encode }}'
                              data-lang-account-type="{{ trans('bav.wcalc_account_type') }}"
                              data-lang-pulls-label="{{ trans('bav.wcalc_pulls_label') }}"
                              data-lang-pulls-hint="{{ trans('bav.wcalc_pulls_hint') }}"

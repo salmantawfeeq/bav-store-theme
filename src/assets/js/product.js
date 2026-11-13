@@ -4,7 +4,6 @@ import Fslightbox from 'fslightbox';
 window.fslightbox = Fslightbox;
 import { zoom } from './partials/image-zoom';
 import { WeaponsCalculator } from './partials/weapons-calculator';
-import { WEAPON_WHEELS } from './partials/weapons-wheels-data';
 
 class Product extends BasePage {
     onReady() {
@@ -123,7 +122,7 @@ class Product extends BasePage {
     initWeaponsCalculator() {
         const container = document.getElementById('bav-weapons-calculator-mini');
         if (!container) return;
-        new WeaponsCalculator(container, { lockedWheelId: container.dataset.wheelId || WEAPON_WHEELS[0].id });
+        new WeaponsCalculator(container, { lockWheel: true });
     }
 
     initImagesZooming() {
