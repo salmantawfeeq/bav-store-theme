@@ -3,7 +3,7 @@ const path = require('node:path');
 const http = require('node:http');
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.BAV_PLAYWRIGHT_PATH || path.join(process.env.TEMP, 'bav-store-qa/node_modules/playwright'));
-const root = path.resolve(__dirname, '../..');
+const root = process.env.BAV_QA_ROOT ? path.resolve(process.env.BAV_QA_ROOT) : path.resolve(__dirname, '../..');
 const artifacts = path.resolve(__dirname, '../.qa-artifacts');
 fs.mkdirSync(artifacts, {recursive:true});
 const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.pdf':'application/pdf'};
