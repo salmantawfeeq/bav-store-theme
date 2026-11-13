@@ -42,6 +42,9 @@ class Products extends BasePage {
             trigger?.setAttribute('aria-expanded', 'false');
             drawer.close();
         };
+        ['mousedown', 'touchstart'].forEach(type => {
+            drawer.backdrop.addEventListener(type, closeDrawer, { capture: true, passive: true });
+        });
         trigger?.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.add('filters-opened');
