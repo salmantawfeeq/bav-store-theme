@@ -5342,6 +5342,19 @@ input[type=radio].sr-only:checked ~ div.main-menu .sub-menu {
   }
 }
 @media only screen and (max-width: 1024px) {
+  /* <salla-filters> (#filters-menu) never had the same hidden-until-opened
+     rule .mobile-menu gets below - it just rendered open and inline, full
+     height, pushing the actual product grid down and overlapping the page
+     header above it (merchant screenshot, طلبات_صاحب_المتجر.md بند 11).
+     products.js already toggles body.filters-opened correctly on open/close
+     (initiateMobileMenu()) - the JS was never the problem, only this
+     missing CSS half of the pair was. */
+  #filters-menu {
+    display: none;
+  }
+  .filters-opened #filters-menu {
+    display: block;
+  }
   .filters-opened .close-filters {
     display: block !important;
   }
@@ -10836,9 +10849,13 @@ input[type=radio].sr-only:checked ~ div.points-ways__list .way-item__icon span {
   }
 }
 @media (max-width: 620px) {
+  /* Stays 2 columns here instead of collapsing to 1, same call and same
+     reasoning as .g3 on the homepage (bav.scss) - a single full-width card
+     per row on a phone read as too plain/sparse, and the two card styles
+     need to stay visually consistent across the site. */
   .s-products-index-grid,
   .s-products-index-grid salla-products-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 .s-add-product-toast{

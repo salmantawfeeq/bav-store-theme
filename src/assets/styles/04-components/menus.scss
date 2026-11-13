@@ -150,11 +150,24 @@
 }
 // Mobile Slide Menu
 @media only screen and (max-width: 1024px) {
-  .filters-opened{
+  /* <salla-filters> (#filters-menu) never had the same hidden-until-opened
+     rule .mobile-menu gets below - it just rendered open and inline, full
+     height, pushing the actual product grid down and overlapping the page
+     header above it (merchant screenshot, طلبات_صاحب_المتجر.md بند 11).
+     products.js already toggles body.filters-opened correctly on open/close
+     (initiateMobileMenu()) - the JS was never the problem, only this
+     missing CSS half of the pair was. */
+  #filters-menu {
+    display: none;
+  }
+  .filters-opened {
+    #filters-menu {
+      display: block;
+    }
     .close-filters{
       display: block !important;
     }
-  } 
+  }
   .menu-opened{
     .btn--close-sm.close-mobile-menu{
       display: block !important;
