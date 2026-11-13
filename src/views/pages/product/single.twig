@@ -172,7 +172,7 @@
                         <div class="promotion-title badge">{{ product.promotion_title }}</div>
                     {% endif %}
                     {% if product.discount_percentage %}
-                        <span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px;z-index:2">-{{ product.discount_percentage }}</span>
+                        <span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px;z-index:2">-{{ product.discount_percentage|replace({'%':''})|round(2) }}%</span>
                     {% endif %}
                     {% if is_recipient_id_product %}
                         {{ bav_gift_ribbon_svg }}
@@ -266,7 +266,8 @@
                       <span class="price num" style="font-size:44px">{{ product.sale_price|money }}</span>
                       <s class="old">{{ product.regular_price|money }}</s>
                       {% if product.is_on_sale %}
-                        {% set saved = product.regular_price - product.sale_price %}
+                        {# Normalize Salla price values to numeric JSON scalars before subtraction. #}
+                        {% set saved = (product.regular_price|json_encode) - (product.sale_price|json_encode) %}
                         <span class="save-badge">{{ trans('bav.product.you_saved', {amount: saved|money}) }}</span>
                       {% endif %}
                   </div>

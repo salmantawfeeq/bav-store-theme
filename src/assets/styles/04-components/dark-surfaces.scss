@@ -13,6 +13,18 @@
 .bav-card-radius { border-radius: 22px !important; border: 1px solid var(--border-1) !important; }
 
 .theme-bav {
+  .s-product-options-wrapper, .s-bought-together-entry, .cart-options {
+    background-color: var(--bg-surface-1);
+    color: var(--main-text-color);
+    border-color: var(--border-2);
+    border-radius: 14px;
+  }
+  .s-product-options-option-label, .s-bought-together-title { color: var(--main-text-color); }
+  .s-product-options-option-label small, .s-product-options-field-required,
+  .s-bought-together-subtitle { color: var(--color-text-secondary); }
+  .s-product-options-option-error .s-product-options-option-label { color: #FF6B5A; }
+  .s-bought-together-checkmark { background-color: var(--bg-surface-4); border-color: var(--border-3); }
+  .s-bought-together-list > :not([hidden]) ~ :not([hidden]) { border-color: var(--border-2); }
   .bg-white { background-color: var(--bg-surface-1) !important; }
   .bg-gray-50, .bg-gray-100 { background-color: var(--bg-surface-2) !important; }
   .text-gray-800, .text-gray-700, .text-gray-900 { color: var(--main-text-color) !important; }

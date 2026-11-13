@@ -80,9 +80,9 @@ for(const name of ['offers_products','game_products','double_cp_products','doubl
   const start=indexTemplate.indexOf('{% set '+name+' = [] %}');
   const end=indexTemplate.indexOf('{% if '+name+'|length %}',start);
   const template=Twig.twig({data:indexTemplate.slice(start,end)+'{{ '+name+'|json_encode }}'});
-  for(const selected of [[123,456],[{value:123},{id:456}],{value:[123,456],source:'products'}]){
+  for(const [selected,expected] of [[[123,456],[123,456]],[[{value:123},{id:456}],[123,456]],[{value:[123,456],source:'products'},[123,456]],[[],[]],[{value:[],source:'products'},[]],[null,[]]]){
     const result=template.render({theme:{settings:{get:()=>selected}}});
-    equal(JSON.stringify(JSON.parse(result)),JSON.stringify([123,456]));
+    equal(JSON.stringify(JSON.parse(result)),JSON.stringify(expected));
   }
 }
 const rewardTextTemplate=Twig.twig({data:indexTemplate.match(/{% set reward_text =[\s\S]*?<\/div>/)[0]});
@@ -92,6 +92,17 @@ for(const text of ['80 CP هدية',{ar:'80 CP هدية',en:'80 CP gift'}]){
 }
 const master=fs.readFileSync('src/views/layouts/master.twig','utf8');
 assert(!/<script[^>]*\bdefer\b[^>]*src="{{ 'product-card.js'/.test(master));assertions++;
+const productTemplate=fs.readFileSync('src/views/pages/product/single.twig','utf8');
+assert(!productTemplate.includes('bav-product-diagnostic'));assertions++;
+const savingsTemplate=Twig.twig({data:productTemplate.match(/{% set saved =[^\r\n]+/)[0]+'{{ saved }}'});
+// Salla's PHP price objects are covered by live-store checks; twig.js uses scalar fixtures.
+for(const [regular,sale,expected]of [[59,56,3],[89.99,84,5.99],[100,99.99,0.01],[175.5,170.1,5.4]]){
+  const actual=Number(savingsTemplate.render({product:{regular_price:regular,sale_price:sale}}));assert(Math.abs(actual-expected)<1e-9,'Invalid savings amount');assertions++;
+}
+const discountBadge=Twig.twig({data:productTemplate.match(/<span class="save num"[^>]*>[\s\S]*?<\/span>/)[0]});
+for(const [percent,expected]of [['5.0847457627119%','-5.08%'],['20%','-20%']]){
+  assert(discountBadge.render({product:{discount_percentage:percent}}).includes(expected));assertions++;
+}
 context.URL=URL;
 vm.runInContext(fs.readFileSync('src/assets/js/partials/preview-links.js','utf8').replaceAll('export function','function'),context);
 const preview='https://salla.design/dev-bav/';
