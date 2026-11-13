@@ -476,7 +476,6 @@ function renderOptionFieldsPreview(product) {
 
   const rows = fields.map((f) => `
     <div style="margin-bottom:18px">
-      <p style="font-size:13px;color:#8E8E98;margin:0 0 10px">مثال: ${f.placeholder} — ده رقم توضيحي بس، اكتب رقمك الحقيقي أنت في الخانة.</p>
       <label style="display:block;font-weight:700;font-size:15px;margin-bottom:10px">${f.label} <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:rgba(255,90,31,.14);color:var(--accent);margin-right:8px">مطلوب</span></label>
       <input class="field" type="text" dir="${f.dir}" placeholder="${f.placeholder}" style="${f.dir === 'rtl' ? 'font-family:inherit;font-weight:500;letter-spacing:0;font-size:16px;text-align:right' : ''}">
     </div>`).join('');
