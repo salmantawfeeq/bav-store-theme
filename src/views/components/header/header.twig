@@ -18,7 +18,8 @@
     <div class="mq-track">
       {% for i in 1..2 %}
         {% for item in topbar_items %}
-          <span><i aria-hidden="true"></i>{{ (item['topbar_items.text']|default(item.text)) }}</span>
+          {% set topbar_text = item['topbar_items.text']|default(item.text) %}
+          <span><i aria-hidden="true"></i>{{ topbar_text is iterable ? topbar_text[language.code]|default(topbar_text|first) : topbar_text }}</span>
         {% endfor %}
       {% endfor %}
     </div>

@@ -58,7 +58,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
 
-    <script defer data-cfasync="false" crossorigin="anonymous" src="{{ 'product-card.js'|asset }}"></script>
+    <script data-cfasync="false" crossorigin="anonymous" src="{{ 'product-card.js'|asset }}"></script>
     <script defer src="{{ 'main-menu.js'|asset }}"></script>
     {% if theme.settings.get('enable_add_product_toast', true) %}
         <script defer src="{{ 'add-product-toast.js'|asset }}"></script>
@@ -74,6 +74,11 @@
         window.enable_more_menu = "{{ theme.settings.get('enable_more_menu', true) }}"
         window.enable_add_product_toast = "{{ theme.settings.get('enable_add_product_toast', true) }}"
         window.notify_when_available_in_card = "{{ theme.settings.get('notify_when_available_in_card', true) }}"
+        window.bavProductCardLabels = {
+            free: {{ trans('bav.product.free_badge')|json_encode|raw }},
+            digitalNote: {{ trans('bav.digital_no_refund_note')|json_encode|raw }},
+            fastExecution: {{ trans('bav.product.badge_fast_execution')|json_encode|raw }}
+        };
     </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">

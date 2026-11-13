@@ -62,9 +62,9 @@ class ProductCard extends HTMLElement {
         this.startingPrice = salla.lang.get('pages.products.starting_price');
         this.addToCart = salla.lang.get('pages.cart.add_to_cart');
         this.outOfStock = salla.lang.get('pages.products.out_of_stock');
-        this.freeBadgeLabel = salla.lang.get('bav.product.free_badge');
-        this.digitalNoRefundNote = salla.lang.get('bav.digital_no_refund_note');
-        this.fastExecutionBadgeLabel = salla.lang.get('bav.product.badge_fast_execution');
+        this.freeBadgeLabel = window.bavProductCardLabels?.free;
+        this.digitalNoRefundNote = window.bavProductCardLabels?.digitalNote;
+        this.fastExecutionBadgeLabel = window.bavProductCardLabels?.fastExecution;
 
         // re-render to update translations
         this.render();

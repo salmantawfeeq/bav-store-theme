@@ -100,7 +100,12 @@
         var col = menu.parentElement;
         var seen = {};
         function key(a) {
-            try { var u = new URL(a.getAttribute('href'), location.href); return u.origin + u.pathname.replace(/\/+$/, '') + u.hash; } catch (e) { return a.getAttribute('href'); }
+            try {
+                var u = new URL(a.getAttribute('href'), location.href);
+                var storeOrigin = new URL({{ store.url|json_encode|raw }}, location.href).origin;
+                var origin = u.origin === location.origin || u.origin === storeOrigin ? '' : u.origin;
+                return origin + u.pathname.replace(/\/+$/, '') + u.hash;
+            } catch (e) { return a.getAttribute('href'); }
         }
         col.querySelectorAll(':scope > a.flink').forEach(function (a) { seen[key(a)] = true; });
         menu.querySelectorAll('a[href]').forEach(function (a) {

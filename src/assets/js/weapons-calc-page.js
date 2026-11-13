@@ -9,4 +9,4 @@ class WeaponsCalcPage extends BasePage {
     }
 }
 
-WeaponsCalcPage.initiateWhenReady(['page.single']);
+WeaponsCalcPage.initiateWhenReady(['page-single', 'page.single']);

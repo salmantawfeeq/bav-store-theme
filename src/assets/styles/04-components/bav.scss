@@ -159,7 +159,19 @@ html[dir="ltr"] .hero-bg { -webkit-mask-image: linear-gradient(270deg, #000 0, #
   .hero-bg { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 88%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 88%, transparent 100%); }
 }
 
+.g3 > salla-products-list {
+  grid-column: 1 / -1;
+  min-width: 0;
+
+  .s-products-list-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
 @media (max-width: 1000px) {
+  .g3 > salla-products-list .s-products-list-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   .bav-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bav-trust-item:nth-child(2)::after { display: none; }

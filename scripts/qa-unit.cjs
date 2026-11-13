@@ -73,4 +73,23 @@ vm.runInNewContext(emptySettingsSource,{require:memoryRequire,__dirname:path.dir
 equal(rendered.size,42);
 const emptyHome=rendered.get('index.html');
 for(const text of ['كل خدماتك الرقمية','في مكان واحد','images/bav-hero.webp','80 CP هدية','data-amt="600"','الشحن بمعرّف اللاعب فقط']){assert(emptyHome.includes(text),'Missing new-install fallback: '+text);assertions++;}
+// Real Salla selections wrap IDs in {value, source}; collection texts can be multilingual.
+const Twig = require('twig');
+const indexTemplate = fs.readFileSync('src/views/pages/index.twig','utf8');
+for(const name of ['offers_products','game_products','double_cp_products','double_cp_gift_products','digital_files','services_products','weapons_products']){
+  const start=indexTemplate.indexOf('{% set '+name+' = [] %}');
+  const end=indexTemplate.indexOf('{% if '+name+'|length %}',start);
+  const template=Twig.twig({data:indexTemplate.slice(start,end)+'{{ '+name+'|json_encode }}'});
+  for(const selected of [[123,456],[{value:123},{id:456}],{value:[123,456],source:'products'}]){
+    const result=template.render({theme:{settings:{get:()=>selected}}});
+    equal(JSON.stringify(JSON.parse(result)),JSON.stringify([123,456]));
+  }
+}
+const rewardTextTemplate=Twig.twig({data:indexTemplate.match(/{% set reward_text =[\s\S]*?<\/div>/)[0]});
+for(const text of ['80 CP هدية',{ar:'80 CP هدية',en:'80 CP gift'}]){
+  const result=rewardTextTemplate.render({level:{text},language:{code:'ar'}});
+  assert(result.includes('80 CP هدية')&&!result.includes('[object Object]'));assertions++;
+}
+const master=fs.readFileSync('src/views/layouts/master.twig','utf8');
+assert(!/<script[^>]*\bdefer\b[^>]*src="{{ 'product-card.js'/.test(master));assertions++;
 console.log(JSON.stringify({passed:true,behaviorAssertions:assertions,previewPages:pages,emptySettingsPages:rendered.size}));

@@ -92,7 +92,8 @@
                                 <span class="lv-chip" style="font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:#131316;border:1px solid #2A2A31;color:#6E6E78">{{ trans('bav.reward_locked') }}</span>
                             </div>
                             <div class="num" style="font-size:34px;margin-top:20px">{{ (level['reward_levels.amount']|default(level.amount)) }}<span class="cur" style="font-family:var(--font-main);margin-right:6px">ر.س</span></div>
-                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ (level['reward_levels.text']|default(level.text))|json_encode }}</div>
+                            {% set reward_text = level['reward_levels.text']|default(level.text) %}
+                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ reward_text is iterable ? reward_text[language.code]|default(reward_text|first) : reward_text }}</div>
                         </div>
                     {% endfor %}
                 </div>
@@ -114,7 +115,8 @@
         teaser is curated.
     #}
     {% set offers_products = [] %}
-    {% for item in theme.settings.get('offers_products')|default([]) %}{% set offers_products = offers_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('offers_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set offers_products = offers_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if offers_products|length %}
     <section id="offers" style="padding:60px 0 40px">
         <div class="wrap">
@@ -141,7 +143,8 @@
 
     {# Choose your currency — merchant-selected products (no game names shown) #}
     {% set game_products = [] %}
-    {% for item in theme.settings.get('game_products')|default([]) %}{% set game_products = game_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('game_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set game_products = game_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if game_products|length %}
         <section id="choose-game" style="padding:110px 0 40px">
             <div class="wrap">
@@ -168,7 +171,8 @@
 
     {# Double CP — merchant-selected products #}
     {% set double_cp_products = [] %}
-    {% for item in theme.settings.get('double_cp_products')|default([]) %}{% set double_cp_products = double_cp_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('double_cp_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set double_cp_products = double_cp_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if double_cp_products|length %}
         <section id="double-cp" style="padding:40px 0 40px">
             <div class="wrap">
@@ -195,7 +199,8 @@
 
     {# Gift Double CP — separate, same tiers, "ID" field instead of Player ID #}
     {% set double_cp_gift_products = [] %}
-    {% for item in theme.settings.get('double_cp_gift_products')|default([]) %}{% set double_cp_gift_products = double_cp_gift_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('double_cp_gift_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set double_cp_gift_products = double_cp_gift_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if double_cp_gift_products|length %}
         <section id="double-cp-gift" style="padding:40px 0 40px;background:#0D0D10">
             <div class="wrap">
@@ -222,7 +227,8 @@
 
     {# Digital files — merchant-selected #}
     {% set digital_files = [] %}
-    {% for item in theme.settings.get('digital_files_products')|default([]) %}{% set digital_files = digital_files|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('digital_files_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set digital_files = digital_files|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if digital_files|length %}
         <section id="digital-files" style="padding:40px 0 40px">
             <div class="wrap">
@@ -249,7 +255,8 @@
 
     {# Services — merchant-selected #}
     {% set services_products = [] %}
-    {% for item in theme.settings.get('services_products')|default([]) %}{% set services_products = services_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('services_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set services_products = services_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if services_products|length %}
         <section id="services" style="padding:40px 0 40px;background:#0D0D10">
             <div class="wrap">
@@ -281,7 +288,8 @@
         the other homepage sections, instead of a fixed hardcoded list.
     #}
     {% set weapons_products = [] %}
-    {% for item in theme.settings.get('weapons_products')|default([]) %}{% set weapons_products = weapons_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
+    {% set selection = theme.settings.get('weapons_products')|default([]) %}
+    {% for item in selection.value|default(selection) %}{% set weapons_products = weapons_products|merge([item.value|default(item.id)|default(item)]) %}{% endfor %}
     {% if weapons_products|length %}
         <section id="weapons" style="padding:40px 0 40px">
             <div class="wrap">
