@@ -541,11 +541,11 @@
                     {% for w in theme.settings.get('weapon_wheel_prices')|default([]) %}
                         {% set weapon_wheels = weapon_wheels|merge([{
                             id: (loop.index0 ~ ''),
-                            label: (w['weapon_wheel_prices.name'] ?? w.name),
+                            label: (w['weapon_wheel_prices.name']|default(w.name)),
                             pulls: {
-                                gulf: (w['weapon_wheel_prices.gulf_prices'] ?? w.gulf_prices)|default('')|split(','),
-                                medium: (w['weapon_wheel_prices.medium_prices'] ?? w.medium_prices)|default('')|split(','),
-                                african: (w['weapon_wheel_prices.african_prices'] ?? w.african_prices)|default('')|split(',')
+                                gulf: (w['weapon_wheel_prices.gulf_prices']|default(w.gulf_prices))|default('')|split(','),
+                                medium: (w['weapon_wheel_prices.medium_prices']|default(w.medium_prices))|default('')|split(','),
+                                african: (w['weapon_wheel_prices.african_prices']|default(w.african_prices))|default('')|split(',')
                             }
                         }]) %}
                     {% endfor %}
