@@ -161,9 +161,38 @@ const servicesProducts = [
     description: 'تبي تبدأ من جديد أو تضيف حساب ثاني من غير ما تدفع فيه فلوس كثير؟ عندنا حساب جاهز بسعر اقتصادي يعطيك بداية سريعة، بأقل تكلفة ممكنة.',
   },
   {
+    // Real description text from صاحب المتجر (2026-11-13, "انسخه نفسه بالضبط")
+    // - copied verbatim per his direct instruction, including the one "COD
+    // Mobile" mention it contains (طلبات_صاحب_المتجر.md has the full note on
+    // this conflicting with the no-game-name rule, same pattern as بند 15).
     slug: 'settings-fix', name: 'حل مشاكل الإعدادات والتحكم', subtitle: 'ضبط الحساسية والإعدادات بما يناسب أسلوب لعبك', price: '5.99', service: true,
     image: '../bav-store-theme/public/images/service-settings-fix-cover.svg',
-    description: 'نضبط لك إعدادات التحكم والحساسية بما يناسب أسلوبك بالضبط، بخبرة عملية في كل التفاصيل اللي تفرق — من غير ما تضيّع وقتك تجرّب لحالك.',
+    description: `<p>تواجهك مشكلة في إعدادات اللعبة أو التحكم؟</p>
+<p>في متجر Bav نساعدك في حل المشاكل المتعلقة بإعدادات COD Mobile، وضبط خيارات التحكم والحساسية، وتخصيص الإعدادات بما يتناسب مع أسلوب لعبك.</p>
+<p>إذا واجهتك مشكلة في الإعدادات أو ما عرفت تضبط خيار معيّن، تواصل معنا ونساعدك بقدر المستطاع في الوصول للحل المناسب.</p>
+<p>قبل شراء الخدمة تأكد من أن المطلوب يدخل من ضمن "المشاكل التي تشملها الخدمة"، وحتى إن دخلت ضمن النطاق لا نضمن لك حل المشكلة تمامًا.</p>
+<p><strong>المشاكل التي تشملها الخدمة:</strong></p>
+<ul>
+<li>مشاكل إطلاق النار والتصويب (ADS).</li>
+<li>إعدادات الرسومات والجودة داخل اللعبة.</li>
+<li>مشاكل تخصيص الأزرار والاستجابة للمس.</li>
+<li>المساعدة في ضبط إعدادات تناسب أسلوب لعبك.</li>
+<li>شرح وظيفة الخيارات الموجودة داخل إعدادات اللعبة.</li>
+</ul>
+<p><strong>الأشياء التي لا يشملها القسم:</strong></p>
+<ul>
+<li>الحظر (Ban) أو رفع الحظر عن الحسابات.</li>
+<li>استرجاع الحسابات المسروقة أو المفقودة.</li>
+<li>مشاكل الشحن أو نقاط CP والمشتريات.</li>
+<li>مشاكل الاتصال بالإنترنت أو مزود الخدمة.</li>
+<li>مشاكل نظام الجهاز نفسه أو أعطاله.</li>
+<li>مشاكل التهنيق أو الكراش الناتجة عن الجهاز أو اللعبة.</li>
+<li>استرجاع المشتريات أو التعويضات من Activision.</li>
+<li>المشاكل التقنية العامة الناتجة عن تحديثات اللعبة والتي لا نملك صلاحية معالجتها.</li>
+</ul>
+<p>ملاحظة: يقتصر الدعم على المشاكل المتعلقة بإعدادات اللعبة والتحكم فقط. لا يشمل القسم مشاكل الحسابات أو السيرفرات أو الأعطال التقنية الخارجة عن نطاق إعدادات اللعبة، ولا نضمن إمكانية حل جميع المشاكل.</p>
+<p>يتم التواصل معك عن طريق حساب التيك توك.</p>
+<p>مدة تنفيذ الخدمة: من 30 دقيقة إلى 48 ساعة، ويمكن أن يتم التنفيذ قبل الحد الأدنى. ويعتمد اختلاف التوقيت على ضغط الطلبات، أو ساعات العمل. وفي حال تأخر التنفيذ أكثر من الحد الأقصى تواصل معنا وأبشر باللي يرضيك.</p>`,
   },
 ];
 
@@ -378,7 +407,10 @@ function toProductContext(p, sectionKey, index) {
   // renders empty.
   let description;
   if (p.description) {
-    description = `<p>${p.description}</p>`;
+    // Some descriptions (like settings-fix's real text) already ship as
+    // full rich HTML (multiple <p>/<ul>/<li>) - wrapping those in another
+    // <p> would nest block elements inside a <p>, which is invalid HTML.
+    description = /^\s*<(p|ul|ol|div)[\s>]/i.test(p.description) ? p.description : `<p>${p.description}</p>`;
   } else if (meta.type === 'digital') {
     description = '<p>ملف رقمي يصلك على بريدك الإلكتروني بعد إتمام الطلب. لا حاجة لأي بيانات حساب.</p>';
   } else if (p.gift) {
@@ -413,9 +445,10 @@ function toProductContext(p, sectionKey, index) {
     can_add_note: false,
     can_upload_file: false,
     has_metadata: false,
-    // "إنشاء حساب" is the one service with real required fields (email +
-    // phone, per صاحب المتجر) - every other service still has none.
-    has_options: meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account',
+    // "إنشاء حساب" (email+phone) and "حل مشاكل الإعدادات والتحكم" (TikTok
+    // username) are the two services with real required fields per صاحب
+    // المتجر - every other service still has none.
+    has_options: meta.type === 'codes' || meta.type === 'digital' || p.slug === 'cheap-account' || p.slug === 'settings-fix',
     // Real option names (not just an empty placeholder object) so single.twig's
     // OWN "المستلم" detection - real server-rendered twig logic, not something
     // the mock swap below replaces - actually runs the same way here as it
@@ -431,7 +464,9 @@ function toProductContext(p, sectionKey, index) {
                 { name: 'البريد الإلكتروني (غير مستخدم أبدًا على أي حساب Activision آخر)', placeholder: 'name@example.com' },
                 { name: 'رقم جوالك (للتواصل وتسليم الحساب وكلمة المرور)', placeholder: '05xxxxxxxx' },
               ]
-            : [],
+            : p.slug === 'settings-fix'
+              ? [{ name: 'اسم المستخدم في تيك توك', placeholder: '@username' }]
+              : [],
     is_on_sale: isOnSale,
     is_hidden_quantity: false,
     is_require_shipping: false,
@@ -471,6 +506,11 @@ function renderOptionFieldsPreview(product) {
       { label: 'البريد الإلكتروني (غير مستخدم أبدًا على أي حساب Activision آخر)', placeholder: 'name@example.com', dir: 'ltr' },
       { label: 'رقم جوالك (للتواصل وتسليم الحساب وكلمة المرور)', placeholder: '05xxxxxxxx', dir: 'ltr' }
     );
+  } else if (product.url === 'product-settings-fix.html') {
+    // Per صاحب المتجر's direct request (2026-11-13): support for this
+    // service happens over the store's TikTok account, so it needs the
+    // shopper's own TikTok username to reach them.
+    fields.push({ label: 'اسم المستخدم في تيك توك', placeholder: '@username', dir: 'ltr' });
   }
   if (!fields.length) return '';
 

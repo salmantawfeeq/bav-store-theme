@@ -464,25 +464,24 @@
 
             Real price tables come from theme.settings.get('weapon_wheel_prices')
             (twilight.json collection, merchant-editable - no code redeploy
-            needed when prices change) - reshaped here from its flat per-pull
-            fields into the {id, label, pulls: {gulf:[], medium:[], african:[]}}
-            shape weapons-calculator.js expects, then passed down as one JSON
-            data attribute. Mirrored in single.twig's mini widget below.
+            needed when prices change) - each account type's prices are one
+            comma-separated string (variable pull count per wheel: 7, 10, or
+            more), split here into an array and reshaped into the
+            {id, label, pulls: {gulf:[], medium:[], african:[]}} shape
+            weapons-calculator.js expects, then passed down as one JSON data
+            attribute (the JS casts the split strings to numbers itself).
+            Mirrored in single.twig's mini widget below.
         #}
         {% set weapon_wheels = [] %}
         {% for w in theme.settings.get('weapon_wheel_prices')|default([]) %}
-            {% set gulf_pulls = [] %}
-            {% set medium_pulls = [] %}
-            {% set african_pulls = [] %}
-            {% for i in 1..10 %}
-                {% set gulf_pulls = gulf_pulls|merge([w['weapon_wheel_prices.gulf_' ~ i]]) %}
-                {% set medium_pulls = medium_pulls|merge([w['weapon_wheel_prices.medium_' ~ i]]) %}
-                {% set african_pulls = african_pulls|merge([w['weapon_wheel_prices.african_' ~ i]]) %}
-            {% endfor %}
             {% set weapon_wheels = weapon_wheels|merge([{
                 id: (loop.index0 ~ ''),
                 label: w['weapon_wheel_prices.name'],
-                pulls: {gulf: gulf_pulls, medium: medium_pulls, african: african_pulls}
+                pulls: {
+                    gulf: w['weapon_wheel_prices.gulf_prices']|default('')|split(','),
+                    medium: w['weapon_wheel_prices.medium_prices']|default('')|split(','),
+                    african: w['weapon_wheel_prices.african_prices']|default('')|split(',')
+                }
             }]) %}
         {% endfor %}
         <div class="wrap" style="padding:60px 0 100px;max-width:760px">

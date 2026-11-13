@@ -73,7 +73,12 @@ export class WeaponsCalculator {
   }
 
   get pulls() {
-    return this.wheel.pulls[this.accountType] || [];
+    // Prices arrive from twig as comma-separated strings (split in the
+    // template, not cast there - the twig.js build used for the local
+    // preview doesn't support a numeric-cast filter), so they land here as
+    // strings. Number() them once, in the one place that actually sums
+    // them, rather than trusting every call site to have cast correctly.
+    return (this.wheel.pulls[this.accountType] || []).map(Number);
   }
 
   compute() {

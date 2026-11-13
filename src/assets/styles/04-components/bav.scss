@@ -559,16 +559,16 @@ body.menu-opened .bav-whatsapp-fab { opacity: 0; pointer-events: none; }
 .bav-wcalc-select { max-width: 320px; }
 .bav-wcalc-bulk { display: flex; gap: 8px; }
 .bav-wcalc-bulk-btn { padding: 7px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; border: 1px solid; cursor: pointer; background: transparent; }
-.bav-wcalc-bulk-btn.is-include { color: #3DBE6B; border-color: #2A4A36; }
-.bav-wcalc-bulk-btn.is-exclude { color: #E25C4E; border-color: #4A2E2A; }
+.bav-wcalc-bulk-btn.is-include { color: var(--accent); border-color: rgba(255, 90, 31, .35); }
+.bav-wcalc-bulk-btn.is-exclude { color: #9B9BA5; border-color: #2A2A31; }
 .bav-wcalc-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 560px) { .bav-wcalc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.bav-wcalc-pull { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border-radius: 12px; border: 1px solid #2A4A36; background: rgba(61, 190, 107, .1); cursor: pointer; transition: all .15s ease; }
+.bav-wcalc-pull { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border-radius: 12px; border: 1px solid rgba(255, 90, 31, .35); background: rgba(255, 90, 31, .1); cursor: pointer; transition: all .15s ease; }
 .bav-wcalc-pull-n { font-size: 11px; font-weight: 700; color: #6E6E78; }
-.bav-wcalc-pull-cost { font-size: 14px; font-weight: 700; color: #3DBE6B; }
+.bav-wcalc-pull-cost { font-size: 14px; font-weight: 700; color: var(--accent); }
 .bav-wcalc-pull-cur { font-size: 10px; font-weight: 600; margin-right: 2px; color: #6E6E78; }
-.bav-wcalc-pull.is-excluded { border-color: #4A2E2A; background: rgba(226, 92, 78, .08); }
-.bav-wcalc-pull.is-excluded .bav-wcalc-pull-cost { color: #E25C4E; text-decoration: line-through; }
+.bav-wcalc-pull.is-excluded { border-color: #2A2A31; background: #17171B; }
+.bav-wcalc-pull.is-excluded .bav-wcalc-pull-cost { color: #6E6E78; text-decoration: line-through; }
 .bav-wcalc-result { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-radius: 14px; background: linear-gradient(135deg, rgba(255, 90, 31, .14), rgba(255, 90, 31, .04)); border: 1px solid rgba(255, 90, 31, .3); }
 .bav-wcalc-result-label { font-size: 14px; font-weight: 700; color: #C7C7CF; }
 .bav-wcalc-result-value { font-size: 26px; font-weight: 800; color: var(--accent); }

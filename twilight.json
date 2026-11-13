@@ -319,54 +319,48 @@
             "type": "collection",
             "format": "collection",
             "label": "جداول أسعار عجلات شحن الأسلحة (CP لكل سحبة)",
-            "description": "كل عنصر = عجلة/سلاح واحد. اكتب تكلفة كل سحبة من العشر سحبات بالـCP لكل نوع حساب. الجدول الحالي (خليجي) حقيقي 100% - جدولي المتوسط والأفريقي نسخة مؤقتة من نفس الأرقام لحد ما تحدّثها بالأرقام الحقيقية.",
+            "description": "كل عنصر = عجلة/سلاح واحد. اكتب تكلفة كل سحبة بالـCP كأرقام مفصولة بفواصل، بترتيب السحبات من الأرخص للأغلى (مثال: 30,80,120,300). عدد الأرقام يحدد عدد السحبات تلقائيًا - مش لازم يكون 10 بالظبط. الجداول الخمسة الأولى حقيقية 100% من صاحب المتجر (2026-11-13).",
             "icon": "sicon-discount-calculator",
             "minLength": 1,
-            "maxLength": 10,
+            "maxLength": 15,
             "item_label": "عجلة/سلاح",
             "value": [
                 {
                     "weapon_wheel_prices.name": "السلاح الأسطوري (10 سحبات)",
-                    "weapon_wheel_prices.gulf_1": 30, "weapon_wheel_prices.gulf_2": 80, "weapon_wheel_prices.gulf_3": 120, "weapon_wheel_prices.gulf_4": 300, "weapon_wheel_prices.gulf_5": 500,
-                    "weapon_wheel_prices.gulf_6": 800, "weapon_wheel_prices.gulf_7": 1300, "weapon_wheel_prices.gulf_8": 2000, "weapon_wheel_prices.gulf_9": 2800, "weapon_wheel_prices.gulf_10": 4700,
-                    "weapon_wheel_prices.medium_1": 30, "weapon_wheel_prices.medium_2": 80, "weapon_wheel_prices.medium_3": 120, "weapon_wheel_prices.medium_4": 300, "weapon_wheel_prices.medium_5": 500,
-                    "weapon_wheel_prices.medium_6": 800, "weapon_wheel_prices.medium_7": 1300, "weapon_wheel_prices.medium_8": 2000, "weapon_wheel_prices.medium_9": 2800, "weapon_wheel_prices.medium_10": 4700,
-                    "weapon_wheel_prices.african_1": 30, "weapon_wheel_prices.african_2": 80, "weapon_wheel_prices.african_3": 120, "weapon_wheel_prices.african_4": 300, "weapon_wheel_prices.african_5": 500,
-                    "weapon_wheel_prices.african_6": 800, "weapon_wheel_prices.african_7": 1300, "weapon_wheel_prices.african_8": 2000, "weapon_wheel_prices.african_9": 2800, "weapon_wheel_prices.african_10": 4700
+                    "weapon_wheel_prices.gulf_prices": "30,80,120,300,500,800,1300,2000,2800,4700",
+                    "weapon_wheel_prices.medium_prices": "20,55,80,210,350,560,900,1400,1900,3200",
+                    "weapon_wheel_prices.african_prices": "10,30,50,120,200,320,520,800,1100,1800"
+                },
+                {
+                    "weapon_wheel_prices.name": "الشخصية الأسطورية (10 سحبات)",
+                    "weapon_wheel_prices.gulf_prices": "30,80,120,300,500,800,1300,2000,3900,5500",
+                    "weapon_wheel_prices.medium_prices": "20,55,80,210,350,560,900,1400,2700,3800",
+                    "weapon_wheel_prices.african_prices": "10,30,50,120,200,320,520,800,1500,2200"
+                },
+                {
+                    "weapon_wheel_prices.name": "سلاح الميثك (10 سحبات)",
+                    "weapon_wheel_prices.gulf_prices": "30,80,120,300,500,800,1300,2400,3400,5800",
+                    "weapon_wheel_prices.medium_prices": "20,55,80,210,350,560,900,1600,2300,4000",
+                    "weapon_wheel_prices.african_prices": "10,30,50,120,200,320,520,960,1300,2300"
+                },
+                {
+                    "weapon_wheel_prices.name": "شخصية الميثك (10 سحبات)",
+                    "weapon_wheel_prices.gulf_prices": "50,130,220,400,700,1100,1700,2800,4200,6700",
+                    "weapon_wheel_prices.medium_prices": "35,90,155,300,490,770,1200,2000,2900,4700",
+                    "weapon_wheel_prices.african_prices": "20,50,90,160,280,440,680,1100,1700,2700"
+                },
+                {
+                    "weapon_wheel_prices.name": "عجلة 7 سحبات (سلاح أسطوري)",
+                    "weapon_wheel_prices.gulf_prices": "30,120,350,800,1600,2800,3900",
+                    "weapon_wheel_prices.medium_prices": "20,80,250,550,1100,2000,2600",
+                    "weapon_wheel_prices.african_prices": "10,50,140,300,600,1100,1600"
                 }
             ],
             "fields": [
                 { "id": "weapon_wheel_prices.name", "type": "string", "format": "text", "label": "اسم العجلة/السلاح", "required": true },
-                { "id": "weapon_wheel_prices.gulf_1", "type": "number", "format": "integer", "label": "خليجي - سحبة 1", "required": true },
-                { "id": "weapon_wheel_prices.gulf_2", "type": "number", "format": "integer", "label": "خليجي - سحبة 2", "required": true },
-                { "id": "weapon_wheel_prices.gulf_3", "type": "number", "format": "integer", "label": "خليجي - سحبة 3", "required": true },
-                { "id": "weapon_wheel_prices.gulf_4", "type": "number", "format": "integer", "label": "خليجي - سحبة 4", "required": true },
-                { "id": "weapon_wheel_prices.gulf_5", "type": "number", "format": "integer", "label": "خليجي - سحبة 5", "required": true },
-                { "id": "weapon_wheel_prices.gulf_6", "type": "number", "format": "integer", "label": "خليجي - سحبة 6", "required": true },
-                { "id": "weapon_wheel_prices.gulf_7", "type": "number", "format": "integer", "label": "خليجي - سحبة 7", "required": true },
-                { "id": "weapon_wheel_prices.gulf_8", "type": "number", "format": "integer", "label": "خليجي - سحبة 8", "required": true },
-                { "id": "weapon_wheel_prices.gulf_9", "type": "number", "format": "integer", "label": "خليجي - سحبة 9", "required": true },
-                { "id": "weapon_wheel_prices.gulf_10", "type": "number", "format": "integer", "label": "خليجي - سحبة 10", "required": true },
-                { "id": "weapon_wheel_prices.medium_1", "type": "number", "format": "integer", "label": "متوسط - سحبة 1", "required": true },
-                { "id": "weapon_wheel_prices.medium_2", "type": "number", "format": "integer", "label": "متوسط - سحبة 2", "required": true },
-                { "id": "weapon_wheel_prices.medium_3", "type": "number", "format": "integer", "label": "متوسط - سحبة 3", "required": true },
-                { "id": "weapon_wheel_prices.medium_4", "type": "number", "format": "integer", "label": "متوسط - سحبة 4", "required": true },
-                { "id": "weapon_wheel_prices.medium_5", "type": "number", "format": "integer", "label": "متوسط - سحبة 5", "required": true },
-                { "id": "weapon_wheel_prices.medium_6", "type": "number", "format": "integer", "label": "متوسط - سحبة 6", "required": true },
-                { "id": "weapon_wheel_prices.medium_7", "type": "number", "format": "integer", "label": "متوسط - سحبة 7", "required": true },
-                { "id": "weapon_wheel_prices.medium_8", "type": "number", "format": "integer", "label": "متوسط - سحبة 8", "required": true },
-                { "id": "weapon_wheel_prices.medium_9", "type": "number", "format": "integer", "label": "متوسط - سحبة 9", "required": true },
-                { "id": "weapon_wheel_prices.medium_10", "type": "number", "format": "integer", "label": "متوسط - سحبة 10", "required": true },
-                { "id": "weapon_wheel_prices.african_1", "type": "number", "format": "integer", "label": "أفريقي - سحبة 1", "required": true },
-                { "id": "weapon_wheel_prices.african_2", "type": "number", "format": "integer", "label": "أفريقي - سحبة 2", "required": true },
-                { "id": "weapon_wheel_prices.african_3", "type": "number", "format": "integer", "label": "أفريقي - سحبة 3", "required": true },
-                { "id": "weapon_wheel_prices.african_4", "type": "number", "format": "integer", "label": "أفريقي - سحبة 4", "required": true },
-                { "id": "weapon_wheel_prices.african_5", "type": "number", "format": "integer", "label": "أفريقي - سحبة 5", "required": true },
-                { "id": "weapon_wheel_prices.african_6", "type": "number", "format": "integer", "label": "أفريقي - سحبة 6", "required": true },
-                { "id": "weapon_wheel_prices.african_7", "type": "number", "format": "integer", "label": "أفريقي - سحبة 7", "required": true },
-                { "id": "weapon_wheel_prices.african_8", "type": "number", "format": "integer", "label": "أفريقي - سحبة 8", "required": true },
-                { "id": "weapon_wheel_prices.african_9", "type": "number", "format": "integer", "label": "أفريقي - سحبة 9", "required": true },
-                { "id": "weapon_wheel_prices.african_10", "type": "number", "format": "integer", "label": "أفريقي - سحبة 10", "required": true }
+                { "id": "weapon_wheel_prices.gulf_prices", "type": "string", "format": "text", "label": "أسعار السحبات - الحساب الخليجي (أرقام مفصولة بفواصل)", "required": true },
+                { "id": "weapon_wheel_prices.medium_prices", "type": "string", "format": "text", "label": "أسعار السحبات - الحساب المتوسط (أرقام مفصولة بفواصل)", "required": true },
+                { "id": "weapon_wheel_prices.african_prices", "type": "string", "format": "text", "label": "أسعار السحبات - الحساب الأفريقي (أرقام مفصولة بفواصل)", "required": true }
             ]
         },
         {
