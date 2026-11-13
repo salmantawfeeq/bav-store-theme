@@ -92,7 +92,7 @@
                                 <span class="lv-chip" style="font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:#131316;border:1px solid #2A2A31;color:#6E6E78">{{ trans('bav.reward_locked') }}</span>
                             </div>
                             <div class="num" style="font-size:34px;margin-top:20px">{{ (level['reward_levels.amount']|default(level.amount)) }}<span class="cur" style="font-family:var(--font-main);margin-right:6px">ر.س</span></div>
-                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ (level['reward_levels.text']|default(level.text)) }}</div>
+                            <div style="font-size:16px;line-height:1.7;color:#B4B4BC;margin-top:10px">{{ (level['reward_levels.text']|default(level.text))|json_encode }}</div>
                         </div>
                     {% endfor %}
                 </div>
