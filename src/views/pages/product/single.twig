@@ -72,6 +72,8 @@
 #}
 {% extends "layouts.master" %}
 {% block content %}
+    {% set fulfillment_time = theme.settings.get('execution_time_text')|default('من 10 دقائق إلى ساعتين ونصف بعد تأكيد الدفع') %}
+    {% set is_technical_service = 'خدمات' in (product.category.name ?? '') %}
     {#
         Salla's icon font only has one heart glyph (no separate filled/
         outline variants) - swapping its colour alone on "liked" left the
@@ -128,8 +130,10 @@
                     products - rather than guessing from the product's name/slug.
                 #}
                 {% set is_recipient_id_product = false %}
+                {% set is_player_id_product = false %}
                 {% for opt in product.options|default([]) %}
                     {% if 'المستلم' in opt.name %}{% set is_recipient_id_product = true %}{% endif %}
+                    {% if 'معرّف اللاعب' in opt.name or 'معرف اللاعب' in opt.name %}{% set is_player_id_product = true %}{% endif %}
                 {% endfor %}
                 {#
                     Double CP (regular and gift) looked identical to a plain
@@ -151,7 +155,7 @@
                     was showing up as an irrelevant second photo on every
                     product page regardless of type.
                 #}
-                {% set gallery_images = product.type == 'codes' ? product.images|slice(0, 1)|merge([explainer_image]) : product.images|slice(0, 2) %}
+                {% set gallery_images = (product.type == 'codes' or is_player_id_product or is_recipient_id_product) ? product.images|slice(0, 1)|merge([explainer_image]) : product.images|slice(0, 2) %}
                 {% set has_many_images = true %}
                 <salla-slider
                         data-testid="store-product-image-slider"
@@ -397,8 +401,8 @@
                         than a hardcoded guess, stays visible the whole time.
                     #}
                     {% for opt in product.options|default([]) %}
-                        {% if opt.placeholder %}
-                            <p style="font-size:13px;color:#8E8E98;margin:-4px 0 10px">{{ trans('bav.product.placeholder_example_note', {example: opt.placeholder}) }}</p>
+                        {% if opt.placeholder and ('معرّف' in opt.name or 'معرف' in opt.name or 'آيدي' in opt.name) %}
+                            <p style="font-size:13px;color:#8E8E98;margin:-4px 0 10px">{% if 'مثال' in opt.placeholder %}{{ opt.placeholder }}{% else %}{{ trans('bav.product.placeholder_example_note', {example: opt.placeholder}) }}{% endif %}</p>
                         {% endif %}
                     {% endfor %}
                     {% include 'pages.partials.product.options' %}
@@ -418,7 +422,7 @@
                                     there too before this type check, pointing a
                                     confused shopper at an irrelevant help page.
                                 #}
-                                {% if product.type == 'codes' %}
+                                {% if product.type == 'codes' or is_player_id_product or is_recipient_id_product %}
                                     {% if is_recipient_id_product %}
                                         <a href="{{ theme.settings.get('find_recipient_id_page_url', store.url ~ '#how') }}" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">{{ trans('bav.find_recipient_id_title') }}</a>
                                     {% else %}
@@ -503,8 +507,10 @@
                     <svg aria-hidden="true" style="flex:none" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                     {% if product.type == 'digital' %}
                         <span style="font-size:15px;line-height:1.7;color:#C7C7CF">{{ trans('bav.product.instant_note') }}</span>
+                    {% elseif is_technical_service %}
+                        <span style="font-size:15px;line-height:1.7;color:#C7C7CF">{{ trans('bav.product.execution_note_service') }}</span>
                     {% else %}
-                        <span style="font-size:15px;line-height:1.7;color:#C7C7CF">{{ trans('bav.product.execution_note', {time: theme.settings.get('execution_time_text', 'من 10 دقائق إلى ساعة بعد تأكيد الدفع')}) }}</span>
+                        <span style="font-size:15px;line-height:1.7;color:#C7C7CF">{{ trans('bav.product.execution_note', {time: fulfillment_time}) }}</span>
                     {% endif %}
                 </div>
 
@@ -535,11 +541,11 @@
                     {% for w in theme.settings.get('weapon_wheel_prices')|default([]) %}
                         {% set weapon_wheels = weapon_wheels|merge([{
                             id: (loop.index0 ~ ''),
-                            label: w['weapon_wheel_prices.name'],
+                            label: (w['weapon_wheel_prices.name'] ?? w.name),
                             pulls: {
-                                gulf: w['weapon_wheel_prices.gulf_prices']|default('')|split(','),
-                                medium: w['weapon_wheel_prices.medium_prices']|default('')|split(','),
-                                african: w['weapon_wheel_prices.african_prices']|default('')|split(',')
+                                gulf: (w['weapon_wheel_prices.gulf_prices'] ?? w.gulf_prices)|default('')|split(','),
+                                medium: (w['weapon_wheel_prices.medium_prices'] ?? w.medium_prices)|default('')|split(','),
+                                african: (w['weapon_wheel_prices.african_prices'] ?? w.african_prices)|default('')|split(',')
                             }
                         }]) %}
                     {% endfor %}
@@ -567,8 +573,8 @@
         <salla-offer data-testid="store-product-offer"></salla-offer>
 
         <div class="split" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:84px">
-            <div class="info"><div class="disp" style="font-size:22px">{{ trans('bav.product.before_buy_title') }}</div><p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#A6A6AF">{{ trans(product.type == 'digital' ? 'bav.product.before_buy_desc_digital' : 'bav.product.before_buy_desc') }}</p></div>
-            <div class="info"><div class="disp" style="font-size:22px">{{ trans('bav.product.after_pay_title') }}</div><p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#A6A6AF">{{ product.type == 'digital' ? trans('bav.product.after_pay_desc_digital') : trans('bav.product.after_pay_desc', {time: theme.settings.get('execution_time_text', 'من 10 دقائق إلى ساعة بعد تأكيد الدفع')}) }}</p></div>
+            <div class="info"><div class="disp" style="font-size:22px">{{ trans('bav.product.before_buy_title') }}</div><p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#A6A6AF">{{ trans(product.type == 'digital' ? 'bav.product.before_buy_desc_digital' : (is_technical_service ? 'bav.product.before_buy_desc_service' : 'bav.product.before_buy_desc')) }}</p></div>
+            <div class="info"><div class="disp" style="font-size:22px">{{ trans('bav.product.after_pay_title') }}</div><p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#A6A6AF">{{ product.type == 'digital' ? trans('bav.product.after_pay_desc_digital') : (is_technical_service ? trans('bav.product.after_pay_desc_service') : trans('bav.product.after_pay_desc', {time: fulfillment_time})) }}</p></div>
             <div class="info"><div class="disp" style="font-size:22px">{{ trans('bav.product.refund_title') }}</div><p style="margin:12px 0 0;font-size:15px;line-height:1.9;color:#A6A6AF">{{ trans('bav.product.refund_desc') }}</p></div>
         </div>
     </div>
