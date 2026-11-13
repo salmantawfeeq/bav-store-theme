@@ -203,7 +203,7 @@
 
 	<div class="wrap s-products-index flex items-start flex-col md:flex-row" style="padding-bottom:90px">
 		
-			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
+			<button type="button" aria-label="إغلاق الفلاتر" class="btn--close-sm close-filters sicon-cancel hidden"></button>
 			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none bav-preview-drawer" id="filters-menu">
       <div style="padding:24px 20px">
         <div style="font-weight:700;font-size:16px;margin-bottom:16px">الفئة</div>
@@ -234,7 +234,7 @@
 				</div>
 				<div class="flex items-center gap-3">
 					
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
+						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" aria-label="تصفية المنتجات" aria-controls="filters-menu" aria-expanded="false" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
 							<i class="sicon-filter text-2xl"></i>
 						</a>
 					
@@ -268,7 +268,7 @@
 
 			<div class="s-products-index-grid">
 				
-    <a href="product-cp-80.html" class="pcard">
+    <a href="product-cp-80.html" class="pcard" data-price="3.5" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_80.webp" alt="80" loading="lazy">
       </div>
         <div class="pbody">
@@ -281,7 +281,7 @@
         </div>
     </a>
 
-    <a href="product-cp-420.html" class="pcard">
+    <a href="product-cp-420.html" class="pcard" data-price="17" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_420.webp" alt="420" loading="lazy">
       </div>
         <div class="pbody">
@@ -294,7 +294,7 @@
         </div>
     </a>
 
-    <a href="product-cp-880.html" class="pcard">
+    <a href="product-cp-880.html" class="pcard" data-price="34" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_880.webp" alt="880" loading="lazy">
       </div>
         <div class="pbody">
@@ -307,7 +307,7 @@
         </div>
     </a>
 
-    <a href="product-cp-2400.html" class="pcard">
+    <a href="product-cp-2400.html" class="pcard" data-price="84" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_2400.webp" alt="2,400" loading="lazy"><span class="badge">الأكثر مبيعًا</span>
       </div>
         <div class="pbody">
@@ -320,7 +320,7 @@
         </div>
     </a>
 
-    <a href="product-cp-5000.html" class="pcard">
+    <a href="product-cp-5000.html" class="pcard" data-price="172" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_5000.webp" alt="5,000" loading="lazy">
       </div>
         <div class="pbody">
@@ -333,7 +333,7 @@
         </div>
     </a>
 
-    <a href="product-cp-10800.html" class="pcard">
+    <a href="product-cp-10800.html" class="pcard" data-price="345" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/CP_10800.webp" alt="10,800" loading="lazy"><span class="badge">أفضل قيمة</span>
       </div>
         <div class="pbody">
@@ -346,7 +346,7 @@
         </div>
     </a>
 
-    <a href="product-battle-pass.html" class="pcard">
+    <a href="product-battle-pass.html" class="pcard" data-price="25" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/Battle_Pass.webp" alt="Battle Pass" loading="lazy"><span class="badge">الموسم الحالي</span>
       </div>
         <div class="pbody">
@@ -359,7 +359,7 @@
         </div>
     </a>
 
-    <a href="product-battle-pass-bundle.html" class="pcard">
+    <a href="product-battle-pass-bundle.html" class="pcard" data-price="56" data-category="currency">
         <div class="pimg"><img src="../BAV_Design/02_product_images/Battle_Pass_Bundle.webp" alt="Battle Pass Bundle" loading="lazy"><span class="badge">وفّر أكثر</span>
       </div>
         <div class="pbody">
@@ -372,7 +372,7 @@
         </div>
     </a>
 
-    <a href="product-battle-pass-2400-combo.html" class="pcard">
+    <a href="product-battle-pass-2400-combo.html" class="pcard" data-price="78" data-category="currency">
         <div class="pimg"><img src="../bav-store-theme/public/images/battle-pass-2400-combo-cover.svg" alt="Battle Pass + 2400 CP" loading="lazy">
       </div>
         <div class="pbody">

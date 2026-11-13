@@ -203,7 +203,7 @@
 
 	<div class="wrap s-products-index flex items-start flex-col md:flex-row" style="padding-bottom:90px">
 		
-			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
+			<button type="button" aria-label="إغلاق الفلاتر" class="btn--close-sm close-filters sicon-cancel hidden"></button>
 			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none bav-preview-drawer" id="filters-menu">
       <div style="padding:24px 20px">
         <div style="font-weight:700;font-size:16px;margin-bottom:16px">الفئة</div>
@@ -234,7 +234,7 @@
 				</div>
 				<div class="flex items-center gap-3">
 					
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
+						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" aria-label="تصفية المنتجات" aria-controls="filters-menu" aria-expanded="false" class="filters-trigger ico lg:hidden" style="width:46px;height:46px;border-radius:14px">
 							<i class="sicon-filter text-2xl"></i>
 						</a>
 					
@@ -268,7 +268,7 @@
 
 			<div class="s-products-index-grid">
 				
-    <a href="product-guide-views.html" class="pcard">
+    <a href="product-guide-views.html" class="pcard" data-price="29" data-category="digital">
         <div class="pimg pimg--contain"><img src="../الملفات الرقمية/غلاف_دليل_المشاهدات.png" alt="دليل زيادة المشاهدات والتفاعل على TikTok" loading="lazy"><span class="badge">تنفيذ سريع</span>
       </div>
         <div class="pbody">
@@ -281,7 +281,7 @@
         </div>
     </a>
 
-    <a href="product-guide-video-quality.html" class="pcard">
+    <a href="product-guide-video-quality.html" class="pcard" data-price="0" data-category="digital">
         <div class="pimg pimg--contain"><img src="../الملفات الرقمية/غلاف_دليل_تحسين_الجودة.png" alt="دليل تحسين جودة الفيديو بالجوال — مجانًا" loading="lazy"><span class="badge">مجانًا</span>
       </div>
         <div class="pbody">
