@@ -92,10 +92,6 @@
         
           <span><i aria-hidden="true"></i>دفع آمن بطرق متعددة</span>
         
-          <span><i aria-hidden="true"></i>مدة التنفيذ من 10 دقائق إلى ساعتين ونصف</span>
-        
-          <span><i aria-hidden="true"></i>ساعات العمل 10 صباحًا – 12 منتصف الليل</span>
-        
           <span><i aria-hidden="true"></i>دعم بعد الشراء على واتساب</span>
         
       
@@ -105,10 +101,6 @@
           <span><i aria-hidden="true"></i>راجع معرّف اللاعب قبل الدفع</span>
         
           <span><i aria-hidden="true"></i>دفع آمن بطرق متعددة</span>
-        
-          <span><i aria-hidden="true"></i>مدة التنفيذ من 10 دقائق إلى ساعتين ونصف</span>
-        
-          <span><i aria-hidden="true"></i>ساعات العمل 10 صباحًا – 12 منتصف الليل</span>
         
           <span><i aria-hidden="true"></i>دعم بعد الشراء على واتساب</span>
         
@@ -173,12 +165,23 @@
         <li><a href="category-double-cp-gift.html">إهداء الدبل CP</a></li>
         <li><a href="category-services.html">الخدمات</a></li>
         <li><a href="category-digital-files.html">الملفات الرقمية</a></li>
-        <li><a href="category.html">شحن الأسلحة</a></li>
         
-            <li><a href="about.html">من نحن</a></li>
+        <li>
+            <a href="category.html">شحن الأسلحة</a>
+            <ul class="bav-mobile-nav__sub">
+                <li><a href="index.html#weapons">حاسبة شحن الأسلحة</a></li>
+            </ul>
+        </li>
         
-        <li><a href="find-id.html">كيف أجد معرّفي؟</a></li>
-        <li><a href="faq-full.html">الأسئلة الشائعة</a></li>
+        <li>
+            <a href="faq-full.html">الأسئلة الشائعة</a>
+            <ul class="bav-mobile-nav__sub">
+                
+                    <li><a href="about.html">من نحن</a></li>
+                
+                <li><a href="find-id.html">كيف أجد معرّفي؟</a></li>
+            </ul>
+        </li>
         <li><a href="#preview-link-placeholder">عروض</a></li>
     </ul>
 </nav>
@@ -213,9 +216,12 @@
                 
                 
                 
+                
+                
     <div style="position:relative;border-radius:26px;overflow:hidden;border:1px solid #232329;aspect-ratio:4/3;background:#09090B">
       <img src="../BAV_Design/02_product_images/Battle_Pass.webp" alt="Battle Pass" style="width:100%;height:100%;object-fit:cover;display:block">
       <span class="save num" dir="ltr" style="position:absolute;top:16px;left:16px">-4%</span>
+      
       
     </div>
     <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px">
@@ -316,9 +322,16 @@
                     
 
                     
+                    
+                        
+                            <p style="font-size:13px;color:#8E8E98;margin:-4px 0 10px">مثال: 4PHMKA — ده رقم توضيحي بس، اكتب رقمك الحقيقي أنت في الخانة.</p>
+                        
+                    
+                    
 
     <div style="margin-bottom:8px">
     <div style="margin-bottom:18px">
+      <p style="font-size:13px;color:#8E8E98;margin:0 0 10px">مثال: 4PHMKA — ده رقم توضيحي بس، اكتب رقمك الحقيقي أنت في الخانة.</p>
       <label style="display:block;font-weight:700;font-size:15px;margin-bottom:10px">معرّف اللاعب (Player ID) <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:rgba(255,90,31,.14);color:var(--accent);margin-right:8px">مطلوب</span></label>
       <input class="field" type="text" dir="ltr" placeholder="4PHMKA" style="">
     </div></div>
@@ -337,7 +350,12 @@
                             <input id="confirm-ok" type="checkbox">
                             <span style="font-size:15px;line-height:1.8;color:#C7C7CF">
                                 أؤكد صحة البيانات المُدخلة أعلاه في خيارات المنتج، وأتحمّل مسؤولية التحقق منها قبل إتمام الطلب.
-                                <a href="find-id.html" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">كيف أجد معرّفي؟</a>
+                                
+                                
+                                    
+                                        <a href="find-id.html" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:6px">كيف أجد معرّفي؟</a>
+                                    
+                                
                             </span>
                         </label>
                         <div class="pid-err" id="confirm-err" style="display:none">لازم توافق على تأكيد البيانات قبل إضافتها للسلة.</div>
@@ -389,6 +407,12 @@
                 </div>
 
                 
+                
+
+                
+                
+
+                
                 <salla-quick-order data-testid="store-product-quick-order" class="mt-5 md:-mb-2 block"></salla-quick-order>
             </div>
         </div>
@@ -411,7 +435,7 @@
         <div class="sechead"><h2>قد يعجبك أيضًا</h2><div class="orn"><b></b><b></b></div></div>
       <div class="g3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px">
     <a href="product-double-cp-160.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_80.webp" alt="160" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_80.webp" alt="160" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">160 <small>CP</small></div>
@@ -419,12 +443,12 @@
             <div class="prow"><span class="price num">3.69</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a>
 
     <a href="product-double-cp-800.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_420.webp" alt="800" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_420.webp" alt="800" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">800 <small>CP</small></div>
@@ -432,12 +456,12 @@
             <div class="prow"><span class="price num">17.99</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a>
 
     <a href="product-double-cp-1600.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_880.webp" alt="1,600" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_880.webp" alt="1,600" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">1,600 <small>CP</small></div>
@@ -445,12 +469,12 @@
             <div class="prow"><span class="price num">36.99</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a>
 
     <a href="product-double-cp-4000.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_2400.webp" alt="4,000" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_2400.webp" alt="4,000" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">4,000 <small>CP</small></div>
@@ -458,12 +482,12 @@
             <div class="prow"><span class="price num">89.99</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a>
 
     <a href="product-double-cp-8000.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_5000.webp" alt="8,000" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_5000.webp" alt="8,000" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">8,000 <small>CP</small></div>
@@ -471,12 +495,12 @@
             <div class="prow"><span class="price num">184.99</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a>
 
     <a href="product-double-cp-16000.html" class="pcard">
-        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_10800.webp" alt="16,000" loading="lazy">
+        <div class="pimg"><img src="../BAV_Design/06_coin_only_renders/CP_10800.webp" alt="16,000" loading="lazy"><span class="bav-x2-badge" aria-hidden="true">×2</span>
       </div>
         <div class="pbody">
             <div class="pname num">16,000 <small>CP</small></div>
@@ -484,7 +508,7 @@
             <div class="prow"><span class="price num">369.99</span><span class="cur">ر.س</span></div>
             
             
-            <div class="pbtn">اختر الفئة</div>
+            <div class="pbtn">أضف للسلة</div>
         </div>
     </a></div>
     </div>
@@ -711,7 +735,7 @@
     var toggle = document.getElementById('bav-search-toggle');
     var closeBtn = document.getElementById('bav-search-close');
     if (!input || !resultsBox || !bar) return;
-    var products = [{"name":"80 CP","url":"product-cp-80.html"},{"name":"420 CP","url":"product-cp-420.html"},{"name":"880 CP","url":"product-cp-880.html"},{"name":"2,400 CP","url":"product-cp-2400.html"},{"name":"5,000 CP","url":"product-cp-5000.html"},{"name":"10,800 CP","url":"product-cp-10800.html"},{"name":"Battle Pass","url":"product-battle-pass.html"},{"name":"Battle Pass Bundle","url":"product-battle-pass-bundle.html"},{"name":"Battle Pass + 2400 CP","url":"product-battle-pass-2400-combo.html"},{"name":"160 CP","url":"product-double-cp-160.html"},{"name":"800 CP","url":"product-double-cp-800.html"},{"name":"1,600 CP","url":"product-double-cp-1600.html"},{"name":"4,000 CP","url":"product-double-cp-4000.html"},{"name":"8,000 CP","url":"product-double-cp-8000.html"},{"name":"16,000 CP","url":"product-double-cp-16000.html"},{"name":"160 CP","url":"product-double-cp-160-gift.html"},{"name":"800 CP","url":"product-double-cp-800-gift.html"},{"name":"1,600 CP","url":"product-double-cp-1600-gift.html"},{"name":"4,000 CP","url":"product-double-cp-4000-gift.html"},{"name":"8,000 CP","url":"product-double-cp-8000-gift.html"},{"name":"16,000 CP","url":"product-double-cp-16000-gift.html"},{"name":"دليل زيادة المشاهدات والتفاعل على TikTok","url":"product-guide-views.html"},{"name":"دليل تحسين جودة الفيديو بالجوال — مجانًا","url":"product-guide-video-quality.html"},{"name":"إنشاء حساب","url":"product-cheap-account.html"},{"name":"حل مشاكل الإعدادات والتحكم","url":"product-settings-fix.html"}];
+    var products = [{"name":"80 CP","url":"product-cp-80.html"},{"name":"420 CP","url":"product-cp-420.html"},{"name":"880 CP","url":"product-cp-880.html"},{"name":"2,400 CP","url":"product-cp-2400.html"},{"name":"5,000 CP","url":"product-cp-5000.html"},{"name":"10,800 CP","url":"product-cp-10800.html"},{"name":"Battle Pass","url":"product-battle-pass.html"},{"name":"Battle Pass Bundle","url":"product-battle-pass-bundle.html"},{"name":"Battle Pass + 2400 CP","url":"product-battle-pass-2400-combo.html"},{"name":"160 CP","url":"product-double-cp-160.html"},{"name":"800 CP","url":"product-double-cp-800.html"},{"name":"1,600 CP","url":"product-double-cp-1600.html"},{"name":"4,000 CP","url":"product-double-cp-4000.html"},{"name":"8,000 CP","url":"product-double-cp-8000.html"},{"name":"16,000 CP","url":"product-double-cp-16000.html"},{"name":"160 CP","url":"product-double-cp-160-gift.html"},{"name":"800 CP","url":"product-double-cp-800-gift.html"},{"name":"1,600 CP","url":"product-double-cp-1600-gift.html"},{"name":"4,000 CP","url":"product-double-cp-4000-gift.html"},{"name":"8,000 CP","url":"product-double-cp-8000-gift.html"},{"name":"16,000 CP","url":"product-double-cp-16000-gift.html"},{"name":"دليل زيادة المشاهدات والتفاعل على TikTok","url":"product-guide-views.html"},{"name":"دليل تحسين جودة الفيديو بالجوال — مجانًا","url":"product-guide-video-quality.html"},{"name":"إنشاء حساب","url":"product-cheap-account.html"},{"name":"حل مشاكل الإعدادات والتحكم","url":"product-settings-fix.html"},{"name":"السلاح الأسطوري","url":"product-legendary-weapon.html"}];
 
     function setBarOpen(isOpen) {
       bar.classList.toggle('is-open', isOpen);
