@@ -54,4 +54,22 @@ for(const file of files('../bav-preview').filter(file=>file.endsWith('.html'))){
   }
   for(const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))if(!/src=|application\/ld\+json/.test(match[1]))new vm.Script(match[2],{filename:file});
 }
-console.log(JSON.stringify({passed:true,behaviorAssertions:assertions,previewPages:pages}));
+// A newly installed Salla theme may have no saved settings yet.
+const generatorPath = path.resolve('scripts/preview-build.js');
+const generatorRequire = require('node:module').createRequire(generatorPath);
+const rendered = new Map();
+const memoryFs = new Proxy(fs,{get(target,key){
+  if(key==='writeFileSync')return(file,html)=>rendered.set(path.basename(file),html);
+  if(key==='mkdirSync')return()=>{};
+  if(['unlinkSync','rmSync','renameSync','copyFileSync','appendFileSync'].includes(key))return()=>{throw Error('Unexpected write during render test');};
+  return target[key];
+}});
+function memoryRequire(name){return name==='fs'?memoryFs:generatorRequire(name);}
+memoryRequire.resolve=generatorRequire.resolve;
+memoryRequire.cache=generatorRequire.cache;
+const emptySettingsSource=fs.readFileSync(generatorPath,'utf8').replace('const v = settingsMap[key];','const v = undefined;');
+vm.runInNewContext(emptySettingsSource,{require:memoryRequire,__dirname:path.dirname(generatorPath),__filename:generatorPath,console:{log:()=>{}},process:{argv:[]},Buffer,setTimeout,clearTimeout},{filename:generatorPath});
+equal(rendered.size,42);
+const emptyHome=rendered.get('index.html');
+for(const text of ['كل خدماتك الرقمية','في مكان واحد','images/bav-hero.webp','80 CP هدية','data-amt="600"','الشحن بمعرّف اللاعب فقط']){assert(emptyHome.includes(text),'Missing new-install fallback: '+text);assertions++;}
+console.log(JSON.stringify({passed:true,behaviorAssertions:assertions,previewPages:pages,emptySettingsPages:rendered.size}));

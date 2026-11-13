@@ -74,9 +74,6 @@ function load() {
       settingsMap[key] = [{ value: 'preview-placeholder' }, { value: 'preview-placeholder' }, { value: 'preview-placeholder' }, { value: 'preview-placeholder' }];
     }
   }
-  if (!settingsMap.hero_image) {
-    settingsMap.hero_image = '__PREVIEW_HERO__';
-  }
 
   // The "see more" buttons under each homepage section, and the links to the
   // dedicated info pages, are intentionally hidden on the real live store
@@ -599,7 +596,7 @@ function buildPageHtml(pageTwigRelPath, pageSlugLabel, contextOverrides, categor
 
   rendered = rendered.replace(/<script\b[^>]*\bsrc=["'][^"']+["'][^>]*>[\s\S]*?<\/script>/gi, '');
   rendered = rendered.replace(/<\/body>/, '<script defer src="../bav-store-theme/public/preview.js"></script></body>');
-  return rendered;
+  return rendered.replace(/^[\t ]+$/gm, '');
 }
 
 function build() {

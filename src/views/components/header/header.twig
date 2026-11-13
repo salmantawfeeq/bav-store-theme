@@ -5,7 +5,7 @@
 | cart.items_count | int     |                                 |
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
-{% set topbar_items = theme.settings.get('topbar_items') %}
+{% set topbar_items = theme.settings.get('topbar_items')|default([{'topbar_items.text':"الشحن بمعرّف اللاعب فقط — بدون كلمة سر"},{'topbar_items.text':"راجع معرّف اللاعب قبل الدفع"},{'topbar_items.text':"دفع آمن بطرق متعددة"},{'topbar_items.text':"دعم بعد الشراء على واتساب"}]) %}
 {#
     The announcement marquee and the header stick together as one unit on
     every page and every screen size (not desktop-only, and not just the
