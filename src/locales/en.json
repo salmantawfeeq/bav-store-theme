@@ -216,7 +216,7 @@
       "refund_desc": "Fulfilled digital products are non-refundable. Please review the full store policy before ordering.",
       "confirm_label": "I confirm the details entered above in the product options are correct, and I take responsibility for verifying them before completing the order.",
       "confirm_required": "Please confirm the details above before adding to cart.",
-      "placeholder_example_note": "Example: :example — this is just a sample, enter your own real one in the field.",
+      "placeholder_example_note": "Example: :example",
       "double_cp_once_warning": "Each tier's doubling can only be activated once per account. If this same tier was already activated on this account before, the doubling won't work again.",
       "how_to_find_id": "How do I find my ID?",
       "execution_note": "Fulfillment time: :time.",
