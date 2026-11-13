@@ -15,10 +15,11 @@ for (const [value, expected] of [['185.50 ر.س',185.5], ['١٨٥٫٥٠ ر.س',1
 for (const [amount, index] of [[0,-1],[49.99,-1],[50,0],[149.99,0],[150,1],[299.99,1],[300,2],[599.99,2],[600,3],[900,3]]) {
   const levels = [50,150,300,600].map(value => ({ dataset:{amt:value},style:{},chip:{style:{}},querySelector(){ return this.chip; } }));
   const total = {}, fill = {style:{}}, text = {};
-  const ladder = { dataset: {initialTotal:String(amount),langAddMore:'أضف :amount',langAlmostThere:'قريب',langAllUnlocked:'مفاجأة',langUnlocked:'current',langNext:'next',langLocked:'locked'}, querySelectorAll:()=>levels };
+  const ladder = { dataset: {initialTotal:String(amount),langAddMore:'أضف :amount <i class=sicon-sar></i>',langAlmostThere:'قريب',langAllUnlocked:'مفاجأة',langUnlocked:'current',langNext:'next',langLocked:'locked'}, querySelectorAll:()=>levels };
   context.document = {getElementById:id=>({'bav-ladder':ladder,'bav-lad-total':total,'bav-lad-fill':fill,'bav-lad-text':text}[id])};
   let update;
   home.initRewardsLadder({formatNumber:value=>value.toFixed(2),subscribe:callback=>{update=callback;}});
+  if(amount===0)equal(text.textContent,'أضف 50.00 ر.س');
   equal(levels.filter(level=>level.chip.textContent==='current').length,index<0?0:1);
   if(index>=0)equal(levels[index].chip.textContent,'current');
   update({total:'٥٠٫٠٠ ر.س'});equal(levels[0].chip.textContent,'current');
