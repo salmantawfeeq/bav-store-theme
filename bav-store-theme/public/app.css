@@ -5348,11 +5348,18 @@ input[type=radio].sr-only:checked ~ div.main-menu .sub-menu {
      header above it (merchant screenshot, طلبات_صاحب_المتجر.md بند 11).
      products.js already toggles body.filters-opened correctly on open/close
      (initiateMobileMenu()) - the JS was never the problem, only this
-     missing CSS half of the pair was. */
-  #filters-menu {
+     missing CSS half of the pair was.
+     :not(.bav-preview-drawer) excludes the LOCAL PREVIEW's own separate
+     open/close simulation (scripts/preview-build.js), which toggles
+     visibility via its own .is-open class directly on this same element,
+     never via body.filters-opened - display:none here would permanently
+     hide it there regardless of .is-open, since display always beats
+     visibility. Real store pages never carry that class, so this changes
+     nothing about the real fix. */
+  #filters-menu:not(.bav-preview-drawer) {
     display: none;
   }
-  .filters-opened #filters-menu {
+  .filters-opened #filters-menu:not(.bav-preview-drawer) {
     display: block;
   }
   .filters-opened .close-filters {
