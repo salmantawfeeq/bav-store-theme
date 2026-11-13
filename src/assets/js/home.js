@@ -30,6 +30,11 @@ class Home extends BasePage {
             chip: el.querySelector('.lv-chip'),
         })).sort((a, b) => a.amount - b.amount);
 
+        // Salla can replace SAR abbreviations with icon markup in translations.
+        // These messages are rendered as text, so keep the currency readable.
+        const plainText = value => String(value || '')
+            .replace(/<i\b[^>]*\bsicon-sar\b[^>]*>\s*<\/i>/gi, 'ر.س')
+            .replace(/<[^>]*>/g, '');
         const lang = {
             addMore: ladder.dataset.langAddMore,
             almostThere: ladder.dataset.langAlmostThere,
@@ -38,6 +43,7 @@ class Home extends BasePage {
             next: ladder.dataset.langNext,
             locked: ladder.dataset.langLocked,
         };
+        Object.keys(lang).forEach(key => { lang[key] = plainText(lang[key]); });
         // "Almost there" only replaces the generic "add :amount SAR" line once
         // the shopper is genuinely close to the next level - showing it at any
         // distance would read as misleading ("one step away" while still far).
