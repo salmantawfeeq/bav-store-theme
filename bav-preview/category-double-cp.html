@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 
-    <script defer data-cfasync="false" crossorigin="anonymous" src="../bav-store-theme/public/product-card.js"></script>
-    <script defer src="../bav-store-theme/public/main-menu.js"></script>
     
-        <script defer src="../bav-store-theme/public/add-product-toast.js"></script>
+    
+    
+        
     
 
     
@@ -204,19 +204,21 @@
 	<div class="wrap s-products-index flex items-start flex-col md:flex-row" style="padding-bottom:90px">
 		
 			<button type="button" aria-label="إغلاق الفلاتر" class="btn--close-sm close-filters sicon-cancel hidden"></button>
-			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none bav-preview-drawer" id="filters-menu">
-      <div style="padding:24px 20px">
-        <div style="font-weight:700;font-size:16px;margin-bottom:16px">الفئة</div>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> فئات شحن العملات</label>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> الملفات الرقمية</label>
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:14px;color:#C7C7CE"><input type="checkbox"> الخدمات</label>
-        <div style="font-weight:700;font-size:16px;margin:22px 0 16px">نطاق السعر</div>
-        <div style="display:flex;gap:10px">
-          <input type="number" placeholder="من" style="flex:1;height:42px;border-radius:10px;border:1px solid #2A2A31;background:#17171B;color:#F4F4F2;padding:0 12px">
-          <input type="number" placeholder="إلى" style="flex:1;height:42px;border-radius:10px;border:1px solid #2A2A31;background:#17171B;color:#F4F4F2;padding:0 12px">
-        </div>
-      </div>
-    </salla-filters>
+			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-24 flex-none bav-preview-filter-panel" id="filters-menu">
+      <div class="bav-preview-filter-content">
+        <div class="bav-preview-filter-heading"><strong>تصفية المنتجات</strong><button type="button" data-filter-close aria-label="إغلاق الفلاتر">×</button></div>
+        <fieldset><legend>الفئة</legend>
+          <label><input type="checkbox" value="currency" data-filter-category> فئات شحن العملات</label>
+          <label><input type="checkbox" value="digital" data-filter-category> الملفات الرقمية</label>
+          <label><input type="checkbox" value="service" data-filter-category> الخدمات</label>
+        </fieldset>
+        <fieldset><legend>نطاق السعر</legend><div class="bav-preview-price-range">
+          <label>من<input type="number" min="0" step="0.01" data-filter-min></label>
+          <label>إلى<input type="number" min="0" step="0.01" data-filter-max></label>
+        </div><p data-filter-error role="status"></p></fieldset>
+        <button type="button" class="btn btn-g" data-filter-reset>مسح الفلاتر</button>
+        <button type="button" class="btn btn-p lg:hidden" data-filter-close>عرض النتائج</button>
+      </div></salla-filters>
 		
 
 		<div class="main-content flex-1 w-full ltr:lg:ml-8 rtl:lg:mr-8">
@@ -443,7 +445,7 @@
 
     <salla-add-product-toast data-testid="store-add-product-toast"></salla-add-product-toast>
 
-<script defer crossorigin="anonymous" src="../bav-store-theme/public/app.js"></script>
+
 
 
 <salla-offer-modal data-testid="store-offer-modal"></salla-offer-modal>
@@ -451,7 +453,7 @@
 <salla-login-modal data-testid="store-login-modal"></salla-login-modal>
 
 
-	<script defer src="../bav-store-theme/public/product.js"></script>
+	
 
 
   <script>
@@ -483,8 +485,6 @@
       setSaved(ids);
       document.querySelectorAll('.btn--wishlist[data-id="' + id + '"]').forEach(function (b) { apply(b, !wasAdded); });
 
-      var countEl = document.getElementById('wishlist-count-' + id);
-      if (countEl) countEl.textContent = Math.max(0, Number(countEl.textContent) + (wasAdded ? -1 : 1));
     }, true);
   })();
   </script>
@@ -548,29 +548,6 @@
   </script>
   <script>
   (function () {
-    // Category page's filter sidebar - same off-canvas drawer mechanics as
-    // the header's mobile nav (reuses the same .bav-preview-drawer /
-    // .bav-preview-backdrop classes), for the same reason: products.js's
-    // real initiateMobileMenu() never runs without a live Salla runtime.
-    var panel = document.getElementById('filters-menu');
-    var trigger = document.querySelector('a[href="#filters-menu"]');
-    var closeBtn = document.querySelector('button.close-filters');
-    if (!panel || !trigger) return;
-    var backdrop = document.createElement('div');
-    backdrop.className = 'bav-preview-backdrop';
-    document.body.appendChild(backdrop);
-    function setOpen(isOpen) {
-      panel.classList.toggle('is-open', isOpen);
-      backdrop.classList.toggle('is-open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-    trigger.addEventListener('click', function (e) { e.preventDefault(); setOpen(true); });
-    if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
-    backdrop.addEventListener('click', function () { setOpen(false); });
-  })();
-  </script>
-  <script>
-  (function () {
     var input = document.getElementById('bav-preview-search');
     var resultsBox = document.getElementById('bav-preview-search-results');
     var bar = document.getElementById('bav-search-bar');
@@ -627,5 +604,5 @@
     });
   })();
   </script>
-  </body>
+  <script defer src="../bav-store-theme/public/preview.js"></script></body>
 </html>

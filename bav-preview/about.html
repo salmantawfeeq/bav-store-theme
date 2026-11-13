@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 
-    <script defer data-cfasync="false" crossorigin="anonymous" src="../bav-store-theme/public/product-card.js"></script>
-    <script defer src="../bav-store-theme/public/main-menu.js"></script>
     
-        <script defer src="../bav-store-theme/public/add-product-toast.js"></script>
+    
+    
+        
     
 
     
@@ -381,7 +381,7 @@
 
     <salla-add-product-toast data-testid="store-add-product-toast"></salla-add-product-toast>
 
-<script defer crossorigin="anonymous" src="../bav-store-theme/public/app.js"></script>
+
 
 
 <salla-offer-modal data-testid="store-offer-modal"></salla-offer-modal>
@@ -436,8 +436,6 @@
       setSaved(ids);
       document.querySelectorAll('.btn--wishlist[data-id="' + id + '"]').forEach(function (b) { apply(b, !wasAdded); });
 
-      var countEl = document.getElementById('wishlist-count-' + id);
-      if (countEl) countEl.textContent = Math.max(0, Number(countEl.textContent) + (wasAdded ? -1 : 1));
     }, true);
   })();
   </script>
@@ -501,29 +499,6 @@
   </script>
   <script>
   (function () {
-    // Category page's filter sidebar - same off-canvas drawer mechanics as
-    // the header's mobile nav (reuses the same .bav-preview-drawer /
-    // .bav-preview-backdrop classes), for the same reason: products.js's
-    // real initiateMobileMenu() never runs without a live Salla runtime.
-    var panel = document.getElementById('filters-menu');
-    var trigger = document.querySelector('a[href="#filters-menu"]');
-    var closeBtn = document.querySelector('button.close-filters');
-    if (!panel || !trigger) return;
-    var backdrop = document.createElement('div');
-    backdrop.className = 'bav-preview-backdrop';
-    document.body.appendChild(backdrop);
-    function setOpen(isOpen) {
-      panel.classList.toggle('is-open', isOpen);
-      backdrop.classList.toggle('is-open', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-    trigger.addEventListener('click', function (e) { e.preventDefault(); setOpen(true); });
-    if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
-    backdrop.addEventListener('click', function () { setOpen(false); });
-  })();
-  </script>
-  <script>
-  (function () {
     var input = document.getElementById('bav-preview-search');
     var resultsBox = document.getElementById('bav-preview-search-results');
     var bar = document.getElementById('bav-search-bar');
@@ -580,5 +555,5 @@
     });
   })();
   </script>
-  </body>
+  <script defer src="../bav-store-theme/public/preview.js"></script></body>
 </html>
